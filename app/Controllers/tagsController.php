@@ -10,7 +10,6 @@ class tagsController extends BaseController
     {
 
 
-
         $tagmodel = new add_tagsModel();
 
         $data = $tagmodel->findAll();

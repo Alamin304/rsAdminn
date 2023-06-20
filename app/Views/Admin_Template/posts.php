@@ -106,7 +106,7 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
@@ -114,7 +114,7 @@
 
 
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Posts (37)</h1>
+    <h1 class="page-header">Posts (<?= $totalCount?>)</h1>
 
     <div class="row">
         <div class="col-md-12">
@@ -175,61 +175,36 @@
                       
                         
                         <tr>
+                          <?php foreach ($data as $value): ?>
                             <td class="col-md-2">
-                                <a href="https://blog-demo.yumefave.com/admin/posts/29" title="Edit this post">
-                                    <img src="https://s3.amazonaws.com/blog-demo.yumefave.com/photos/thumbnails/DcDdgpoJsP.jpg" class="thumbnail" width="200px" />
+                                <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
+                                <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
                                 </a>
                             </td>
                             <td class="col-md-10">
-                                <a href="https://blog-demo.yumefave.com/admin/categories/6" class="label label-default" style="background-color: #dce040;" title="View this category">Crypto</a>
+                           
+                                
 
-                                <a href="https://blog-demo.yumefave.com/admin/posts/29" title="Edit this post"><h3>Goldman Sachs says bitcoin may rise about $500 more, before losing half its value</h3></a>
+                                <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
 
-                                <p>Goldman Sachs' chart analyst Sheba Jafari said in a Sunday report that bitcoin could reach $4,827, about $500 more than Monday's record high above $4,300.</p>
-                                <p>Once bitcoin hits that level, Jafari estimates it could drop as far as $2,221.</p>
-                                <p>That said, bitcoin will need to fall under $2,935 "to signal that a top is already in place," the report said.</p>
+                                <p><?php echo $value['content']; ?></p>
+                                
 
                                 <hr class="text-muted" />
 
                                 <small class="text-muted">
                                     Tags:
-
-                                    <a href="https://blog-demo.yumefave.com/admin/tags/28" class="tag" title="View posts with this tag">#Bitcoin</a>,
-                                    <a href="https://blog-demo.yumefave.com/admin/tags/29" class="tag" title="View posts with this tag">#BTC</a>
+                                    <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" class="tag" title="View posts with this tag"><?php echo '#' .$value['tags']; ?></a>
                                     <br />
 
-                                    News &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">5 years ago</span>
+                                    <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>
                                     &middot; 2 views
                                 </small>
+                                
                             </td>
                         </tr>
-                        <tr>
-                            <td class="col-md-2">
-                                <a href="https://blog-demo.yumefave.com/admin/posts/28" title="Edit this post">
-                                    <img src="https://s3.amazonaws.com/blog-demo.yumefave.com/photos/thumbnails/OvWtFOvBlk.jpeg" class="thumbnail" width="200px" />
-                                </a>
-                            </td>
-                            <td class="col-md-10">
-                                <a href="https://blog-demo.yumefave.com/admin/categories/6" class="label label-default" style="background-color: #dce040;" title="View this category">Crypto</a>
-
-                                <a href="https://blog-demo.yumefave.com/admin/posts/28" title="Edit this post"><h3>Orders for Bitcoin Cash Are &#039;Exploding&#039;</h3></a>
-
-                                Sebastian Quinn-Watson has had more than 12 cups of coffee since he woke up around 24 hours ago.Quinn-Watson is a venture partner for a bitcoin exchange operator based in Australia. As such, he has ha...
-
-                                <hr class="text-muted" />
-
-                                <small class="text-muted">
-                                    Tags:
-
-                                    <a href="https://blog-demo.yumefave.com/admin/tags/28" class="tag" title="View posts with this tag">#Bitcoin</a>,
-                                    <a href="https://blog-demo.yumefave.com/admin/tags/29" class="tag" title="View posts with this tag">#BTC</a>
-                                    <br />
-
-                                    News &middot; Admin &middot; <span title="Aug 14, 2017 8:12 am">5 years ago</span>
-                                    &middot; 3 views
-                                </small>
-                            </td>
-                        </tr>
+                        <?php endforeach; ?>
+                       
                     </tbody>
                 </table>
             </div>

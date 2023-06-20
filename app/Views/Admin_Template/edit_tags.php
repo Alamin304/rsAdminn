@@ -10,8 +10,6 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/');?>css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
-       
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -107,201 +105,76 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-                        
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
+                <div class="container-fluid">
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Edit Tags</h1>
 
-                        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Create Post</h1>
-
-    <?php if (isset($successMessage)) : ?>
-                <div class="alert alert-success">
-                    <?= $successMessage ?>
-                </div>
-            <?php endif; ?>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="flash-message"></div>
-
-            <?= validation_list_errors() ?>
-
-            <form method="POST" id="posts-store-form" action="<?php echo base_url('postinsertData') ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
-                <input type="hidden" name="_token" value="DO5GFBF3jsw5VT9IbUm76QM5USXvaL3XlddgwoLA" />
-
-                <div class="form-group">
-                    <label for="title" class="col-md-3 control-label">Title <span class="text-danger">*</span></label>
-
-                    <div class="col-md-7">
-                        <input id="title" type="text" class="form-control" name="title" value="" required />
-                        
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="uri" class="col-md-3 control-label">URI <span class="text-danger">*</span></label>
-
-                    <div class="col-md-7">
-                        <input id="uri" type="text" class="form-control" name="uri" value="" required />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="type" class="col-md-3 control-label">Type <span class="text-danger">*</span></label>
-
-                    <div class="col-md-7">
-                        <div class="radio">
-                            <label>
-                                <input type="radio" id="type" name="type" value="blog" checked />
-                                Blog
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" id="type" name="type" value="news" />
-                                News
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="opening" class="col-md-3 control-label">Opening</label>
-
-                    <div class="col-md-7">
-                        <p class="form-control-static">
-                            <a href="#opening-block" aria-expanded="false" aria-controls="opening-block" data-toggle="collapse">
-                                Add an opening paragraph
-                            </a>
-                        </p>
-
-                        <div id="opening-block" class="collapse">
-                            <textarea id="opening" class="form-control summernote" name="opening" rows="5"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="content" class="col-md-3 control-label">Content</label>
-
-                    <div class="col-md-7">
-                        <textarea id="content" class="form-control summernote" name="content" rows="5"></textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="media-id" class="col-md-3 control-label">Media ID</label>
-
-                    <div class="col-md-7">
-                        <input id="media-id" type="text" class="form-control" name="media_id" value="" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="media-type" class="col-md-3 control-label">Media Type</label>
-
-                    <div class="col-md-7">
-                        <select id="media-type" class="form-control" name="media_type">
-                            <option value="">Select one</option>
-                            <option value="youtube">Youtube</option>
-                            <option value="vimeo">Vimeo</option>
-                            <option value="soundcloud">SoundCloud</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="media-artwork" class="col-md-3 control-label">Media Artwork</label>
-
-                    <div class="col-md-7">
-                        <input id="media-artwork" type="text" class="form-control" name="media_artwork" value="" />
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    <label for="category-id" class="col-md-3 control-label">Category <span class="text-danger">*</span></label>
-
-                    <div class="col-md-7">
-                        <select id="category-id" class="form-control" name="category_id" disabled>
-                            <option value="">Select one</option>
-                            <option value="6">Crypto</option>
-                            <option value="1">Video Clips</option>
-                            <option value="13">Alamin308</option>
-                            <option value="2">Technology</option>
-                            <option value="4">Audio</option>
-                            <option value="3">Space</option>
-                       
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group hidden">
-                    <label for="featured" class="col-md-3 control-label">Featured</label>
-
-                    <div class="col-md-7">
-                        <select id="featured" class="form-control" name="featured" disabled>
-                            <option value="">Select one</option>
-                            <option value="top">Top</option>
-                            <option value="medium">Medium</option>
-                            <option value="low_left">Low Left</option>
-                            <option value="low_right">Low Right</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="source" class="col-md-3 control-label">Source</label>
-
-                    <div class="col-md-7">
-                        <input id="source" type="text" class="form-control" name="source" value="" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="source-link" class="col-md-3 control-label">Source Link</label>
-
-                    <div class="col-md-7">
-                        <input id="source-link" type="text" class="form-control" name="source_link" value="" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="tags" class="col-md-3 control-label">Tags</label>
-
-                    <div class="col-md-7">
-                        <input id="tags" type="text" class="form-control" name="tags" value="" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="photos" class="col-md-3 control-label">Photos</label>
-
-                    <div class="col-md-7">
-                        <input type="file" id="photos" name="photos" title="Upload" multiple />
-
-                        <p class="help-block">
-                            You can upload your own images.
-
-                            <br />
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4">
-                        <button type="submit" name ="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
-                        &nbsp;&nbsp;&nbsp;<a href="https://blog-demo.yumefave.com/admin/posts" class="text-muted">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+   <h1 class="page-header">3D</h1>
+   <div class="row">
+      <div class="col-md-5">
+         <div class="flash-message">
+         </div>
+         <form method="post" action="https://blog-demo.yumefave.com/admin/tags/27" class="form-horizontal" role="form">
+            <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
+            <input type="hidden" name="_method" value="PUT">
+            <div class="form-group">
+               <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
+               <div class="col-md-6">
+                  <input type="text" id="name" class="form-control" name="name" autocomplete="off" value="3D" required />
+               </div>
+            </div>
+            <div class="form-group">
+               <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
+               <div class="col-md-6">
+                  <input type="text" id="uri" class="form-control" name="uri" autocomplete="off" value="3d" required />
+               </div>
+            </div>
+            <div class="form-group">
+               <div class="col-md-6 col-md-offset-4">
+                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                  &nbsp;&nbsp;&nbsp;<a href="https://blog-demo.yumefave.com/admin/tags" class="text-muted">Cancel</a>
+                  <a href="#" class="btn btn-danger pull-right" onclick="event.preventDefault(); var r = confirm('Are you sure you would like to remove this tag?'); if (r == true) { document.getElementById('tag-remove-form').submit(); }"><i class="fa fa-times"></i> Remove</a>
+               </div>
+            </div>
+         </form>
+         <form id="tag-remove-form" action="https://blog-demo.yumefave.com/admin/tags/27" method="POST" class="hidden">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
+         </form>
+      </div>
+      <div class="col-md-7">
+         <h3>Posts with this tag (1)</h3>
+         <div class="table-responsive">
+            <table class="table table-striped">
+               <tbody>
+                  <tr>
+                     <td class="col-md-2">
+                        <a href="https://blog-demo.yumefave.com/admin/posts/23" class="vimeo">
+                        <img src="https://i.vimeocdn.com/video/8794142_400x225.jpg" class="thumbnail" width="200px" />
+                        </a>
+                     </td>
+                     <td class="col-md-10">
+                        <a href="https://blog-demo.yumefave.com/admin/posts/23" title="Edit this post">
+                           <h3>Amazing 3D immersion technology</h3>
+                        </a>
+                        A simple, featherweight headset, a 10&#039; x 10&#039; x 10&#039; white room, and $600,000 worth of projector and computer equipment, combined with the smarts of the folks at Eon Reality, results in one insanely rea...
+                        <hr class="text-muted" />
+                        <small class="text-muted">
+                        News Article
+                        &middot; Admin &middot; <span title="Aug 14, 2017 7:46 am">5 years ago</span>
+                        </small>
+                        <a href="https://blog-demo.yumefave.com/admin/posts/23" class="btn btn-info btn-xs pull-right" title="Edit this post"><i class="fa fa-pencil"></i> Edit</a>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
 </div>
-
-
-
+</div>
+</div>
                         
 
 
@@ -327,14 +200,6 @@
         
         
         
-        <script> 
-                            $('#title').keyup(function(){
-
-                    var abc = $(this).val();
-                    console.log(abc)
-                                $('#uri').val(abc);
-                                // $('#uriview').html(abc);
-                    });
-        </script>
+        
     </body>
 </html>

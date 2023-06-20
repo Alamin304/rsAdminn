@@ -134,7 +134,7 @@
                 <?php foreach ($data as $value): ?>
                     <i class="fa fa-square" style="color: #d3d323;"></i>
                 &nbsp;
-                    <a href="<?php echo $value['URL']; ?>" title="View this Tags">
+                    <a href="<?php echo $value['id']; ?>" title="View this Tags">
                         <strong><?php echo $value['name']; ?></strong>
                      </a>
                      <span class="text-muted">(1 posts)</span>

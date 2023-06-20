@@ -10,7 +10,8 @@ class add_tagsController extends BaseController
         return view('Admin_Template/add_tags');
     }
 
-    public function tags_insertData(){
+    public function tags_insertData()
+    {
 
         
         $validation = \Config\Services::validation();
@@ -47,5 +48,11 @@ class add_tagsController extends BaseController
         ]);
 
 
+    }
+    public  function edit_tags($id)
+    {
+
+
+        return view('Admin_Template/edit_tags');
     }
 }

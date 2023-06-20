@@ -170,7 +170,7 @@
                 <?php foreach ($data as $value): ?>
                     <i class="fa fa-square" style="color: #d3d323;"></i>
                 &nbsp;
-                    <a href="<?php echo $value['id']; ?>" title="View this category">
+                <a href="<?php echo base_url('edit_categories/' . $value['id']); ?>" title="View this category">
                         <strong><?php echo $value['name']; ?><br></strong>
                      </a>
                         <br>
