@@ -115,26 +115,13 @@
   <table class="table table-striped">
     <tbody>
 
-    <tr>
-        <td class="col-md-12">
-          <i class="fa fa-square" style="color: #d3d323;"></i>
-          &nbsp;
-          <a
-            href="https://blog-demo.yumefave.com/admin/categories/5"
-            title="View this category">
-            <strong>Business</strong>
-          </a>
-          <span class="text-muted">(1 posts)</span>
-        </td>
-      </tr>
-
 
       <tr>
             <td class="col-md-12">
                 <?php foreach ($data as $value): ?>
                     <i class="fa fa-square" style="color: #d3d323;"></i>
                 &nbsp;
-                    <a href="<?php echo $value['id']; ?>" title="View this Tags">
+                    <a href="<?php echo base_url('edit_tags/' . $value['id']); ?>" title="View this Tags">
                         <strong><?php echo $value['name']; ?></strong>
                      </a>
                      <span class="text-muted">(1 posts)</span>
@@ -143,12 +130,7 @@
             </td>
         </tr>
 
-        
-                
 
-      
-
-           
                 
      </tbody>
  </table>

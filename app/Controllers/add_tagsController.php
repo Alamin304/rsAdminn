@@ -49,10 +49,41 @@ class add_tagsController extends BaseController
 
 
     }
+    
     public  function edit_tags($id)
     {
 
 
-        return view('Admin_Template/edit_tags');
+        $updattagModel = new add_tagsModel();
+            
+        $data= $updattagModel->where('id', $id)->findAll();
+                    // echo "<pre>";
+                    // var_dump($data);
+                    // die();
+        return view('Admin_Template/edit_tags',['data'=>$data,]);
+    }
+
+    public function update_tags($id)
+    {
+        
+        $updattagModel = new add_tagsModel();
+        if ($this->request->getMethod() === 'put') {
+            $name = $this->request->getPost('name');
+            $URL = $this->request->getPost('uri');
+        
+            if ($name && $URL) {
+                $data = [
+                    'name' => $name,
+                    'URL' => $URL,
+                ];
+        
+                $updattagModel->update([$id], $data); // Wrap $id in an array
+            }
+        }
+        
+        $data = $updattagModel->find([$id]); // Wrap $id in an array
+        var_dump($data);
+    
+          return view('Admin_Template/edit_tags',['data'=>$data]);
     }
 }

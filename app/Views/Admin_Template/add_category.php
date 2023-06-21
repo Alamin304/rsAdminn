@@ -130,7 +130,7 @@
                     <div class="col-md-6">
                         <input type="text" id="name" class="form-control" name="name" value=""/>
                         <!-- <span style="color:red;" id="nameErr"></span> -->
-                        <span style="color:red"><?= validation_show_error('name') ?></span>
+                        <span style="color:red;"><?= validation_show_error('name') ?></span>
                     </div>
                 </div>
 
@@ -138,7 +138,8 @@
                     <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
 
                     <div class="col-md-6">
-                        <input type="text" id="uri" class="form-control" name="uri" value="" required />
+                        <input type="text" id="uri" class="form-control" name="uri" value="" />
+                        <span style="color:red;"><?= validation_show_error('uri') ?></span>
                         <!-- <div id="uriview"> id </div> -->
 
                     </div>
@@ -149,7 +150,7 @@
 
                     <div class="col-md-6">
                         <textarea id="description" class="form-control" name="description" rows="5"></textarea>
-
+                        <span style="color:red;"><?= validation_show_error('description') ?></span>
                     </div>
                 </div>
 
@@ -157,7 +158,8 @@
                     <label for="order" class="col-md-4 control-label">Order <span class="text-danger">*</span></label>
 
                     <div class="col-md-6">
-                        <input type="number" id="order" class="form-control" name="order" value="" required />
+                        <input type="number" id="order" class="form-control" name="order" value=""  />
+                        <span style="color:red;"><?= validation_show_error('order') ?></span>
                     </div>
 
                 </div>

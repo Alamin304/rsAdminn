@@ -35,18 +35,23 @@ $routes->get('/categories', 'CategoriesController::categories');
 $routes->get('/add_categories', 'add_categoryController::add_categories');
 $routes->post('/insertData', 'add_categoryController::category_insertData');
 $routes->get('/edit_categories/(:any)', 'add_categoryController::edit_categories/$1');
+$routes->put('/update_categories/(:any)', 'add_categoryController::update_categories/$1');
+
 
 
 $routes->get('/posts', 'postsController::posts');
 $routes->get('/create_post', 'create_postController::create_post');
 $routes->post('/postinsertData', 'create_postController::post_insertData');
 $routes->get('/edit_posts/(:any)', 'create_postController::edit_posts/$1');
+$routes->put('/update_posts/(:any)', 'create_postController::update_posts/$1');
+
 
 
 $routes->get('/tags', 'tagsController::tags');
 $routes->get('/add_tags', 'add_tagsController::add_tags');
 $routes->post('/taginsertData', 'add_tagsController::tags_insertData');
 $routes->get('/edit_tags/(:any)', 'add_tagsController::edit_tags/$1');
+$routes->put('/update_tags/(:any)', 'add_tagsController::update_tags/$1');
 
 
 

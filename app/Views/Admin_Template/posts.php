@@ -183,7 +183,7 @@
                             </td>
                             <td class="col-md-10">
                            
-                                
+                            <a href=" <?php echo base_url('edit_categories/'.$value['id']);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value['category']; ?></a>
 
                                 <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
 
@@ -194,7 +194,7 @@
 
                                 <small class="text-muted">
                                     Tags:
-                                    <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" class="tag" title="View posts with this tag"><?php echo '#' .$value['tags']; ?></a>
+                                    <a href="<?php echo base_url('edit_tags/' . $value['id']); ?>" class="tag" title="View posts with this tag"><?php echo '#' .$value['tags']; ?></a>
                                     <br />
 
                                     <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>

@@ -9,6 +9,10 @@
         <title>Dashboard - SB Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/');?>css/styles.css" rel="stylesheet" />
+         <!-- Summernote CSS - CDN Link -->
+         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+         <!-- //Summernote CSS - CDN Link -->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -115,19 +119,20 @@
       <div class="col-md-12">
          <div class="flash-message">
          </div>
-         <form method="post" id="posts-update-form" action="https://blog-demo.yumefave.com/admin/posts/37" class="form-horizontal" enctype="multipart/form-data" role="form">
-            <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
+         <?php foreach ($data as $value): ?>
+         <form method="post" id="posts-update-form" action="<?php echo base_url('update_posts/').$value['id']?> " class="form-horizontal" enctype="multipart/form-data" role="form">
+            <input type="hidden" name="_token" value=" ">
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
                <label for="title" class="col-md-3 control-label">Title <span class="text-danger">*</span></label>
                <div class="col-md-7">
-                  <input id="title" type="text" class="form-control" name="title" value="Proud Of You - Fiona Fung" required />
+                  <input id="title" type="text" class="form-control" name="title" value="<?= $value['title']?>" required />
                </div>
             </div>
             <div class="form-group">
                <label for="uri" class="col-md-3 control-label">URI <span class="text-danger">*</span></label>
                <div class="col-md-7">
-                  <input id="uri" type="text" class="form-control" name="uri" value="proud-of-you-fiona-fung" required />
+                  <input id="uri" type="text" class="form-control" name="uri" value="<?= $value['URI']?>" required />
                </div>
             </div>
             <div class="form-group">
@@ -135,19 +140,19 @@
                <div class="col-md-7">
                   <div class="radio">
                      <label>
-                     <input type="radio" id="type" name="type" value="blog" checked />
+                     <input type="radio" id="type" name="type" value="<?= $value['type']?>" checked />
                      Blog
                      </label>
                   </div>
                   <div class="radio">
                      <label>
-                     <input type="radio" id="type" name="type" value="news" />
+                     <input type="radio" id="type" name="type" value="<?= $value['type']?>" />
                      News
                      </label>
                   </div>
                </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                <label for="opening" class="col-md-3 control-label">Opening</label>
                <div class="col-md-7">
                   <p class="form-control-static">
@@ -159,24 +164,26 @@
                      <textarea id="opening" class="form-control summernote" name="opening" rows="5"></textarea>
                   </div>
                </div>
-            </div>
+            </div> -->
             <div class="form-group">
                <label for="content" class="col-md-3 control-label">Content</label>
                <div class="col-md-7">
-                  <textarea id="content" class="form-control summernote" name="content" rows="5">&lt;p&gt;Love in your eyes&lt;/p&gt;&lt;p&gt;Sitting silent by my side&lt;/p&gt;&lt;p&gt;Going on Holding hand&lt;/p&gt;&lt;p&gt;Walking through the nights&lt;/p&gt;&lt;p&gt;Hold me up Hold me tight&lt;/p&gt;&lt;p&gt;Lift me up to touch the sky&lt;/p&gt;&lt;p&gt;Teaching me to love with heart&lt;/p&gt;&lt;p&gt;Helping me open my mind&lt;/p&gt;&lt;p&gt;I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;Till the end of the time&lt;/p&gt;&lt;p&gt;Believe me I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;The heaven in the sky&lt;/p&gt;&lt;p&gt;Stars in the sky&lt;/p&gt;&lt;p&gt;Wishing once upon a time&lt;/p&gt;&lt;p&gt;Give me love Make me smile&lt;/p&gt;&lt;p&gt;Till the end of life&lt;/p&gt;&lt;p&gt;Hold me up Hold me tight&lt;/p&gt;&lt;p&gt;Lift me up to touch the sky&lt;/p&gt;&lt;p&gt;Teaching me to love with heart&lt;/p&gt;&lt;p&gt;Helping me open my mind&lt;/p&gt;&lt;p&gt;I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;Till the end of the time&lt;/p&gt;&lt;p&gt;Believe me I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;The heaven in the sky&lt;/p&gt;&lt;p&gt;Can&#039;t you believe that you light up my way&lt;/p&gt;&lt;p&gt;No matter how that ease my path&lt;/p&gt;&lt;p&gt;I&#039;ll never lose my faith&lt;/p&gt;&lt;p&gt;See me fly&lt;/p&gt;&lt;p&gt;I&#039;m proud to fly up high&lt;/p&gt;&lt;p&gt;Show you the best of mine&lt;/p&gt;&lt;p&gt;Till the end of the time&lt;/p&gt;&lt;p&gt;Believe me I can fly&lt;/p&gt;&lt;p&gt;I&#039;m singing in the sky&lt;/p&gt;&lt;p&gt;Show you the best of mine&lt;/p&gt;&lt;p&gt;The heaven in the sky&lt;/p&gt;&lt;p&gt;Nothing can stop me&lt;/p&gt;&lt;p&gt;Spread my wings so wide&lt;/p&gt;</textarea>
+               <!-- <textarea name="content" id="summernote" class="form-control" rows="5"></textarea> -->
+               <textarea id="summernote" class="form-control" name="content" rows="5"><?= $value['content'] ?></textarea>
+               <!-- <textarea id="content" class="form-control summernote" name="content" rows="5">&lt;p&gt;Love in your eyes&lt;/p&gt;&lt;p&gt;Sitting silent by my side&lt;/p&gt;&lt;p&gt;Going on Holding hand&lt;/p&gt;&lt;p&gt;Walking through the nights&lt;/p&gt;&lt;p&gt;Hold me up Hold me tight&lt;/p&gt;&lt;p&gt;Lift me up to touch the sky&lt;/p&gt;&lt;p&gt;Teaching me to love with heart&lt;/p&gt;&lt;p&gt;Helping me open my mind&lt;/p&gt;&lt;p&gt;I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;Till the end of the time&lt;/p&gt;&lt;p&gt;Believe me I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;The heaven in the sky&lt;/p&gt;&lt;p&gt;Stars in the sky&lt;/p&gt;&lt;p&gt;Wishing once upon a time&lt;/p&gt;&lt;p&gt;Give me love Make me smile&lt;/p&gt;&lt;p&gt;Till the end of life&lt;/p&gt;&lt;p&gt;Hold me up Hold me tight&lt;/p&gt;&lt;p&gt;Lift me up to touch the sky&lt;/p&gt;&lt;p&gt;Teaching me to love with heart&lt;/p&gt;&lt;p&gt;Helping me open my mind&lt;/p&gt;&lt;p&gt;I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;Till the end of the time&lt;/p&gt;&lt;p&gt;Believe me I can fly&lt;/p&gt;&lt;p&gt;I&#039;m proud that I can fly&lt;/p&gt;&lt;p&gt;To give the best of mine&lt;/p&gt;&lt;p&gt;The heaven in the sky&lt;/p&gt;&lt;p&gt;Can&#039;t you believe that you light up my way&lt;/p&gt;&lt;p&gt;No matter how that ease my path&lt;/p&gt;&lt;p&gt;I&#039;ll never lose my faith&lt;/p&gt;&lt;p&gt;See me fly&lt;/p&gt;&lt;p&gt;I&#039;m proud to fly up high&lt;/p&gt;&lt;p&gt;Show you the best of mine&lt;/p&gt;&lt;p&gt;Till the end of the time&lt;/p&gt;&lt;p&gt;Believe me I can fly&lt;/p&gt;&lt;p&gt;I&#039;m singing in the sky&lt;/p&gt;&lt;p&gt;Show you the best of mine&lt;/p&gt;&lt;p&gt;The heaven in the sky&lt;/p&gt;&lt;p&gt;Nothing can stop me&lt;/p&gt;&lt;p&gt;Spread my wings so wide&lt;/p&gt;</textarea> -->
                </div>
             </div>
             <div class="form-group">
                <label for="media-id" class="col-md-3 control-label">Media ID</label>
                <div class="col-md-7">
-                  <input id="media-id" type="text" class="form-control" name="media_id" value="216871082" />
+                  <input id="media-id" type="text" class="form-control" name="media_id" value="<?= $value['media_id']?>" />
                </div>
             </div>
             <div class="form-group">
                <label for="media-type" class="col-md-3 control-label">Media Type</label>
                <div class="col-md-7">
                   <select id="media-type" class="form-control" name="media_type">
-                     <option value="">Select one</option>
+                     <option value="<?= $value['media_type']?>"><?= $value['media_type']?></option>
                      <option value="youtube">Youtube</option>
                      <option value="vimeo">Vimeo</option>
                      <option value="soundcloud" selected>SoundCloud</option>
@@ -218,7 +225,7 @@
             <div class="form-group">
                <label for="source" class="col-md-3 control-label">Source</label>
                <div class="col-md-7">
-                  <input id="source" type="text" class="form-control" name="source" value="SoundCloud" />
+                  <input id="source" type="text" class="form-control" name="source" value="<?= $value['source']?>" />
                </div>
             </div>
             <div class="form-group">
@@ -236,17 +243,16 @@
             <div class="form-group">
                <label for="tags" class="col-md-3 control-label">Tags</label>
                <div class="col-md-7">
-                  <input id="tags" type="text" class="form-control" name="tags" value="Fiona Fung" />
+                  <input id="tags" type="text" class="form-control" name="tags" value="<?= $value['tags']?>" />
                </div>
             </div>
             <div class="form-group">
                <label for="photos" class="col-md-3 control-label">Photos:</label>
                <div class="col-md-7">
+               <div style="display: flex;">
+               <a href="<?= base_url('edit_posts/' . $value['id']) ?>">
+               <img style="width:40px; height:40px;" src="<?= base_url('uploads/'. $value['photos']) ?>" alt="no images">
                   <input type="file" id="photos" name="photos[]" title="Upload" multiple />
-                  <p class="help-block">
-                     You can upload your own images.
-                     <br /><span class="text-danger"><i class="fa fa-exclamation-circle"></i> This site is under demo mode, no photos can be uploaded!</span>
-                  </p>
                </div>
             </div>
             <div class="form-group">
@@ -257,6 +263,7 @@
                </div>
             </div>
          </form>
+         <?php endforeach; ?>
          <form id="post-remove-form" action="https://blog-demo.yumefave.com/admin/posts/37" method="POST" class="hidden">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
@@ -287,6 +294,18 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
+         <!-- Summernote JS - CDN Link -->
+         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+         <script>
+            $(document).ready(function() {
+                  // $("#your_summernote").summernote();
+                  $("#summernote").summernote({
+                     placeholder:"Type your Content..",
+                     height:300
+                  });
+                  $('.dropdown-toggle').dropdown();
+            });
+         </script>
         
         
         

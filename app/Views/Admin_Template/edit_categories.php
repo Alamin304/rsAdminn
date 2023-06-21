@@ -115,12 +115,13 @@
       <div class="col-md-5">
          <div class="flash-message">
          </div>
-         <form method="post" id="categories-update-form" action="<?php echo base_url('edit_categories');?>" class="form-horizontal" enctype="multipart/form-data" role="form">
-            <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
+         <?php foreach ($data as $value): ?>
+       <form method="post" id="categories-update-form" action="<?php echo base_url('update_categories/'.$value['id']) ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+            <input type="hidden" name="_token" value="'">
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
                <label for="name" class="col-md-4 control-label">Title <span class="text-danger">*</span></label>
-               <?php foreach ($data as $value): ?>
+              
                <div class="col-md-6">
                   <input type="text" id="name" class="form-control" name="name" value="<?= $value['name']?>" />
                </div>
@@ -129,7 +130,8 @@
             <div class="form-group">
                <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
                <div class="col-md-6">
-                  <input type="uri" id="uri" class="form-control" name="uri" value="<?= $value['URL']?>"/>
+               <input type="text" id="uri" class="form-control" name="uri" value="<?= $value['URL']?>" />
+
                </div>
             </div>
             <div class="form-group">
@@ -156,10 +158,12 @@
             <div class="form-group">
                <label for="parent-id" class="col-md-4 control-label">Parent Category</label>
                <div class="col-md-6">
-                  <select id="parent-id" class="form-control" name="parent_id" value="">
-                     <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
-                     <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
-                  </select>
+               <select id="parent-id" class="form-control" name="parent_id">
+               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>><?php echo $value['name']; ?></option>
+                        <?php foreach ($data2 as $value2): ?>
+                            <option value="<?php echo $value2['id']; ?>"><?php echo $value2['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>   
                </div>
             </div>
             <?php endforeach; ?>

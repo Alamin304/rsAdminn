@@ -115,19 +115,20 @@
       <div class="col-md-5">
          <div class="flash-message">
          </div>
-         <form method="post" action="https://blog-demo.yumefave.com/admin/tags/27" class="form-horizontal" role="form">
-            <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
+         <?php foreach ($data as $value): ?>
+            <form method="post" id="tags-update-form" action="<?php echo base_url('update_tags/').$value['id']?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+            <input type="hidden" name="_token" value="">
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
                <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
                <div class="col-md-6">
-                  <input type="text" id="name" class="form-control" name="name" autocomplete="off" value="3D" required />
+                  <input type="text" id="name" class="form-control" name="name" autocomplete="off" value="<?= $value['name']?>" />
                </div>
             </div>
             <div class="form-group">
                <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
                <div class="col-md-6">
-                  <input type="text" id="uri" class="form-control" name="uri" autocomplete="off" value="3d" required />
+                  <input type="text" id="uri" class="form-control" name="uri" autocomplete="off" value="<?= $value['URL']?>" />
                </div>
             </div>
             <div class="form-group">
@@ -138,38 +139,11 @@
                </div>
             </div>
          </form>
+         <?php endforeach; ?>
          <form id="tag-remove-form" action="https://blog-demo.yumefave.com/admin/tags/27" method="POST" class="hidden">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
          </form>
-      </div>
-      <div class="col-md-7">
-         <h3>Posts with this tag (1)</h3>
-         <div class="table-responsive">
-            <table class="table table-striped">
-               <tbody>
-                  <tr>
-                     <td class="col-md-2">
-                        <a href="https://blog-demo.yumefave.com/admin/posts/23" class="vimeo">
-                        <img src="https://i.vimeocdn.com/video/8794142_400x225.jpg" class="thumbnail" width="200px" />
-                        </a>
-                     </td>
-                     <td class="col-md-10">
-                        <a href="https://blog-demo.yumefave.com/admin/posts/23" title="Edit this post">
-                           <h3>Amazing 3D immersion technology</h3>
-                        </a>
-                        A simple, featherweight headset, a 10&#039; x 10&#039; x 10&#039; white room, and $600,000 worth of projector and computer equipment, combined with the smarts of the folks at Eon Reality, results in one insanely rea...
-                        <hr class="text-muted" />
-                        <small class="text-muted">
-                        News Article
-                        &middot; Admin &middot; <span title="Aug 14, 2017 7:46 am">5 years ago</span>
-                        </small>
-                        <a href="https://blog-demo.yumefave.com/admin/posts/23" class="btn btn-info btn-xs pull-right" title="Edit this post"><i class="fa fa-pencil"></i> Edit</a>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
       </div>
    </div>
 </div>

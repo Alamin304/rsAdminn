@@ -10,6 +10,11 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/');?>css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+         <!-- Summernote CSS - CDN Link -->
+         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+         <!-- //Summernote CSS - CDN Link -->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
        
     </head>
@@ -126,16 +131,17 @@
         <div class="col-md-12">
             <div class="flash-message"></div>
 
-            <?= validation_list_errors() ?>
+           
 
             <form method="POST" id="posts-store-form" action="<?php echo base_url('postinsertData') ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
-                <input type="hidden" name="_token" value="DO5GFBF3jsw5VT9IbUm76QM5USXvaL3XlddgwoLA" />
+                <input type="hidden" name="_token" value="" />
 
                 <div class="form-group">
                     <label for="title" class="col-md-3 control-label">Title <span class="text-danger">*</span></label>
 
                     <div class="col-md-7">
-                        <input id="title" type="text" class="form-control" name="title" value="" required />
+                        <input id="title" type="text" class="form-control" name="title" value=""  />
+                        <span style="color:red;"><?= validation_show_error('title') ?></span>
                         
                     </div>
                 </div>
@@ -144,7 +150,8 @@
                     <label for="uri" class="col-md-3 control-label">URI <span class="text-danger">*</span></label>
 
                     <div class="col-md-7">
-                        <input id="uri" type="text" class="form-control" name="uri" value="" required />
+                        <input id="uri" type="text" class="form-control" name="uri" value=""  />
+                        <span style="color:red;"><?= validation_show_error('uri') ?></span>
                     </div>
                 </div>
 
@@ -167,7 +174,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="opening" class="col-md-3 control-label">Opening</label>
 
                     <div class="col-md-7">
@@ -181,13 +188,15 @@
                             <textarea id="opening" class="form-control summernote" name="opening" rows="5"></textarea>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label for="content" class="col-md-3 control-label">Content</label>
 
                     <div class="col-md-7">
-                        <textarea id="content" class="form-control summernote" name="content" rows="5"></textarea>
+                    <textarea id="summernote" class="form-control" name="content" rows="5"></textarea>
+                    <span style="color:red;"><?= validation_show_error('content') ?></span>
+                        <!-- <textarea id="content" class="form-control summernote" name="content" rows="5"></textarea> -->
                     </div>
                 </div>
 
@@ -196,6 +205,7 @@
 
                     <div class="col-md-7">
                         <input id="media-id" type="text" class="form-control" name="media_id" value="" />
+                        <span style="color:red;"><?= validation_show_error('media_id') ?></span>
                     </div>
                 </div>
 
@@ -223,17 +233,13 @@
                 <div class="form-group hidden">
                     <label for="category-id" class="col-md-3 control-label">Category <span class="text-danger">*</span></label>
 
-                    <div class="col-md-7">
-                        <select id="category-id" class="form-control" name="category_id" disabled>
-                            <option value="">Select one</option>
-                            <option value="6">Crypto</option>
-                            <option value="1">Video Clips</option>
-                            <option value="13">Alamin308</option>
-                            <option value="2">Technology</option>
-                            <option value="4">Audio</option>
-                            <option value="3">Space</option>
-                       
-                        </select>
+                    <div class="col-md-6">
+                    <select id="category" class="form-control" name="category">
+                        <option>--Select one--</option>
+                    <?php foreach ($data as $value): ?>
+                        <option value="<?php echo $value['name']; ?>"><?php echo $value['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
                     </div>
                 </div>
 
@@ -256,6 +262,7 @@
 
                     <div class="col-md-7">
                         <input id="source" type="text" class="form-control" name="source" value="" />
+                        <span style="color:red;"><?= validation_show_error('source') ?></span>
                     </div>
                 </div>
 
@@ -264,6 +271,7 @@
 
                     <div class="col-md-7">
                         <input id="source-link" type="text" class="form-control" name="source_link" value="" />
+                        <span style="color:red;"><?= validation_show_error('source_link') ?></span>
                     </div>
                 </div>
 
@@ -272,6 +280,7 @@
 
                     <div class="col-md-7">
                         <input id="tags" type="text" class="form-control" name="tags" value="" />
+                        <span style="color:red;"><?= validation_show_error('tags') ?></span>
                     </div>
                 </div>
 
@@ -280,12 +289,9 @@
 
                     <div class="col-md-7">
                         <input type="file" id="photos" name="photos" title="Upload" multiple />
+                        <span style="color:red;"><?= validation_show_error('photos') ?></span>
 
-                        <p class="help-block">
-                            You can upload your own images.
-
-                            <br />
-                        </p>
+                        
                     </div>
                 </div>
 
@@ -324,6 +330,19 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
+
+         <!-- Summernote JS - CDN Link -->
+         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+         <script>
+            $(document).ready(function() {
+                  // $("#your_summernote").summernote();
+                  $("#summernote").summernote({
+                     placeholder:"Type your Content..",
+                     height:300
+                  });
+                  $('.dropdown-toggle').dropdown();
+            });
+         </script>
         
         
         
