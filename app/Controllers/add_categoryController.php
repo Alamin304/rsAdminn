@@ -90,17 +90,18 @@ class add_categoryController extends BaseController
                         'URL' => $URL,
                         'description' => $description,
                         'order' => $order,
-                        'parents' => $parents,
+                        'parents' => 0,
                     ];
+                    
 
                     $updatcatgModel->update([$id], $data); 
                 }
             }
-
+              $data2 = $updatcatgModel->where('parents', 0)->findAll();
             $data = $updatcatgModel->find([$id]); 
             var_dump($data);
         
-             return view('Admin_Template/edit_categories', ['data' => $data]);
+             return view('Admin_Template/edit_categories', ['data' => $data,'data2' => $data2]);
         }
         
 

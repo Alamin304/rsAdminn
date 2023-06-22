@@ -122,51 +122,52 @@
             <div class="form-group">
                <label for="name" class="col-md-4 control-label">Title <span class="text-danger">*</span></label>
               
-               <div class="col-md-6">
+               <div class="col-md-10">
                   <input type="text" id="name" class="form-control" name="name" value="<?= $value['name']?>" />
                </div>
                
             </div>
             <div class="form-group">
                <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
-               <div class="col-md-6">
+               <div class="col-md-10">
                <input type="text" id="uri" class="form-control" name="uri" value="<?= $value['URL']?>" />
 
                </div>
             </div>
             <div class="form-group">
                <label for="color" class="col-md-4 control-label">Color</label>
-               <div class="col-md-6">
+               <div class="col-md-10">
                   <div class="input-group colorpicker-component">
                      <input type="text" id="color" class="form-control" name="color" value="" />
+                     <input type="color" id="colorpic" class="form-control" name="color" value="#ff0080"/>
                      <span class="input-group-addon"><i></i></span>
                   </div>
                </div>
             </div>
             <div class="form-group">
                <label for="description" class="col-md-4 control-label">Description</label>
-               <div class="col-md-6">
+               <div class="col-md-15">
                <textarea id="description" class="form-control" name="description" rows="5"><?= $value['description'] ?></textarea>
                </div>
             </div>
             <div class="form-group">
                <label for="order" class="col-md-4 control-label">Order <span class="text-danger">*</span></label>
-               <div class="col-md-6">
+               <div class="col-md-10">
                   <input type="number" id="order" class="form-control" name="order" value="<?= $value['order']?>"  />
                </div>
             </div>
             <div class="form-group">
                <label for="parent-id" class="col-md-4 control-label">Parent Category</label>
-               <div class="col-md-6">
+               <div class="col-md-10">
                <select id="parent-id" class="form-control" name="parent_id">
-               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>><?php echo $value['name']; ?></option>
+               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>>-select one-</option>
                         <?php foreach ($data2 as $value2): ?>
                             <option value="<?php echo $value2['id']; ?>"><?php echo $value2['name']; ?></option>
                         <?php endforeach; ?>
                     </select>   
                </div>
             </div>
-            <?php endforeach; ?>
+            
             <div class="form-group">
                <div class="col-md-6 col-md-offset-4">
                   <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
@@ -175,6 +176,7 @@
                </div>
             </div>
          </form>
+         <?php endforeach;?>
          <form id="category-remove-form" action="https://blog-demo.yumefave.com/admin/categories/4" method="POST" class="hidden">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
@@ -184,11 +186,7 @@
 </div>
 </div>
 </div>
-                        
-
-
-                    </div>
-                </main>
+</main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -215,8 +213,14 @@
                     var abc = $(this).val();
                     console.log(abc)
                                 $('#uri').val(abc);
-                                // $('#uriview').html(abc);
+                                
                     });
         </script>
+
+            <script>
+                $(document).ready(function () {
+                    $("#colorpic").kendoColorPicker();
+                });
+            </script>
     </body>
 </html>

@@ -197,17 +197,14 @@
                </div>
             </div>
             <div class="form-group hidden">
-               <label for="category-id" class="col-md-3 control-label">Category <span class="text-danger">*</span></label>
+               <label for="category-id" class="col-md-3 control-label">Category<span class="text-danger">*</span></label>
                <div class="col-md-7">
-                  <select id="category-id" class="form-control" name="category_id" disabled>
-                     <option value="">Select one</option>
-                     <option value="6">Crypto</option>
-                     <option value="1">Video Clips</option>
-                     <option value="2">Technology</option>
-                     <option value="4">Audio</option>
-                     <option value="3">Space</option>
-                     <option value="5">Business</option>
-                  </select>
+               <select id="category" class="form-control" name="category">
+               <option value="0" <?php if ($value['category']) echo "selected"; ?>><?php echo $value['category']; ?></option>
+                        <?php foreach ($data2 as $value2): ?>
+                            <option value="<?php echo $value2['id']; ?>"><?php echo $value2['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select> 
                </div>
             </div>
             <div class="form-group">

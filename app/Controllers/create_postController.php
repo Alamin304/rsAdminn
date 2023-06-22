@@ -17,8 +17,7 @@ class create_postController extends BaseController
 
     public function post_insertData ()
     {
-        $catmodel = new add_categoryModel();
-        $data = $catmodel->where('parents', 0)->findAll();
+    
         
         
 
@@ -33,7 +32,7 @@ class create_postController extends BaseController
             'source' => 'required',
             'source_link' => 'required',
             'tags' => 'required',
-            'photos' => 'required',
+            // 'photos' => 'uploaded[flag]|mime_in[flag,image/png,image/jpg,image/jpeg]|max_size[flag,2048]',
             
             
             
@@ -66,6 +65,7 @@ class create_postController extends BaseController
             
             
         ];
+        
 
         $createpostModel->insert($data);
 
@@ -74,11 +74,16 @@ class create_postController extends BaseController
          $photos->move(ROOTPATH . 'public/uploads');
         }
         $successMessage = "Thank you, your blog post has been updated successfully..";
+
+        $createpostModel = new add_categoryModel();
+        $data2 = $createpostModel->where('parents', 0)->findAll();
         
         $data = $createpostModel->findAll();
+       
 
         return view('Admin_Template/create_post', [
             'data' => $data,
+            'data2' => $data2,
             
             'successMessage' => $successMessage
         ]);
@@ -91,63 +96,65 @@ class create_postController extends BaseController
     {
 
         $updatpostModel = new create_postModel();
-
-            
-            
         $data= $updatpostModel->where('id', $id)->findAll();
 
-        return view('Admin_Template/edit_posts', ['data'=>$data,]);
+        $updatpostModel = new add_categoryModel();
+        $data2 = $updatpostModel ->where('parents', 0)->findAll();   
+        
+
+        return view('Admin_Template/edit_posts', ['data'=>$data,'data2'=>$data2,]);
     }
     
     public function update_posts($id)
-        {
-            
-            $updatpostModel = new create_postModel();
-        
-            if ($this->request->getMethod() === 'put') {
-                $title = $this->request->getPost('title');
-                $URI = $this->request->getPost('uri');
-                $type = $this->request->getPost('type');
-                $content = $this->request->getPost('content');
-                $media_id = $this->request->getPost('media_id');
-                $media_type = $this->request->getPost('media_type');
-                $media_artwork = $this->request->getPost('media_artwork');
-                $category_id = $this->request->getPost('category_id');
-                $source = $this->request->getPost('source');
-                $source_link = $this->request->getPost('source_link');
-                $views = $this->request->getPost('views');
-                $tags = $this->request->getPost('tags');
-                $photos = $this->request->getPost('photos[]');
-                
-        
-                if ($title && $URI && $type && $content && $media_id && $media_type && $media_artwork && $category_id && $source && $source_link && $views && $tags && $photos) {
-                    $data = [
-                        'title' => $title,
-                        'URI' => $URI,
-                        'type' => $type,
-                        'content' => $content,
-                        'media_id' => $media_id,
-                        'media_type' => $media_type,
-                        'media_artwork' => $media_artwork,
-                        'category_id' => $category_id,
-                        'source' => $source,
-                        'source_link' => $source_link,
-                        'views' => $views,
-                        'tags' => $tags,
-                        'photos' => $photos,
-                        
+{
+    $updatpostModel = new create_postModel();
 
-                    ];
-                    
-        
-                    $updatpostModel->update($id, $data);
-                }
-            }
-        
-            $data =  $updatpostModel->find($id);
-            var_dump($data);
-        
-            //  return view('Admin_Template/edit_categories', ['data' => $data]);
+    if ($this->request->getMethod() === 'put') {
+    
+       echo $title = $this->request->getPost('title');
+        $URI = $this->request->getPost('uri');
+        $type = $this->request->getPost('type');
+        $content = $this->request->getPost('content');
+        $media_id = $this->request->getPost('media_id');
+        $media_type = $this->request->getPost('media_type');
+        $media_artwork = $this->request->getPost('media_artwork');
+        $category = $this->request->getPost('category');
+        $source = $this->request->getPost('source');
+        $source_link = $this->request->getPost('source_link');
+        $tags = $this->request->getPost('tags');
+        $photos = $this->request->getPost('photos');
+
+        if ($title && $URI && $type && $content && $media_id && $media_type && $media_artwork && $category && $source && $source_link && $tags && $photos) {
+            $data = [
+                
+                'title' => $title,
+                'URI' => $URI,
+                'type' => $type,
+                'content' => $content,
+                'media_id' => $media_id,
+                'media_type' => $media_type,
+                'media_artwork' => $media_artwork,
+                'category' => $category,
+                'source' => $source,
+                'source_link' => $source_link,
+                'tags' => $tags,
+                'photos' => $photos,
+            ];
+            print_r($data);
+            die ();
+
+            $updatpostModel->update([$id], $data); 
+
+            
         }
+    }
+    
+    $data2 = $updatpostModel->where('category')->findAll();
+    $data = $updatpostModel->find([$id]);
+    var_dump($data);
+
+    return view('Admin_Template/edit_posts', ['data' => $data,'data2' => $data2,]);
+}
+
 
 }

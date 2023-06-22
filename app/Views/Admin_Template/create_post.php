@@ -233,7 +233,7 @@
                 <div class="form-group hidden">
                     <label for="category-id" class="col-md-3 control-label">Category <span class="text-danger">*</span></label>
 
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                     <select id="category" class="form-control" name="category">
                         <option>--Select one--</option>
                     <?php foreach ($data as $value): ?>
@@ -289,7 +289,7 @@
 
                     <div class="col-md-7">
                         <input type="file" id="photos" name="photos" title="Upload" multiple />
-                        <span style="color:red;"><?= validation_show_error('photos') ?></span>
+                        
 
                         
                     </div>
