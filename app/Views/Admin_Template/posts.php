@@ -111,10 +111,9 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
 
-
-
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Posts (<?= $totalCount?>)</h1>
+                            
+                        <h1 class="page-header">Posts (<?= $totalCount?>)</h1>
 
     <div class="row">
         <div class="col-md-12">
@@ -122,58 +121,22 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <form action="https://blog-demo.yumefave.com/admin/posts" method="get">
+                    <form action="" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search..." name="search" value="" style="width: 60%;" />
-
-                            <select name="filters-type" class="form-control" style="width: 40%;">
-                                <option value="all">All</option>
-                                <option value="news">News</option>
-                                <option value="blog">Blog</option>
-                            </select>
 
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit" title="Search"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </form>
-
-                    <br />
-                </div>
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="dropdown text-right">
-                        <a id="sort" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="btn btn-default">
-                            <i class="fa fa-sort-alpha-asc"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="sort">
-                            <li>
-                                <a href="https://blog-demo.yumefave.com/admin/posts?order=title&amp;sort=asc" tabindex="-1" title="Sort by Title - Ascending">Title - A to Z</a>
-                            </li>
-                            <li>
-                                <a href="https://blog-demo.yumefave.com/admin/posts?order=title&amp;sort=desc" tabindex="-1" title="Sort by Title - Descending">Title - Z to A</a>
-                            </li>
-                            <li>
-                                <a href="https://blog-demo.yumefave.com/admin/posts?order=views&amp;sort=asc" tabindex="-1" title="Sort by Views - Smallest first">Views - Low to High</a>
-                            </li>
-                            <li>
-                                <a href="https://blog-demo.yumefave.com/admin/posts?order=views&amp;sort=desc" tabindex="-1" title="Sort by Views - Largest first">Views - High to Low</a>
-                            </li>
-                            <li>
-                                <a href="https://blog-demo.yumefave.com/admin/posts?order=created&amp;sort=asc" tabindex="-1" title="Sort by Created Time - Oldest first">Created - Old to New</a>
-                            </li>
-                            <li class="active">
-                                <a href="https://blog-demo.yumefave.com/admin/posts?order=created&amp;sort=desc" tabindex="-1" title="Sort by Created Time - Newest first">Created - New to Old</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <br/>
                 </div>
             </div>
 
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tbody>
-                      
-                        
                         <tr>
                           <?php foreach ($data as $value): ?>
                             <td class="col-md-2">
@@ -203,12 +166,21 @@
                                 
                             </td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach;?>
                        
+                        
                     </tbody>
                 </table>
-            </div>
 
+            <?php if ($pager) : ?>
+                <div class="pagination">
+                 <?= $pager->links() ?>
+                </div>
+            <?php endif; ?>
+              
+            </div>
+       
+<!-- 
             <ul class="pagination" role="navigation">
                 <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
                     <span class="page-link" aria-hidden="true">&lsaquo;</span>
@@ -222,7 +194,7 @@
                 <li class="page-item">
                     <a class="page-link" href="https://blog-demo.yumefave.com/admin/posts?page=2" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
                 </li>
-            </ul>
+            </ul> -->
 
             <div class="row">
                 <div class="col-md-12">

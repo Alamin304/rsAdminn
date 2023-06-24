@@ -44,6 +44,7 @@ $routes->get('/create_post', 'create_postController::create_post');
 $routes->post('/postinsertData', 'create_postController::post_insertData');
 $routes->get('/edit_posts/(:any)', 'create_postController::edit_posts/$1');
 $routes->put('/update_posts/(:any)', 'create_postController::update_posts/$1');
+$routes->get('/search', 'postsController::posts');
 
 
 

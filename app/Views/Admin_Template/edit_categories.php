@@ -119,6 +119,7 @@
        <form method="post" id="categories-update-form" action="<?php echo base_url('update_categories/'.$value['id']) ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
             <input type="hidden" name="_token" value="'">
             <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" value="<?= $value['id'] ?>" name="categoryId">
             <div class="form-group">
                <label for="name" class="col-md-4 control-label">Title <span class="text-danger">*</span></label>
               
@@ -182,10 +183,36 @@
             <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
          </form>
       </div>
+                <div class="col-md-7">
+                <h3>Posts (4)</h3>
+                <div class="table-responsive">
+                <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <a href="https://blog-demo.yumefave.com/admin/posts/11" class="soundcloud">
+                        <img src="https://i1.sndcdn.com/artworks-000218248773-hbas13-t500x500.jpg" class="thumbnail" width="200px" />
+                        </a>
+                    </td>
+                    <td class="col-md-10">
+                        <a href="https://blog-demo.yumefave.com/admin/posts/11" title="Edit this post">
+                            <h3>Có Đôi Lần</h3>
+                        </a>
+                        <p>Composer: Đức Trí</p>
+                        <p>Performer: Phạm Hoài Nam</p>
+                        <hr class="text-muted" />
+                        <small class="text-muted">
+                        News Article
+                        &middot; Admin &middot; <span title="Aug 04, 2017 7:37 am">5 years ago</span>
+                        </small>
+                        <a href="https://blog-demo.yumefave.com/admin/posts/11" class="btn btn-info btn-xs pull-right" title="Edit this post"><i class="fa fa-pencil"></i> Edit</a>
+                    </td>
+                </tr>
    </div>
 </div>
 </div>
 </div>
+
 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
@@ -222,5 +249,6 @@
                     $("#colorpic").kendoColorPicker();
                 });
             </script>
+            
     </body>
 </html>

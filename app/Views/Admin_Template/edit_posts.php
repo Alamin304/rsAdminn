@@ -193,14 +193,14 @@
             <div class="form-group">
                <label for="media-artwork" class="col-md-3 control-label">Media Artwork</label>
                <div class="col-md-7">
-                  <input id="media-artwork" type="text" class="form-control" name="media_artwork" value="http://i.yai.bz/Assets/70/082/l_p1011008270.jpg" />
+                  <input id="media-artwork" type="text" class="form-control" name="media_artwork" value="<?= $value['media_artwork']?>" />
                </div>
             </div>
             <div class="form-group hidden">
                <label for="category-id" class="col-md-3 control-label">Category<span class="text-danger">*</span></label>
                <div class="col-md-7">
                <select id="category" class="form-control" name="category">
-               <option value="0" <?php if ($value['category']) echo "selected"; ?>><?php echo $value['category']; ?></option>
+               <option <?php if ($value['category']) echo "selected"; ?>>--select one--</option>
                         <?php foreach ($data2 as $value2): ?>
                             <option value="<?php echo $value2['id']; ?>"><?php echo $value2['name']; ?></option>
                         <?php endforeach; ?>
@@ -228,7 +228,7 @@
             <div class="form-group">
                <label for="source-link" class="col-md-3 control-label">Source Link</label>
                <div class="col-md-7">
-                  <input id="source-link" type="text" class="form-control" name="source_link" value="https://soundcloud.com/nouvo206/proud-of-you-fiona-fung-nghe-nhac-mp3-hot-nhat" />
+                  <input id="source-link" type="text" class="form-control" name="source_link" value="<?= $value['source_link']?>" />
                </div>
             </div>
             <div class="form-group">
@@ -249,7 +249,7 @@
                <div style="display: flex;">
                <a href="<?= base_url('edit_posts/' . $value['id']) ?>">
                <img style="width:40px; height:40px;" src="<?= base_url('uploads/'. $value['photos']) ?>" alt="no images">
-                  <input type="file" id="photos" name="photos[]" title="Upload" multiple />
+                  <input type="file" id="photos" name="photos" title="Upload" multiple />
                </div>
             </div>
             <div class="form-group">
@@ -307,7 +307,7 @@
         
         
         <script> 
-                            $('#name').keyup(function(){
+                            $('#title').keyup(function(){
 
                     var abc = $(this).val();
                     console.log(abc)
@@ -315,5 +315,7 @@
                                 // $('#uriview').html(abc);
                     });
         </script>
+        
+
     </body>
 </html>

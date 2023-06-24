@@ -237,7 +237,7 @@
                     <select id="category" class="form-control" name="category">
                         <option>--Select one--</option>
                     <?php foreach ($data as $value): ?>
-                        <option value="<?php echo $value['name']; ?>"><?php echo $value['name']; ?></option>
+                        <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
                         <?php endforeach; ?>
                     </select>
                     </div>

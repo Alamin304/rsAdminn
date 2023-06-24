@@ -17,9 +17,6 @@ class create_postController extends BaseController
 
     public function post_insertData ()
     {
-    
-        
-        
 
         $validation = \Config\Services::validation();
 
@@ -33,9 +30,7 @@ class create_postController extends BaseController
             'source_link' => 'required',
             'tags' => 'required',
             // 'photos' => 'uploaded[flag]|mime_in[flag,image/png,image/jpg,image/jpeg]|max_size[flag,2048]',
-            
-            
-            
+
         ];
 
         if (! $this->validate($rules)) {
@@ -43,12 +38,11 @@ class create_postController extends BaseController
         }
 
         $createpostModel = new create_postModel();
-       
-      
 
-       
+        
+
+            
         $data = [
-
             
             'title' => $this->request->getPost('title'),
             'URI' => $this->request->getPost('uri'),
@@ -62,36 +56,24 @@ class create_postController extends BaseController
             'source_link' => $this->request->getPost('source_link'),
             'tags' => $this->request->getPost('tags'),
             'photos' => $this->request->getfile('photos')->getName(),
-            
-            
+             
         ];
-        
 
         $createpostModel->insert($data);
 
-         $photos = $this->request->getFile('photos');
+
+        $photos = $this->request->getFile('photos');
         if ($photos->isValid() && !$photos->hasMoved()) {
          $photos->move(ROOTPATH . 'public/uploads');
         }
         $successMessage = "Thank you, your blog post has been updated successfully..";
 
-        $createpostModel = new add_categoryModel();
-        $data2 = $createpostModel->where('parents', 0)->findAll();
-        
-        $data = $createpostModel->findAll();
-       
-
-        return view('Admin_Template/create_post', [
-            'data' => $data,
-            'data2' => $data2,
-            
-            'successMessage' => $successMessage
-        ]);
-
-
-     
+        // session->setFlashData('success', $successMessage);
+        return redirect()->to('/create_post',);
 
     }
+
+
     public  function edit_posts($id)
     {
 
@@ -104,9 +86,10 @@ class create_postController extends BaseController
 
         return view('Admin_Template/edit_posts', ['data'=>$data,'data2'=>$data2,]);
     }
+
     
     public function update_posts($id)
-{
+    {
     $updatpostModel = new create_postModel();
 
     if ($this->request->getMethod() === 'put') {
@@ -119,12 +102,13 @@ class create_postController extends BaseController
         $media_type = $this->request->getPost('media_type');
         $media_artwork = $this->request->getPost('media_artwork');
         $category = $this->request->getPost('category');
+        $featured = $this->request->getPost('featured');
         $source = $this->request->getPost('source');
         $source_link = $this->request->getPost('source_link');
         $tags = $this->request->getPost('tags');
         $photos = $this->request->getPost('photos');
 
-        if ($title && $URI && $type && $content && $media_id && $media_type && $media_artwork && $category && $source && $source_link && $tags && $photos) {
+       
             $data = [
                 
                 'title' => $title,
@@ -135,26 +119,24 @@ class create_postController extends BaseController
                 'media_type' => $media_type,
                 'media_artwork' => $media_artwork,
                 'category' => $category,
+                'featured' => $featured,
                 'source' => $source,
                 'source_link' => $source_link,
                 'tags' => $tags,
                 'photos' => $photos,
             ];
-            print_r($data);
-            die ();
 
             $updatpostModel->update([$id], $data); 
 
-            
-        }
+        
     }
-    
+
     $data2 = $updatpostModel->where('category')->findAll();
     $data = $updatpostModel->find([$id]);
-    var_dump($data);
-
+    
     return view('Admin_Template/edit_posts', ['data' => $data,'data2' => $data2,]);
-}
+
+  }
 
 
 }

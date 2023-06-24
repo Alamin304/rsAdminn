@@ -42,7 +42,6 @@ class add_categoryController extends BaseController
             'parents' => $this->request->getPost('parent_id'),
             
         ];
-        
 
                  $addcatgModel->insert($data);
                 
@@ -62,11 +61,11 @@ class add_categoryController extends BaseController
             $updatcatgModel = new add_categoryModel();
 
             // $catmodel = new add_categoryModel();
-        $data2 = $updatcatgModel->where('parents', 0)->findAll();
-        print_r($data2);
+            $data2 = $updatcatgModel->where('parents', 0)->findAll();
+       
             // $data2 = $catmodel->where('parents', 0)->findAll();
             $data= $updatcatgModel->where('id', $id)->findAll();
-            print_r($data);
+            
             
 
             return view('Admin_Template/edit_categories', ['data'=>$data,'data2'=>$data2,]);
@@ -78,30 +77,42 @@ class add_categoryController extends BaseController
             
             $updatcatgModel = new add_categoryModel();
             if ($this->request->getMethod() === 'put') {
+                $categoryId = $this->request->getPost('categoryId');
                 $name = $this->request->getPost('name');
                 $URL = $this->request->getPost('uri');
                 $description = $this->request->getPost('description');
                 $order = $this->request->getPost('order');
                 $parents = $this->request->getPost('parent_id');
 
-                if ($name && $URL && $description && $order && $parents) {
-                    $data = [
-                        'name' => $name,
-                        'URL' => $URL,
-                        'description' => $description,
-                        'order' => $order,
-                        'parents' => 0,
-                    ];
+                $data = [
+                    'name' => $name,
+                    'URL' => $URL,
+                    'description' => $description,
+                    'order' => $order,
+                    'parents' => $parents,
+                ];
+
+                // if ($name && $URL && $description && $order && $parents) {
+                //     $data = [
+                //         'name' => $name,
+                //         'URL' => $URL,
+                //         'description' => $description,
+                //         'order' => $order,
+                //         'parents' => 0,
+                //     ];
                     
 
-                    $updatcatgModel->update([$id], $data); 
-                }
+                     
+                // }
+
+                $updatcatgModel->update($categoryId, $data);
             }
-              $data2 = $updatcatgModel->where('parents', 0)->findAll();
+            $data2 = $updatcatgModel->where('parents', 0)->findAll();
             $data = $updatcatgModel->find([$id]); 
-            var_dump($data);
+            // var_dump($data);
         
              return view('Admin_Template/edit_categories', ['data' => $data,'data2' => $data2]);
+            // return redirect()->to('/update_categories');
         }
         
 
