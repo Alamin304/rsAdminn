@@ -115,20 +115,34 @@
   <table class="table table-striped">
     <tbody>
 
-
-      <tr>
-            <td class="col-md-12">
-                <?php foreach ($data as $value): ?>
+ 
+    <tr>
+    <td class="col-md-12">
+        <ul>
+            <?php foreach ($data as $value): ?>
+                <li>
                     <i class="fa fa-square" style="color: #d3d323;"></i>
-                &nbsp;
+                    &nbsp;
                     <a href="<?php echo base_url('edit_tags/' . $value['id']); ?>" title="View this Tags">
                         <strong><?php echo $value['name']; ?></strong>
-                     </a>
-                     <span class="text-muted">(1 posts)</span>
-                    <br>
-                 <?php endforeach; ?>
-            </td>
-        </tr>
+                    </a>
+                    <?php 
+                        $tagCount = 0;
+                        foreach ($data2 as $row) {
+                            if ($row->tags == $value['id']) {
+                                $tagCount = $row->count;
+                                break;
+                            }
+                        }
+                    ?>
+                    <span class="text-muted">(<?= $tagCount ?> posts)</span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <br>
+        <span class="text-muted">Total Tags: <?= $totalCountTags ?></span>
+    </td>
+</tr>
 
 
                 

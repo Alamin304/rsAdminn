@@ -107,7 +107,7 @@
                 <main>
                 <div class="container-fluid">
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Create Category</h1>
+            <h1 class="page-header">Edit Category</h1>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
    <h1 class="page-header">Audio</h1>
    
@@ -187,7 +187,7 @@
       <?php foreach($data1 as $value1){ ?>
         
                 <div class="col-md-7">
-                <h3>Posts (1)</h3>
+                <!-- <h3>Posts (1)</h3> -->
                 <div class="table-responsive">
                 <table class="table table-striped">
                 <tbody>

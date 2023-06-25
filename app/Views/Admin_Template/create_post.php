@@ -238,12 +238,12 @@
                         <option>--Select one--</option>
                     <?php foreach ($data as $value): ?>
                         <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                     </select>
                     </div>
                 </div>
 
-                <div class="form-group hidden">
+                <!-- <div class="form-group hidden">
                     <label for="featured" class="col-md-3 control-label">Featured</label>
 
                     <div class="col-md-7">
@@ -255,7 +255,7 @@
                             <option value="low_right">Low Right</option>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label for="source" class="col-md-3 control-label">Source</label>
@@ -278,8 +278,12 @@
                 <div class="form-group">
                     <label for="tags" class="col-md-3 control-label">Tags</label>
                     <div class="col-md-7">
-                        <input id="tags" type="text" class="form-control" name="tags" value="" />
-                        <span style="color:red;"><?= validation_show_error('tags') ?></span>
+                    <select id="tags" class="form-control" name="tags">
+                        <option>--Select one--</option>
+                    <?php foreach ($data1 as $value1): ?>
+                        <option value="<?php echo $value1['id']; ?>"><?php echo $value1['name']; ?></option>
+                        <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
 

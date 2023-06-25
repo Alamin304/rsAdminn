@@ -141,6 +141,7 @@
                         
                             
                         <?php foreach($data1 as $value1){ ?>
+                            <?php foreach($data2 as $value2){ ?>
                             <tr>
                             <td class="col-md-2">
                                 <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
@@ -149,7 +150,7 @@
                             </td>
                             <td class="col-md-10">
                            
-                            <a href=" <?php echo base_url('edit_categories/'.$value['id']);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value1->name; ?></a>
+                            <a href=" <?php echo base_url('edit_categories/'.$value1->id);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value1->name; ?></a>
 
                                 <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
 
@@ -160,21 +161,19 @@
 
                                 <small class="text-muted">
                                     Tags:
-                                    <a href="<?php echo base_url('edit_tags/' . $value['id']); ?>" class="tag" title="View posts with this tag"><?php echo '#' .$value['tags']; ?></a>
+                                    <a href="<?php echo base_url('edit_tags/' . $value2->id); ?>" class="tag" title="View posts with this tag"><?php echo '#' . $value2->name; ?></a>
                                     <br />
-
                                     <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>
                                     &middot; 2 views
                                 </small>
                                 
                             </td>
                         </tr>
-                        <?php }    
-                            
+                        <?php }     
+                        ?>
+                         <?php }     
                         ?>
                         <?php endforeach;?>
-                       
-                        
                     </tbody>
                 </table>
 

@@ -103,77 +103,99 @@
                     </div>
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
-                <main>
-                <div class="container-fluid">
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Edit Tags</h1>
-
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-   <h1 class="page-header">3D</h1>
-   <div class="row">
-      <div class="col-md-5">
-         <div class="flash-message">
-         </div>
-         <?php foreach ($data as $value): ?>
-            <form method="post" id="tags-update-form" action="<?php echo base_url('update_tags/').$value['id']?>" class="form-horizontal" enctype="multipart/form-data" role="form">
-            <input type="hidden" name="_token" value="">
-            <input type="hidden" name="_method" value="PUT">
-            <div class="form-group">
-               <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
-               <div class="col-md-6">
-                  <input type="text" id="name" class="form-control" name="name" autocomplete="off" value="<?= $value['name']?>" />
-               </div>
-            </div>
-            <div class="form-group">
-               <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
-               <div class="col-md-6">
-                  <input type="text" id="uri" class="form-control" name="uri" autocomplete="off" value="<?= $value['URL']?>" />
-               </div>
-            </div>
-            <div class="form-group">
-               <div class="col-md-6 col-md-offset-4">
-                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
-                  &nbsp;&nbsp;&nbsp;<a href="https://blog-demo.yumefave.com/admin/tags" class="text-muted">Cancel</a>
-                  <a href="#" class="btn btn-danger pull-right" onclick="event.preventDefault(); var r = confirm('Are you sure you would like to remove this tag?'); if (r == true) { document.getElementById('tag-remove-form').submit(); }"><i class="fa fa-times"></i> Remove</a>
-               </div>
-            </div>
-         </form>
-         <?php endforeach; ?>
-         <form id="tag-remove-form" action="https://blog-demo.yumefave.com/admin/tags/27" method="POST" class="hidden">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
-         </form>
-      </div>
-   </div>
-</div>
-</div>
-</div>
-                        
-
-
-                    </div>
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+      <div id="layoutSidenav_content">
+      <main>
+         <div class="container-fluid">
+         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+         <h1 class="page-header">Edit Tags</h1>
+         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">3D</h1>
+            <div class="row">
+               <div class="col-md-5">
+                  <div class="flash-message">
+                  </div>
+                  <?php foreach ($data as $value): ?>
+                  <form method="post" id="tags-update-form" action="<?php echo base_url('update_tags/').$value['id']?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+                     <input type="hidden" name="_token" value="">
+                     <input type="hidden" name="_method" value="PUT">
+                     <div class="form-group">
+                        <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
+                        <div class="col-md-6">
+                           <input type="text" id="name" class="form-control" name="name" autocomplete="off" value="<?= $value['name']?>" />
                         </div>
-                    </div>
-                </footer>
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
-        
-        
-        
-        
-    </body>
+                     </div>
+                     <div class="form-group">
+                        <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
+                        <div class="col-md-6">
+                           <input type="text" id="uri" class="form-control" name="uri" autocomplete="off" value="<?= $value['URL']?>" />
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                           <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                           &nbsp;&nbsp;&nbsp;<a href="https://blog-demo.yumefave.com/admin/tags" class="text-muted">Cancel</a>
+                           <a href="#" class="btn btn-danger pull-right" onclick="event.preventDefault(); var r = confirm('Are you sure you would like to remove this tag?'); if (r == true) { document.getElementById('tag-remove-form').submit(); }"><i class="fa fa-times"></i> Remove</a>
+                        </div>
+                     </div>
+                  </form>
+                  <?php endforeach; ?>
+                  <form id="tag-remove-form" action="https://blog-demo.yumefave.com/admin/tags/27" method="POST" class="hidden">
+                     <input type="hidden" name="_method" value="DELETE">
+                     <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
+                  </form>
+               </div>
+
+               <?php foreach($data1 as $value1){ ?>
+               <div class="col-md-7">
+                  <h3>Posts with this tag (1)</h3>
+                  <div class="table-responsive">
+                     <table class="table table-striped">
+                        <tbody>
+                           <tr>
+                              <td class="col-md-2">
+                                 <a href="https://blog-demo.yumefave.com/admin/posts/11" class="soundcloud">
+                                 <img src="<?php echo base_url('uploads/' .$value1->photos); ?>" class="thumbnail" width="200px" />
+                                 </a>
+                              </td>
+                              <td class="col-md-10">
+                                 <a href="https://blog-demo.yumefave.com/admin/posts/12" title="Edit this post">
+                                    <h3><?php echo $value1->title; ?></h3>
+                                 </a>
+                                 <p><?php echo $value1->content; ?><br></p>
+                                 <hr class="text-muted" />
+                                 <small class="text-muted">
+                                 <?php echo $value1->type; ?>
+                                 &middot; Admin &middot; <span title="Aug 04, 2017 7:52 am">5 years ago</span>
+                                 </small>
+                                 <a href="https://blog-demo.yumefave.com/admin/posts/12" class="btn btn-info btn-xs pull-right" title="Edit this post"><i class="fa fa-pencil"></i> Edit</a>
+                              </td>
+                           </tr>
+                           <?php }    
+                              ?>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               </div>
+      </div>
+      </main>
+    
+      <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+      <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
+
+
+      
+            <script> 
+                    $('#name').keyup(function(){
+
+            var abc = $(this).val();
+            console.log(abc)
+                        $('#uri').val(abc);
+                        // $('#uriview').html(abc);
+            });
+            </script>
+
+      
+   </body>
 </html>

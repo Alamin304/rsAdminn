@@ -161,20 +161,28 @@
     <tbody>
 
 
-            <tr>
-            <td class="col-md-12">
-                <?php foreach ($data as $value): ?>
-                    <i class="fa fa-square" style="color: #d3d323;"></i>
-                &nbsp;
-                <a href="<?php echo base_url('edit_categories/' . $value['id']); ?>" title="View this category">
-                        <strong><?php echo $value['name']; ?><br></strong>
-                     </a>
-                     <span class="text-muted">(7 posts)</span>
-                        <br>
-                    <?php endforeach; ?>
-                </td>
-            </tr>
-
+    <?php foreach ($data as $value): ?>
+    <tr>
+        <td class="col-md-12">
+            <i class="fa fa-square" style="color: #d3d323;"></i>
+            &nbsp;
+            <a href="<?php echo base_url('edit_categories/' . $value['id']); ?>" title="View this category">
+                <strong><?php echo $value['name']; ?></strong>
+            </a>
+            <?php
+            $postCount = 0; 
+            foreach ($data2 as $row) {
+                if ($row->category == $value['id']) {
+                    $postCount = $row->count;
+                    break;
+                }
+            }
+            ?>
+            <span class="text-muted">Posts (<?= $postCount ?>)</span>
+            <br>
+        </td>
+    </tr>
+<?php endforeach; ?>
             
 
                 

@@ -7,19 +7,23 @@ use CodeIgniter\Database\Database;
 class tagsController extends BaseController
 {
     public function tags()
-    {
-
-
-        $tagmodel = new add_tagsModel();
-
-        $data = $tagmodel->findAll();
+{
+    $tagmodel = new add_tagsModel();
+    $data = $tagmodel->findAll();
  
-         $db = db_connect();
-         $totalCounttags = $db->table('tags')->countAll();
-         $totalCountname = $db->table('tags')->where('name', '!=', '')->countAll();
+    $db = db_connect();
+    $totalCountTags = $db->table('tags')->countAll();
  
-         return view('Admin_Template/tags',['data'=>$data,'totalCounttags' => $totalCounttags,
-         'totalCountname' => $totalCountname]);
-        return view('Admin_Template/tags');
-    }
+    $query = 'SELECT tags, COUNT(tags) AS count FROM posts
+              LEFT JOIN tags ON posts.tags = tags.id
+              GROUP BY tags';
+    $result = $db->query($query);
+    $data2 = $result->getResult();
+ 
+    return view('Admin_Template/tags', [
+        'data' => $data,
+        'totalCountTags' => $totalCountTags,
+        'data2' => $data2
+    ]);
+}
 }

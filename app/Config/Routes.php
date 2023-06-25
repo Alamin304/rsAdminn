@@ -31,6 +31,10 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->get('/userhome','UserController::userhome');
+
+
+
 $routes->get('/categories', 'CategoriesController::categories');
 $routes->get('/add_categories', 'add_categoryController::add_categories');
 $routes->post('/insertData', 'add_categoryController::category_insertData');

@@ -3,10 +3,12 @@
 namespace App\Controllers;
 use App\Models\add_tagsModel;
 
+
 class add_tagsController extends BaseController
 {
     public function add_tags()
     {
+        
         return view('Admin_Template/add_tags');
     }
 
@@ -53,15 +55,22 @@ class add_tagsController extends BaseController
     public  function edit_tags($id)
     {
 
-
+        $db = \Config\Database::connect();
         $updattagModel = new add_tagsModel();
-            
         $data= $updattagModel->where('id', $id)->findAll();
-                    // echo "<pre>";
+
+         $query = 'SELECT * FROM tags
+            LEFT JOIN posts ON tags.id = posts.tags
+            WHERE tags.id = ' . $id;
+
+       $res = db_connect()->query($query)->getResult();
+       $data1 = $res;
+                            // echo "<pre>";
                     // var_dump($data);
                     // die();
-        return view('Admin_Template/edit_tags',['data'=>$data,]);
+        return view('Admin_Template/edit_tags',['data'=>$data,'data1'=>$data1,]);
     }
+
 
     public function update_tags($id)
     {

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\create_postModel;
 use App\Models\add_categoryModel;
+use App\Models\add_tagsModel;
 
 class create_postController extends BaseController
 {
@@ -10,9 +11,12 @@ class create_postController extends BaseController
     {
         $catmodel = new add_categoryModel();
         $data = $catmodel->where('parents', 0)->findAll();
+
+        $tagsmodel = new add_tagsModel();
+        $data1 = $tagsmodel->findAll();
        
         // return view('Admin_Template/add_category',['data'=>$data]);
-        return view('Admin_Template/create_post',['data'=>$data]);
+        return view('Admin_Template/create_post',['data'=>$data,'data1'=>$data1]);
     }
 
     public function post_insertData ()
@@ -34,13 +38,10 @@ class create_postController extends BaseController
         ];
 
         if (! $this->validate($rules)) {
-            return view('Admin_Template/create_post',['data'=>$data]);
+            return redirect()->to('/create_post',);
         }
 
         $createpostModel = new create_postModel();
-
-        
-
             
         $data = [
             
@@ -60,7 +61,6 @@ class create_postController extends BaseController
         ];
 
         $createpostModel->insert($data);
-
 
         $photos = $this->request->getFile('photos');
         if ($photos->isValid() && !$photos->hasMoved()) {
