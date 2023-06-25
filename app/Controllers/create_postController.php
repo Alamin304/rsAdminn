@@ -94,7 +94,7 @@ class create_postController extends BaseController
 
     if ($this->request->getMethod() === 'put') {
     
-       echo $title = $this->request->getPost('title');
+        $title = $this->request->getPost('title');
         $URI = $this->request->getPost('uri');
         $type = $this->request->getPost('type');
         $content = $this->request->getPost('content');
@@ -106,7 +106,7 @@ class create_postController extends BaseController
         $source = $this->request->getPost('source');
         $source_link = $this->request->getPost('source_link');
         $tags = $this->request->getPost('tags');
-        $photos = $this->request->getPost('photos');
+        $photos = $this->request->getfile('photos')->getName();
 
        
             $data = [

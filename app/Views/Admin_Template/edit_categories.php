@@ -183,49 +183,44 @@
             <input type="hidden" name="_token" value="YCE9guiJrStubuy7918LRylUj9NXwrEbmDNYBLc8">
          </form>
       </div>
+
+      <?php foreach($data1 as $value1){ ?>
+        
                 <div class="col-md-7">
-                <h3>Posts (4)</h3>
+                <h3>Posts (1)</h3>
                 <div class="table-responsive">
                 <table class="table table-striped">
                 <tbody>
                 <tr>
                     <td class="col-md-2">
                         <a href="https://blog-demo.yumefave.com/admin/posts/11" class="soundcloud">
-                        <img src="https://i1.sndcdn.com/artworks-000218248773-hbas13-t500x500.jpg" class="thumbnail" width="200px" />
+                        <img src="<?php echo base_url('uploads/' .$value1->photos); ?>" class="thumbnail" width="200px" />
                         </a>
                     </td>
                     <td class="col-md-10">
                         <a href="https://blog-demo.yumefave.com/admin/posts/11" title="Edit this post">
-                            <h3>Có Đôi Lần</h3>
+                            <h3><?php echo $value1->title; ?></h3>
                         </a>
-                        <p>Composer: Đức Trí</p>
-                        <p>Performer: Phạm Hoài Nam</p>
+                        <p>Composer: <?php echo $value1->content; ?></p>
+                        <p><?php echo '#' .$value1->tags; ?></p>
                         <hr class="text-muted" />
                         <small class="text-muted">
-                        News Article
-                        &middot; Admin &middot; <span title="Aug 04, 2017 7:37 am">5 years ago</span>
+                        <?php echo $value1->type; ?>
+                        &middot; Admin &middot; <span title="Aug 04, 2017 7:37 am">1 years ago</span>
                         </small>
                         <a href="https://blog-demo.yumefave.com/admin/posts/11" class="btn btn-info btn-xs pull-right" title="Edit this post"><i class="fa fa-pencil"></i> Edit</a>
                     </td>
                 </tr>
+                <?php }    
+                            
+                 ?>
    </div>
 </div>
 </div>
 </div>
 
 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>

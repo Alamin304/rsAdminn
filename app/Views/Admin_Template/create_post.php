@@ -277,7 +277,6 @@
 
                 <div class="form-group">
                     <label for="tags" class="col-md-3 control-label">Tags</label>
-
                     <div class="col-md-7">
                         <input id="tags" type="text" class="form-control" name="tags" value="" />
                         <span style="color:red;"><?= validation_show_error('tags') ?></span>

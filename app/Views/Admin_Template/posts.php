@@ -137,8 +137,11 @@
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tbody>
-                        <tr>
-                          <?php foreach ($data as $value): ?>
+                    <?php foreach ($data as $value): ?>
+                        
+                            
+                        <?php foreach($data1 as $value1){ ?>
+                            <tr>
                             <td class="col-md-2">
                                 <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
                                 <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
@@ -146,7 +149,7 @@
                             </td>
                             <td class="col-md-10">
                            
-                            <a href=" <?php echo base_url('edit_categories/'.$value['id']);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value['category']; ?></a>
+                            <a href=" <?php echo base_url('edit_categories/'.$value['id']);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value1->name; ?></a>
 
                                 <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
 
@@ -166,6 +169,9 @@
                                 
                             </td>
                         </tr>
+                        <?php }    
+                            
+                        ?>
                         <?php endforeach;?>
                        
                         

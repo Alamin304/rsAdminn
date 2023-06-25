@@ -58,17 +58,23 @@ class add_categoryController extends BaseController
 
         public function edit_categories($id)
         {
+            $db = \Config\Database::connect();
             $updatcatgModel = new add_categoryModel();
 
-            // $catmodel = new add_categoryModel();
+        
             $data2 = $updatcatgModel->where('parents', 0)->findAll();
-       
-            // $data2 = $catmodel->where('parents', 0)->findAll();
             $data= $updatcatgModel->where('id', $id)->findAll();
+
+            $query = 'SELECT * FROM categorys
+            LEFT JOIN posts ON categorys.id = posts.category
+            WHERE categorys.id = ' . $id;
+
+           $res = db_connect()->query($query)->getResult();
+           $data1 = $res;
             
             
 
-            return view('Admin_Template/edit_categories', ['data'=>$data,'data2'=>$data2,]);
+            return view('Admin_Template/edit_categories', ['data'=>$data,'data2'=>$data2,'data1'=>$data1,]);
         }
 
         
@@ -92,18 +98,6 @@ class add_categoryController extends BaseController
                     'parents' => $parents,
                 ];
 
-                // if ($name && $URL && $description && $order && $parents) {
-                //     $data = [
-                //         'name' => $name,
-                //         'URL' => $URL,
-                //         'description' => $description,
-                //         'order' => $order,
-                //         'parents' => 0,
-                //     ];
-                    
-
-                     
-                // }
 
                 $updatcatgModel->update($categoryId, $data);
             }

@@ -160,38 +160,22 @@
   <table class="table table-striped">
     <tbody>
 
-    
-
-      
 
             <tr>
             <td class="col-md-12">
-            
                 <?php foreach ($data as $value): ?>
                     <i class="fa fa-square" style="color: #d3d323;"></i>
                 &nbsp;
                 <a href="<?php echo base_url('edit_categories/' . $value['id']); ?>" title="View this category">
                         <strong><?php echo $value['name']; ?><br></strong>
-                        <span class="text-muted">(7 posts)</span>
                      </a>
+                     <span class="text-muted">(7 posts)</span>
                         <br>
                     <?php endforeach; ?>
                 </td>
             </tr>
 
-            <tr>
-            <td class="col-md-12">
-                <i class="fa fa-square" style="color: #4d90fe;"></i>
-                &nbsp;
-                <a
-                href="https://blog-demo.yumefave.com/admin/categories/2"
-                title="View this category"
-                >
-                <strong>Technology</strong>
-                </a>
-                <span class="text-muted">(7 posts)</span>
-            </td>
-            </tr>
+            
 
                 
                 
