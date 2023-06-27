@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>Rs Admin</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/');?>css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -117,11 +117,9 @@
 
     <div class="row">
         <div class="col-md-5">
-         <div class="flash-message"></div>
-         
-                                                        
+         <div class="flash-message"></div>                                   
 
-            <form method="POST" id="catgForm" action="<?php echo base_url('insertData') ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+            <form method="POST" id="catgForm" action=" " class="form-horizontal" enctype="multipart/form-data" role="form">
                 <input type="hidden" name="_token" value="dbDpnTylHfQoyf3GhOqOtfsZcb6gSOyS9V9i5t28">
 
                 <div class="form-group">
@@ -131,6 +129,7 @@
                         <input type="text" id="name" class="form-control" name="name" value=""/>
                         <!-- <span style="color:red;" id="nameErr"></span> -->
                         <span style="color:red;"><?= validation_show_error('name') ?></span>
+                        <span style="color:red;" id= "nameErr"></span>
                     </div>
                 </div>
 
@@ -140,6 +139,7 @@
                     <div class="col-md-6">
                         <input type="text" id="uri" class="form-control" name="uri" value="" />
                         <span style="color:red;"><?= validation_show_error('uri') ?></span>
+                        <span style="color:red;" id= "uriErr"></span>
                         <!-- <div id="uriview"> id </div> -->
 
                     </div>
@@ -151,6 +151,7 @@
                     <div class="col-md-6">
                         <textarea id="description" class="form-control" name="description" rows="5"></textarea>
                         <span style="color:red;"><?= validation_show_error('description') ?></span>
+                        <span style="color:red;" id= "desErr"></span>
                     </div>
                 </div>
 
@@ -160,6 +161,7 @@
                     <div class="col-md-6">
                         <input type="number" id="order" class="form-control" name="order" value=""  />
                         <span style="color:red;"><?= validation_show_error('order') ?></span>
+                        <span style="color:red;" id= "orderErr"></span>
                     </div>
 
                 </div>
@@ -177,6 +179,23 @@
                     </div>
                 </div>
 
+            <label for="select" class="col-md-4 control-label">Select Box</label>
+            <div class="col-md-6">
+            <select id="site" class="form-control" name="site">
+                <option value="">--Please choose--</option>
+                <option value="Google">Google</option>
+                <option value="Yahoo">Yahoo</option>
+                <option value="Amazon">Amazon</option>
+                 <option value="oth">Others</option>
+            </select>
+            <div class="col-md-6">
+            <input type="text" value ="" name="othersField" id="otherField" style="display: none;" placeholder="writte.." />
+            </div>
+            </div>
+            
+
+                
+
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
                         <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
@@ -185,16 +204,13 @@
                 </div>
             </form>
         </div>
-    </div>
+        </div>
+        </div>
         </div>
     </div>
-</div>
+    </div>
+    </main>
 
-                        
-
-
-                    </div>
-                </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
@@ -212,6 +228,54 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
+
+<script>
+   $(document).ready(function () {
+      $('#catgForm').submit(function (e) {
+         e.preventDefault();
+
+         var nameErr = $('#nameErr');
+         var uriErr = $('#uriErr');
+         var desErr = $('#desErr');
+         var orderErr = $('#orderErr');
+
+         $.ajax({
+            url: "<?php echo base_url('insertData') ?>",
+            type: "POST",
+            data: $('#catgForm').serialize(),
+            dataType: "json",
+            success: function (response) {
+               nameErr.text(response.name ? response.name.message : '');
+               uriErr.text(response.uri ? response.uri.message : '');
+               desErr.text(response.description ? response.description.message : '');
+               orderErr.text(response.order ? response.order.message : '');
+
+               if (response.success) {
+                  alert(response.success.message);
+               }
+            }
+         });
+      });
+   }); 
+</script>
+
+
+    <script>
+         $(document).ready(function() {
+         $('#site').change(function() {
+        var selectedOption = $(this).val();
+        var otherField = $('#otherField');
+        
+          if (selectedOption === 'oth') {
+          otherField.show();
+          } 
+          else {
+          otherField.hide();
+           }
+     });
+  });
+    </script>
+
         
         
         

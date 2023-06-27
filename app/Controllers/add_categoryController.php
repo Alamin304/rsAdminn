@@ -28,11 +28,31 @@ class add_categoryController extends BaseController
         ];
 
         if (! $this->validate($rules)) {
-            return view('Admin_Template/add_category',['data'=>$data]);
+
+            $response = [
+                'name' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a name',
+                ],
+                'uri' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a uri',
+                ],
+                'description' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a description',
+                ],
+                'order' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a order',
+                ]
+                
+            ];
+            return json_encode($response);
+            // return view('Admin_Template/add_category',['data'=>$data]);
         }
         
         $addcatgModel = new add_categoryModel();
-
         $data = [
 
             'name' => $this->request->getPost('name'),
@@ -40,14 +60,24 @@ class add_categoryController extends BaseController
             'description' => $this->request->getPost('description'),
             'order' => $this->request->getPost('order'),
             'parents' => $this->request->getPost('parent_id'),
+            'others' => $this->request->getPost('site')=== 'oth' ? $this->request->getPost('othersField') : $this->request->getPost('site'),
+            
             
         ];
 
                  $addcatgModel->insert($data);
                 
-                $successMessage = "Category has been created successfully.";
+                // $successMessage = "Category has been created successfully.";
                 $data = $addcatgModel->findAll();
                 $data = $addcatgModel->where('parents', 0)->findAll();
+
+                $response = [
+                    'success' => [
+                        'status' => 'ok',
+                        'message' => 'Data inserted successfully.',
+                    ],
+                ];
+                return json_encode($response);
 
                 return view('Admin_Template/add_category', [
                     'data' => $data,
