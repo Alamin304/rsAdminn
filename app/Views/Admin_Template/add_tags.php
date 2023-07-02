@@ -240,6 +240,7 @@
 
                      if (response.success) {
                      alert(response.success.message);
+                     $('#form')[0].reset();
                                }
                       }
                     });

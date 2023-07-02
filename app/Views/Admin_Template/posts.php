@@ -121,7 +121,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <form action="" method="get">
+                <form id="srcForm" action="" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search..." name="search" value="" style="width: 60%;" />
 
@@ -237,5 +237,31 @@
         <script src="<?php echo base_url('assets/');?>assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
+
+
+        <script>
+        $(document).ready(function() {
+            $('#srcform').submit(function(event) {
+                event.preventDefault();
+
+                var searchValue = $(this).serialize();
+                if(searchValue != null){
+                    $.ajax({
+                        url: '/search',
+                        type: 'GET',
+                        data: searchValue,
+                        success:function(response){
+                            if(response){
+                               
+                            }
+                        },
+                       
+                    })
+                }
+            });
+        });
+    </script>
+
+        
     </body>
 </html>

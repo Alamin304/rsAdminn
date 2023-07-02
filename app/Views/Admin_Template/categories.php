@@ -180,6 +180,18 @@
             ?>
             <span class="text-muted">Posts (<?= $postCount ?>)</span>
             <br>
+
+            <?php foreach ($data1 as $subcategory): ?>
+                    <?php if ($subcategory->parents == $value['id']): ?>
+                        <i class="fa fa-angle-right" style="margin-left: 10px;"></i>
+                        &nbsp;
+                        <a href="<?php echo base_url('edit_categories/' . $subcategory->id); ?>" title="View this subcategory">
+                            <strong><?php echo $subcategory->name; ?></strong>
+                        </a>
+                        <br>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                
         </td>
     </tr>
 <?php endforeach; ?>

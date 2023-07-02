@@ -252,6 +252,7 @@
 
                if (response.success) {
                   alert(response.success.message);
+                  $('#catgForm')[0].reset();
                }
             }
          });
@@ -276,9 +277,6 @@
   });
     </script>
 
-        
-        
-        
         <script> 
                             $('#name').keyup(function(){
 
