@@ -138,8 +138,6 @@
                 <table class="table table-striped">
                     <tbody>
                     <?php foreach ($data as $value): ?>
-                        
-                            
                         <?php foreach($data1 as $value1){ ?>
                             <?php foreach($data2 as $value2){ ?>
                             <tr>
@@ -149,16 +147,10 @@
                                 </a>
                             </td>
                             <td class="col-md-10">
-                           
                             <a href=" <?php echo base_url('edit_categories/'.$value1->id);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value1->name; ?></a>
-
-                                <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
-
+                            <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
                                 <p><?php echo $value['content']; ?></p>
-                                
-
                                 <hr class="text-muted" />
-
                                 <small class="text-muted">
                                     Tags:
                                     <a href="<?php echo base_url('edit_tags/' . $value2->id); ?>" class="tag" title="View posts with this tag"><?php echo '#' . $value2->name; ?></a>
@@ -176,9 +168,10 @@
                         <?php endforeach;?>
                     </tbody>
                 </table>
+                </div>
 
             <?php if ($pager) : ?>
-                <div class="pagination">
+                <div id ="pagination" class="pagination">
                  <?= $pager->links() ?>
                 </div>
             <?php endif; ?>

@@ -96,23 +96,45 @@ class add_tagsController extends BaseController
     {
         
         $updattagModel = new add_tagsModel();
-        if ($this->request->getMethod() === 'put') {
-            $name = $this->request->getPost('name');
-            $URL = $this->request->getPost('uri');
-        
-            if ($name && $URL) {
-                $data = [
-                    'name' => $name,
-                    'URL' => $URL,
+
+        $data= $updattagModel->where('id', $id)->findAll();
+
+        $query = 'SELECT * FROM tags
+           LEFT JOIN posts ON tags.id = posts.tags
+           WHERE tags.id = ' . $id;
+
+      $res = db_connect()->query($query)->getResult();
+      $data1 = $res;
+
+      if ($this->request->getMethod() === 'put') {
+        $name = $this->request->getPost('name');
+        $URL = $this->request->getPost('uri');
+        $checkbox = $this->request->getPost('checkbox');
+        $checkbox = isset($checkbox) ? 1 : 0;
+
+        if ($name && $URL) {
+            $data = [
+                'name' => $name,
+                'URL' => $URL,
+                'future' => $checkbox,
+            ];
+            
+                $updattagModel->update([$id], $data); 
+                
+                $response = [
+                    'success' => true,
+                    'message' => 'tags updated successfully.'
                 ];
-        
-                $updattagModel->update([$id], $data); // Wrap $id in an array
+
+                return $this->response->setJSON($response);
+
             }
+        
         }
         
-        $data = $updattagModel->find([$id]); // Wrap $id in an array
-        var_dump($data);
+        $data = $updattagModel->find([$id]); 
+        // var_dump($data);
     
-          return view('Admin_Template/edit_tags',['data'=>$data]);
+          return view('Admin_Template/edit_tags',['data'=>$data,'data1'=>$data1,]);
     }
 }

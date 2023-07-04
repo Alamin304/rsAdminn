@@ -116,7 +116,7 @@
          <div class="flash-message">
          </div>
          <?php foreach ($data as $value): ?>
-       <form method="post" id="categories-update-form" action="<?php echo base_url('update_categories/'.$value['id']) ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+       <form method="post" id="catupdateform" action="" class="form-horizontal" enctype="multipart/form-data" role="form">
             <input type="hidden" name="_token" value="'">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" value="<?= $value['id'] ?>" name="categoryId">
@@ -167,6 +167,20 @@
                         <?php endforeach; ?>
                     </select>   
                </div>
+            </div>
+
+            <label for="select" class="col-md-4 control-label">Select Box</label>
+            <div class="col-md-6">
+            <select id="site" class="form-control" name="site">
+                <option value="">--Please choose--</option>
+                <option value="Google">Google</option>
+                <option value="Yahoo">Yahoo</option>
+                <option value="Amazon">Amazon</option>
+                 <option value="oth">Others</option>
+            </select>
+            <div class="col-md-6">
+            <input type="text" value ="" name="othersField" id="otherField" style="display: none;" placeholder="writte.." />
+            </div>
             </div>
             
             <div class="form-group">
@@ -226,6 +240,54 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
+
+<script>
+   $(document).ready(function () {
+      $('#catupdateform').submit(function (e) {
+         e.preventDefault();
+
+        //  var nameErr = $('#nameErr');
+        //  var uriErr = $('#uriErr');
+        //  var desErr = $('#desErr');
+        //  var orderErr = $('#orderErr');
+
+         $.ajax({
+            url: "<?php echo base_url('update_categories/'.$value['id']) ?>",
+            type: "POST",
+            data: $('#catupdateform').serialize(),
+            dataType: "json",
+            success: function (response) {
+            //    nameErr.text(response.name ? response.name.message : '');
+            //    uriErr.text(response.uri ? response.uri.message : '');
+            //    desErr.text(response.description ? response.description.message : '');
+            //    orderErr.text(response.order ? response.order.message : '');
+
+               if (response.success) {
+                  alert(response.message);
+                  
+               }
+            }
+         });
+      });
+   }); 
+</script>
+
+
+        <script>
+         $(document).ready(function() {
+         $('#site').change(function() {
+        var selectedOption = $(this).val();
+        var otherField = $('#otherField');
+        
+          if (selectedOption === 'oth') {
+          otherField.show();
+          } 
+          else {
+          otherField.hide();
+           }
+     });
+  });
+    </script>
         
         
         

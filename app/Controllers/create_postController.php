@@ -20,99 +20,107 @@ class create_postController extends BaseController
     }
 
     public function post_insertData()
-{
-    $validation = \Config\Services::validation();
-
-    $rules = [
-        'title' => 'required',
-        'uri' => 'required',
-        'content' => 'required',
-        'media_id' => 'required',
-        // 'media_type' => 'required',
-        'source' => 'required',
-        'source_link' => 'required',
-        // 'tags' => 'required',
-        'photos' => 'uploaded[flag]|mime_in[flag,image/png,image/jpg,image/jpeg]|max_size[flag,2048]',
-    ];
-
-    if (!$this->validate($rules)) {
-
+    {
+        $validation = \Config\Services::validation();
+    
+        $rules = [
+            'title' => 'required',
+            'uri' => 'required',
+            'content' => 'required',
+            'media_id' => 'required',
+            'media_type' => 'required',
+            'source' => 'required',
+            'source_link' => 'required',
+            'tags' => 'required',
+            // 'photos' => 'uploaded[flag]|mime_in[flag,image/png,image/jpg,image/jpeg]|max_size[flag,2048]',
+        ];
+    
         if (!$this->validate($rules)) {
-            $response = [
-                'title' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('title'),
-                ],
-                'uri' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('uri'),
-                ],
-                'content' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('content'),
-                ],
-                'media_id' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('media_id'),
-                ],
-                // 'media_type' => [
-                //     'status' => 'required',
-                //     'message' => $validation->getError('media_type'),
-                // ],
-                'source' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('source'),
-                ],
-                'source_link' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('source_link'),
-                ],
-                // 'tags' => [
-                //     'status' => 'required',
-                //     'message' => $validation->getError('tags'),
-                // ],
-                'photos' => [
-                    'status' => 'required',
-                    'message' => $validation->getError('photos'),
-                ]
-            ];
     
-            return json_encode($response);
+            if (!$this->validate($rules)) {
+                $response = [
+                    'title' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('title'),
+                    ],
+                    'uri' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('uri'),
+                    ],
+                    'content' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('content'),
+                    ],
+                    'media_id' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('media_id'),
+                    ],
+                    // 'media_type' => [
+                    //     'status' => 'required',
+                    //     'message' => $validation->getError('media_type'),
+                    // ],
+                    'source' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('source'),
+                    ],
+                    'source_link' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('source_link'),
+                    ],
+                    'tags' => [
+                        'status' => 'required',
+                        'message' => $validation->getError('tags'),
+                    ],
+                    // 'photos' => [
+                    //     'status' => 'required',
+                    //     'message' => $validation->getError('photos'),
+                    // ]
+                ];
+    
+                return json_encode($response);
+            }
+    
+    
+            return redirect()->to('/create_post')->withInput()->with('errors', $validation->getErrors());
         }
-
-        
-        return redirect()->to('/create_post')->withInput()->with('errors', $validation->getErrors());
-    }
-
-    $createpostModel = new create_postModel();
     
-    $data = [
-        'title' => $this->request->getPost('title'),
-        'URI' => $this->request->getPost('uri'),
-        'type' => $this->request->getPost('type'),
-        'content' => $this->request->getPost('content'),
-        'media_id' => $this->request->getPost('media_id'),
-        'media_type' => $this->request->getPost('media_type'),
-        'media_artwork' => $this->request->getPost('media_artwork'),
-        'category' => $this->request->getPost('category'),
-        'source' => $this->request->getPost('source'),
-        'source_link' => $this->request->getPost('source_link'),
-        'tags' => $this->request->getPost('tags'),
-        'photos' => $this->request->getFile('photos')->getName(),
-    ];
+        $createpostModel = new create_postModel();
+    
+        $data = [
+            'title' => $this->request->getPost('title'),
+            'URI' => $this->request->getPost('uri'),
+            'type' => $this->request->getPost('type'),
+            'content' => $this->request->getPost('content'),
+            'media_id' => $this->request->getPost('media_id'),
+            'media_type' => $this->request->getPost('media_type'),
+            'media_artwork' => $this->request->getPost('media_artwork'),
+            'category' => $this->request->getPost('category'),
+            'source' => $this->request->getPost('source'),
+            'source_link' => $this->request->getPost('source_link'),
+            'tags' => $this->request->getPost('tags'),
+            'photos' => $this->request->getFile('photos')->getName(),
+        ];
+    
+        $createpostModel->insert($data);
 
-    $createpostModel->insert($data);
+        $response = [
+            'success' => true,
+            'message' => 'Post updated successfully.'
+        ];
 
-    $photos = $this->request->getFile('photos');
-    if ($photos->isValid() && !$photos->hasMoved()) {
-        $photos->move(ROOTPATH . 'public/uploads');
+        return $this->response->setJSON($response);
+
+    
+        $photos = $this->request->getFile('photos');
+        if ($photos->isValid() && !$photos->hasMoved()) {
+            $photos->move(ROOTPATH . 'public/uploads');
+        }
+    
+        $successMessage = "Thank you, your blog post has been updated successfully.";
+    
+        return redirect()->to('/create_post')->with('successMessage', $successMessage);
     }
     
-    $successMessage = "Thank you, your blog post has been updated successfully.";
-
-    return redirect()->to('/create_post')->with('successMessage', $successMessage);
-}
-
 
     public  function edit_posts($id)
     {
@@ -121,10 +129,13 @@ class create_postController extends BaseController
         $data= $updatpostModel->where('id', $id)->findAll();
 
         $updatpostModel = new add_categoryModel();
-        $data2 = $updatpostModel ->where('parents', 0)->findAll();   
+        $data2 = $updatpostModel ->where('parents', 0)->findAll();  
+        
+        $tagsmodel = new add_tagsModel();
+        $data1 = $tagsmodel->findAll();
         
 
-        return view('Admin_Template/edit_posts', ['data'=>$data,'data2'=>$data2,]);
+        return view('Admin_Template/edit_posts', ['data'=>$data,'data2'=>$data2,'data1'=>$data1,]);
     }
 
     
@@ -167,6 +178,13 @@ class create_postController extends BaseController
             ];
 
             $updatpostModel->update([$id], $data); 
+
+            $response = [
+                'success' => true,
+                'message' => 'Post updated successfully.'
+            ];
+    
+            return $this->response->setJSON($response);
 
         
     }

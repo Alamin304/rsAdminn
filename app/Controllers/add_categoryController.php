@@ -112,6 +112,15 @@ class add_categoryController extends BaseController
         {
             
             $updatcatgModel = new add_categoryModel();
+
+
+            $query = 'SELECT * FROM categorys
+            LEFT JOIN posts ON categorys.id = posts.category
+            WHERE categorys.id = ' . $id;
+
+           $res = db_connect()->query($query)->getResult();
+           $data1 = $res;
+
             if ($this->request->getMethod() === 'put') {
                 $categoryId = $this->request->getPost('categoryId');
                 $name = $this->request->getPost('name');
@@ -119,6 +128,7 @@ class add_categoryController extends BaseController
                 $description = $this->request->getPost('description');
                 $order = $this->request->getPost('order');
                 $parents = $this->request->getPost('parent_id');
+                $others = $this->request->getPost('site');
 
                 $data = [
                     'name' => $name,
@@ -126,16 +136,25 @@ class add_categoryController extends BaseController
                     'description' => $description,
                     'order' => $order,
                     'parents' => $parents,
+                    'others' => $others,
                 ];
 
 
                 $updatcatgModel->update($categoryId, $data);
+
+                $response = [
+                    'success' => true,
+                    'message' => 'Data updated successfully.'
+                ];
+
+                return $this->response->setJSON($response);
+
             }
             $data2 = $updatcatgModel->where('parents', 0)->findAll();
             $data = $updatcatgModel->find([$id]); 
             // var_dump($data);
         
-             return view('Admin_Template/edit_categories', ['data' => $data,'data2' => $data2]);
+             return view('Admin_Template/edit_categories', ['data' => $data,'data2' => $data2,'data1'=>$data1,]);
             // return redirect()->to('/update_categories');
         }
         

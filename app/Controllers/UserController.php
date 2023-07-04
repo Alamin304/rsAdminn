@@ -61,4 +61,31 @@ $db = \Config\Database::connect();
         
         // return view('User_Side/userhome');
     }
+
+
+    public function readmore(){
+
+        $postmodel = new create_postModel();
+       
+
+        $search = $this->request->getGet('search');
+
+        if ($search) {
+            $data = $postmodel->like('title', $search)->findAll();
+            $totalCount = count($data);
+            $pager = null;
+        } else {
+            $perPage = 3;
+            $data = $postmodel->paginate($perPage);
+            $pager = $postmodel->pager;
+            $totalCount = $postmodel->pager->getTotal();
+        }
+        $data = $postmodel->findAll();
+
+        return view('User_Side/readmore_content',[
+            'data' => $data,
+            'pager' => $pager,
+            'totalCount' => $totalCount,
+        ]);
+    }
 }

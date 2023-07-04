@@ -120,7 +120,7 @@
          <div class="flash-message">
          </div>
          <?php foreach ($data as $value): ?>
-         <form method="post" id="posts-update-form" action="<?php echo base_url('update_posts/').$value['id']?> " class="form-horizontal" enctype="multipart/form-data" role="form">
+         <form method="post" id="postsupdateform" action="" class="form-horizontal" enctype="multipart/form-data" role="form">
             <input type="hidden" name="_token" value=" ">
             <input type="hidden" name="_method" value="PUT">
             <div class="form-group">
@@ -240,7 +240,12 @@
             <div class="form-group">
                <label for="tags" class="col-md-3 control-label">Tags</label>
                <div class="col-md-7">
-                  <input id="tags" type="text" class="form-control" name="tags" value="<?= $value['tags']?>" />
+               <select id="tags" class="form-control" name="tags">
+               <option <?php if ($value['tags']) echo "selected"; ?>>--select one--</option>
+                        <?php foreach ($data1 as $value1): ?>
+                            <option value="<?php echo $value1['id']; ?>"><?php echo $value1['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select> 
                </div>
             </div>
             <div class="form-group">
@@ -293,6 +298,33 @@
         <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
          <!-- Summernote JS - CDN Link -->
          <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+   <script>
+    $(document).ready(function() {
+        $('#postsupdateform').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "<?php echo base_url('update_posts/').$value['id']?> ",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: new FormData(this),
+                dataType: "json",
+
+               // success: function(response) {
+               // if (response.success) {
+               //    alert(response.success.message);
+               // }
+               // }
+            });
+        });
+    });
+</script>
+
+
+
+
          <script>
             $(document).ready(function() {
                   // $("#your_summernote").summernote();

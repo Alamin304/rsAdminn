@@ -8,5 +8,5 @@ class create_postModel extends Model
 {
     protected $table = 'posts'; 
     protected $primaryKey = 'id';
-    protected $allowedFields = ['title','URI','type','content','media_id','media_type','media_artwork','category','featured','source','source_link','tags','photos','categories_id']; 
+    protected $allowedFields = ['title','URI','type','content','media_id','media_type','category','featured','source','source_link','tags','photos','categories_id']; 
 }

@@ -115,7 +115,7 @@
                   <div class="flash-message">
                   </div>
                   <?php foreach ($data as $value): ?>
-                  <form method="post" id="tags-update-form" action="<?php echo base_url('update_tags/').$value['id']?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+                  <form method="post" id="tagupdateform" action="" class="form-horizontal" enctype="multipart/form-data" role="form">
                      <input type="hidden" name="_token" value="">
                      <input type="hidden" name="_method" value="PUT">
                      <div class="form-group">
@@ -130,6 +130,15 @@
                            <input type="text" id="uri" class="form-control" name="uri" autocomplete="off" value="<?= $value['URL']?>" />
                         </div>
                      </div>
+
+                <div>
+                    <label for="" class="col-md-4 control-label">Check box</label>
+                    <div class="col-md-6">
+                        <input type="hidden" name="checkbox" value="1">
+                        <input type="checkbox" id="checkbox" name="checkbox" value="1" <?php echo $value['future'] == 1 ? 'checked' : ''; ?>>
+                    </div>
+                </div>
+                
                      <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
@@ -183,6 +192,35 @@
       <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
       <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
+
+
+      <script>
+                    $(document).ready(function() {
+                    $('#tagupdateform').submit(function(e) {e.preventDefault();
+                    // var nameErr = $('#nameErr');
+                    // var uriErr = $('#uriErr');
+                    // var checkboxErr = $('#checkboxErr');
+
+                  $.ajax({
+                     url: "<?php echo base_url('update_tags/').$value['id']?>",
+                     type: "POST",
+                     data: $('#tagupdateform').serialize(),
+                     dataType: "json",
+                     success: function(response)
+                      {
+                    //  nameErr.text(response.name ? response.name.message : '');
+                    //  uriErr.text(response.uri ? response.uri.message : '');
+                    //  checkboxErr.text(response.checkbox ? response.checkbox.message : '');
+
+                     if (response.success) {
+                     alert(response.message);
+                     
+                               }
+                      }
+                    });
+                 });
+             });
+            </script>
 
 
       

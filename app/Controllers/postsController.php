@@ -18,6 +18,8 @@
         $tagData = $tagsmodel->findAll();
 
         $postmodel = new create_postModel();
+        $data = $postmodel->findAll();
+        
         $search = $this->request->getGet('search');
 
         if ($search) {
@@ -33,21 +35,26 @@
 
         foreach($catData as $value){
             $id =  $value['id'];
+            // print_r($id);
             $query = 'SELECT * FROM categorys
             LEFT JOIN posts ON categorys.id = posts.category
             WHERE categorys.id = ' .$id;
             $result = $db->query($query);
             $data1 = $result->getResult();
+            // print_r($data1);
             
         }
 
         foreach($tagData as $value2){
                 $id =  $value2['id'];
+                // print_r($id);
                 $query = 'SELECT * FROM tags
                 LEFT JOIN posts ON tags.id = posts.tags
                 WHERE tags.id = ' . $id;
                 $result = $db->query($query);
                 $data2 = $result->getResult();
+                // print_r($data2);
+               
             }
 
         return view('Admin_Template/posts', [

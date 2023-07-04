@@ -117,22 +117,23 @@
                   </ol>
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                      <h1 class="page-header">Create Post</h1>
+
                      <?php if (isset($successMessage)) : ?>
                      <div class="alert alert-success">
                         <?= $successMessage ?>
                      </div>
-
                      <?php endif; ?>
+
                      <div class="row">
                         <div class="col-md-12">
                            <div class="flash-message"></div>
-                           <form method="POST" id="postsform" action="<?php echo base_url('postinsertData') ?>" class="form-horizontal" enctype="multipart/form-data" role="form">
+                           <form method="POST" id="postsform" action="" class="form-horizontal" enctype="multipart/form-data" role="form">
                               <input type="hidden" name="_token" value="" />
                               <div class="form-group">
                                  <label for="title" class="col-md-3 control-label">Title <span class="text-danger">*</span></label>
                                  <div class="col-md-7">
                                     <input id="title" type="text" class="form-control" name="title" value=""  />
-                                    <span style="color:red;"><?= validation_show_error('title') ?></span>
+                                   
                                     <span style="color:red;" id= "titleErr"></span>
                                  </div>
                               </div>
@@ -140,7 +141,7 @@
                                  <label for="uri" class="col-md-3 control-label">URI <span class="text-danger">*</span></label>
                                  <div class="col-md-7">
                                     <input id="uri" type="text" class="form-control" name="uri" value=""  />
-                                    <span style="color:red;"><?= validation_show_error('uri') ?></span>
+                                    
                                     <span style="color:red;" id= "uriErr"></span>
                                  </div>
                               </div>
@@ -180,7 +181,7 @@
                                  <label for="content" class="col-md-3 control-label">Content</label>
                                  <div class="col-md-7">
                                     <textarea id="summernote" class="form-control" name="content" rows="5"></textarea>
-                                    <span style="color:red;"><?= validation_show_error('content') ?></span>
+                                    
                                     <span style="color:red;" id= "contentErr"></span>
                                     <!-- <textarea id="content" class="form-control summernote" name="content" rows="5"></textarea> -->
                                  </div>
@@ -189,7 +190,7 @@
                                  <label for="media-id" class="col-md-3 control-label">Media ID</label>
                                  <div class="col-md-7">
                                     <input id="media-id" type="text" class="form-control" name="media_id" value="" />
-                                    <span style="color:red;"><?= validation_show_error('media_id') ?></span>
+                                   
                                     <span style="color:red;" id= "medidErr"></span>
                                  </div>
                               </div>
@@ -238,7 +239,7 @@
                                  <label for="source" class="col-md-3 control-label">Source</label>
                                  <div class="col-md-7">
                                     <input id="source" type="text" class="form-control" name="source" value="" />
-                                    <span style="color:red;"><?= validation_show_error('source') ?></span>
+                                    
                                     <span style="color:red;" id= "sourceErr"></span>
                                  </div>
                               </div>
@@ -246,7 +247,7 @@
                                  <label for="source-link" class="col-md-3 control-label">Source Link</label>
                                  <div class="col-md-7">
                                     <input id="source-link" type="text" class="form-control" name="source_link" value="" />
-                                    <span style="color:red;"><?= validation_show_error('source_link') ?></span>
+                                    
                                     <span style="color:red;" id= "slinkErr"></span>
                                  </div>
                               </div>
@@ -265,8 +266,7 @@
                                  <label for="photos" class="col-md-3 control-label">Photos</label>
                                  <div class="col-md-7">
                                     <input type="file" id="photos" name="photos" title="Upload" multiple />
-                                    <span style="color:red;"><?= validation_show_error('photos') ?></span>
-                                    <span style="color:red;" id= "photoErr"></span>
+                                    
                                  </div>
                               </div>
                               <div class="form-group">
@@ -301,43 +301,50 @@
       <!-- Summernote JS - CDN Link -->
       <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-      <script>
-         $(document).ready(function() {
-         $('#postsform').submit(function(e) {
-             e.preventDefault();
-         
-             var errorMessages = {
-             'title': $('#titleErr'),
-             'uri': $('#uriErr'),
-             'content': $('#contentErr'),
-             'media_id': $('#medidErr'),
-             'source': $('#sourceErr'),
-             'source_link': $('#slinkErr'),
-             'photos': $('#photoErr')
-             };
-        
-             $.ajax({
-             url: "<?php echo base_url('postinsertData') ?>",
-             type: "POST",
-             processData: false,
-             contentType: false,
-             data: new FormData(this),
-             dataType: "json",
-             success: function(response) {
-                 Object.values(errorMessages).forEach(function(element) {
-                 element.text('');
-                 });
-         
-                 for (var field in response) {
-                 if (response.hasOwnProperty(field)) {
-                     errorMessages[field].text(response[field].message);
-                 }
-                 }
-             }
-             });
-         });
-         });
-      </script>
+   <script>
+    $(document).ready(function() {
+        $('#postsform').submit(function(e) {
+            e.preventDefault();
+
+            var errorMessages = {
+                'title': $('#titleErr'),
+                'uri': $('#uriErr'),
+                'content': $('#contentErr'),
+                'media_id': $('#midErr'),
+                'media_type': $('#mtypeErr'),
+                'source': $('#sourceErr'),
+                'source_link': $('#slinkErr'),
+                'tags': $('#tagErr'),
+                'photos': $('#photoErr')
+            };
+
+            $.ajax({
+                url: "<?php echo base_url('postinsertData') ?>",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: new FormData(this),
+                dataType: "json",
+                success: function(response) {
+                    Object.values(errorMessages).forEach(function(element) {
+                        element.text('');
+                    });
+
+                    for (var field in response) {
+                        if (response.hasOwnProperty(field)) {
+                            errorMessages[field].text(response[field].message);
+                        }
+                    }
+
+                    if (response.success) {
+                        alert(response.success.message);
+                        $('#postsform')[0].reset();
+                    }
+                }
+            });
+        });
+    });
+</script>
 
       <script>
          $(document).ready(function() {

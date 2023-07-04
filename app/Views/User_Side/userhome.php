@@ -31,7 +31,7 @@
       <div class="blog-masthead">
          <div class="container">
             <nav class="blog-nav">
-               <a class="blog-nav-item active" href="https://blog-demo.yumefave.com/blog" title="Blog">Home</a>
+               <a class="blog-nav-item active" href="<?php echo base_url('userhome');?>" title="Blog">Home</a>
                <a href="https://blog-demo.yumefave.com/blog/about-us" class="blog-nav-item" title="About Us">About</a>
                <a href="https://blog-demo.yumefave.com/blog/contact-us" class="blog-nav-item" title="Contact Us">Contact</a>
             </nav>
@@ -45,35 +45,38 @@
    <div class="row">
       <div class="col-sm-8 blog-main">
 
-         
-         <?php foreach ($data as $value): ?>  
-            <?php foreach($data1 as $value1): ?>
-               <?php foreach($data2 as $value2): ?>
-                  
-                     <!-- /.blog-post -->
-                     <div class="blog-post">
-                         <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
-                           <figure>
-                           <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
-                           </figure>
-                        </a>
-                        <a href="https://blog-demo.yumefave.com/blog/p/the-water-8da70643497c" class="blog-post-title" title="View this blog post">
-                           <h3><?php echo $value['title']; ?></h3>
-                        </a>
-                        <p class="blog-post-meta">August 15, 2017 by Admin</p>
-                        <p class="blog-post-meta">
-                           <i class="fa fa-tags"></i> Tags:
-                           <a href="<?php echo base_url('edit_tags/' . $value2->id); ?>" class="tag" title="View posts with this tag"><?php echo '#' . $value2->name; ?></a>
-                        </p>
-                        <?php echo $value['content']; ?>
-                        <p>
-                           <a href="https://blog-demo.yumefave.com/blog/p/the-water-8da70643497c" title="View this blog post"><small>read more &raquo;</small></a>
-                        </p>
-                     </div>
-                   
+            <?php foreach ($data as $value): ?>  
+               <?php foreach($data1 as $value1): ?>
+                  <?php foreach($data2 as $value2): ?>
+                        <!-- /.blog-post -->
+                        <div class="blog-post">
+                           <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
+                              <figure>
+                                    <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
+                              </figure>
+                           </a>
+                           <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" class="blog-post-title" title="View this blog post">
+                              <h3><?php echo $value['title']; ?></h3>
+                           </a>
+                           <p class="blog-post-meta">August 15, 2017 by Admin</p>
+                           <p class="blog-post-meta">
+                              <i class="fa fa-tags"></i> Tags:
+                              <a href="<?php echo base_url('edit_tags/' . $value2->id); ?>" class="tag" title="View posts with this tag"><?php echo '#' . $value2->name; ?></a>
+                           </p>
+                           <?php echo $value['content']; ?>
+                           <p>
+                              <a href="<?php echo base_url('readmore_content/' . $value['id']); ?>" title="View this blog post"><small>read more &raquo;</small></a>
+                           </p>
+                        </div>
+                  <?php endforeach; ?>
                <?php endforeach; ?>
             <?php endforeach; ?>
-         <?php endforeach; ?>
+
+         <?php if ($pager) : ?>
+                <div id ="pagination" class="pagination">
+                 <?= $pager->links() ?>
+                </div>
+            <?php endif; ?>
 
          <nav>
             <!-- Add navigation elements here -->
@@ -121,5 +124,25 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
       <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
       <script src="/js/ie10-viewport-bug-workaround.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 
+        <script>
+            $(document).on('click', '.pagination a', function(e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            
+            $.ajax({
+               url: url,
+               type: 'GET',
+               dataType: 'json',
+               success: function(response) {
+                  $('#pagination').html(response.pagination);
+                  $('#data').html(response.data);
+               },
+              
+            });
+            });
+         </script> -->
+
    </body>
 </html>

@@ -32,6 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 $routes->get('/userhome','UserController::userhome');
+$routes->get('/readmore_content/(:any)','UserController::readmore/$1');
 
 
 
@@ -49,6 +50,7 @@ $routes->post('/postinsertData', 'create_postController::post_insertData');
 $routes->get('/edit_posts/(:any)', 'create_postController::edit_posts/$1');
 $routes->put('/update_posts/(:any)', 'create_postController::update_posts/$1');
 $routes->get('/search', 'postsController::posts');
+
 
 
 
