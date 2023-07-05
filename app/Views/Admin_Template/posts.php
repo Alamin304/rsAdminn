@@ -137,35 +137,37 @@
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tbody>
-                    <?php foreach ($data as $value): ?>
-                        <?php foreach($data1 as $value1){ ?>
-                            <?php foreach($data2 as $value2){ ?>
-                            <tr>
-                            <td class="col-md-2">
-                                <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
-                                <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
-                                </a>
-                            </td>
-                            <td class="col-md-10">
-                            <a href=" <?php echo base_url('edit_categories/'.$value1->id);?>" class="label label-default" style="background-color: #dce040;" title="View this category"><?php echo $value1->name; ?></a>
-                            <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
-                                <p><?php echo $value['content']; ?></p>
-                                <hr class="text-muted" />
-                                <small class="text-muted">
-                                    Tags:
-                                    <a href="<?php echo base_url('edit_tags/' . $value2->id); ?>" class="tag" title="View posts with this tag"><?php echo '#' . $value2->name; ?></a>
-                                    <br />
-                                    <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>
-                                    &middot; 2 views
-                                </small>
-                                
-                            </td>
-                        </tr>
-                        <?php }     
-                        ?>
-                         <?php }     
-                        ?>
-                        <?php endforeach;?>
+                        <?php foreach ($data as $value): ?>
+                            <?php echo '<pre>';
+                                print_r($data);
+                                die();?>
+
+                                    <tr>
+                                        <td class="col-md-2">
+                                            <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
+                                                <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
+                                            </a>
+                                        </td>
+                                        <td class="col-md-10">
+                                        <a href="<?php echo base_url('edit_categories/'.$value['category_into'][0]->id);?>" class="label label-default" style="background-color: #dce040;" title="View this category">
+                                            <img src="<?php echo base_url('catphotos/'. $value['category_photo'][0]['photos']); ?>" alt="Thumbnail" class="thumbnail">
+                                            <?php echo $value['category_into'][0]->name; ?>
+                                        </a>
+
+                                            <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
+                                            <p><?php echo $value['content']; ?></p>
+                                            <hr class="text-muted" />
+                                            <small class="text-muted">
+                                                Tags:
+                                                <a href="<?php echo base_url('edit_tags/'.$value['tag_into'][0]->id);?>" class="tag" title="View posts with this tag"><?php echo'#'.$value['tag_into'][0]->name; ?></a>
+                                                <br />
+                                                <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>
+                                                &middot; 2 views
+                                            </small>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                           
                     </tbody>
                 </table>
                 </div>
@@ -202,10 +204,6 @@
         </div>
     </div>
 </div>
-
-
-                        
-
 
                     </div>
                 </main>

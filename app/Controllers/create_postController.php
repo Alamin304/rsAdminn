@@ -9,14 +9,20 @@ class create_postController extends BaseController
 {
     public function create_post()
     {
+        $db = \Config\Database::connect();
+
         $catmodel = new add_categoryModel();
         $data = $catmodel->where('parents', 0)->findAll();
+
+        $subquery = 'SELECT * FROM categorys where parents>0';
+        $result1 = $db->query($subquery);
+        $subdata1 = $result1->getResult();
 
         $tagsmodel = new add_tagsModel();
         $data1 = $tagsmodel->findAll();
        
         // return view('Admin_Template/add_category',['data'=>$data]);
-        return view('Admin_Template/create_post',['data'=>$data,'data1'=>$data1]);
+        return view('Admin_Template/create_post',['data'=>$data,'data1'=>$data1,'subdata1' =>$subdata1,]);
     }
 
     public function post_insertData()

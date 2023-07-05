@@ -8,5 +8,5 @@ class add_categoryModel extends Model
 {
     protected $table = 'categorys'; 
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name','URL','description','order','parents','others',]; 
+    protected $allowedFields = ['name','URL','description','order','parents','others','photos',]; 
 }

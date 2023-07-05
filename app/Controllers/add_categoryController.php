@@ -61,9 +61,15 @@ class add_categoryController extends BaseController
             'order' => $this->request->getPost('order'),
             'parents' => $this->request->getPost('parent_id'),
             'others' => $this->request->getPost('site')=== 'oth' ? $this->request->getPost('othersField') : $this->request->getPost('site'),
+            'photos' => $this->request->getFile('photos')->getName(),
             
             
         ];
+
+        $photos = $this->request->getFile('photos');
+        if ($photos->isValid() && !$photos->hasMoved()) {
+            $photos->move(ROOTPATH . 'public/catphotos');
+        }
 
                  $addcatgModel->insert($data);
                 
@@ -129,6 +135,7 @@ class add_categoryController extends BaseController
                 $order = $this->request->getPost('order');
                 $parents = $this->request->getPost('parent_id');
                 $others = $this->request->getPost('site');
+                $photos = $this->request->getfile('photos')->getName();
 
                 $data = [
                     'name' => $name,
@@ -137,6 +144,7 @@ class add_categoryController extends BaseController
                     'order' => $order,
                     'parents' => $parents,
                     'others' => $others,
+                    'photos' => $photos,
                 ];
 
 

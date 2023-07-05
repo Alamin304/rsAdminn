@@ -118,6 +118,7 @@
                   <form method="post" id="tagupdateform" action="" class="form-horizontal" enctype="multipart/form-data" role="form">
                      <input type="hidden" name="_token" value="">
                      <input type="hidden" name="_method" value="PUT">
+                    
                      <div class="form-group">
                         <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
                         <div class="col-md-6">

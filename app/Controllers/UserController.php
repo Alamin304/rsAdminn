@@ -31,29 +31,27 @@ $db = \Config\Database::connect();
             $totalCount = $postmodel->pager->getTotal();
         }
 
-        foreach($catData as $value){
-            $id =  $value['id'];
-            $query = 'SELECT * FROM categorys
-            LEFT JOIN posts ON categorys.id = posts.category
-            WHERE categorys.id = ' .$id;
-            $result = $db->query($query);
-            $data1 = $result->getResult();
-            
+        $myData = [];
+
+        foreach ($data as $allvalue) {
+            $allvalue['category_into'] = $db->table('categorys')
+                ->where('id', $allvalue['category'])
+                ->get()
+                ->getResult();
+        
+            $allvalue['tag_into'] = $db->table('tags')
+                ->where('id', $allvalue['tags'])
+                ->get()
+                ->getResult();
+
+                $myData[]=$allvalue;
+                
         }
-
-        foreach($tagData as $value2){
-                $id =  $value2['id'];
-                $query = 'SELECT * FROM tags
-                LEFT JOIN posts ON tags.id = posts.tags
-                WHERE tags.id = ' . $id;
-                $result = $db->query($query);
-                $data2 = $result->getResult();
-            }
-
-            return view('User_Side/userhome', [
-            'data' => $data,
-            'data1' => $data1,
-            'data2' => $data2,
+// echo '<pre>';
+// print_r($myData);
+// die();
+        return view('User_Side/userhome', [
+            'data' => $myData,
             'pager' => $pager,
             'totalCount' => $totalCount,
         ]);

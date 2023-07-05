@@ -35,13 +35,11 @@ $routes->get('/userhome','UserController::userhome');
 $routes->get('/readmore_content/(:any)','UserController::readmore/$1');
 
 
-
 $routes->get('/categories', 'CategoriesController::categories');
 $routes->get('/add_categories', 'add_categoryController::add_categories');
 $routes->post('/insertData', 'add_categoryController::category_insertData');
 $routes->get('/edit_categories/(:any)', 'add_categoryController::edit_categories/$1');
 $routes->put('/update_categories/(:any)', 'add_categoryController::update_categories/$1');
-
 
 
 $routes->get('/posts', 'postsController::posts');
@@ -50,8 +48,6 @@ $routes->post('/postinsertData', 'create_postController::post_insertData');
 $routes->get('/edit_posts/(:any)', 'create_postController::edit_posts/$1');
 $routes->put('/update_posts/(:any)', 'create_postController::update_posts/$1');
 $routes->get('/search', 'postsController::posts');
-
-
 
 
 $routes->get('/tags', 'tagsController::tags');

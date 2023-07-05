@@ -10,8 +10,6 @@ class CategoriesController extends BaseController
     $db = \Config\Database::connect();
     $catmodel = new add_categoryModel();
     $data = $catmodel->where('parents', 0)->findAll();
-    
-
     $totalCountParents = count($data);
 
     $subquery = 'SELECT * FROM categorys where parents>0';
@@ -20,7 +18,7 @@ class CategoriesController extends BaseController
 
     $query = 'SELECT category, COUNT(category) AS count FROM posts
     LEFT JOIN categorys ON posts.category = categorys.id
-     GROUP BY category';
+    GROUP BY category';
     $result = $db->query($query);
     $data2 = $result->getResult();
 

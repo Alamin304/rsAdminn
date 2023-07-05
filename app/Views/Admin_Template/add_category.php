@@ -120,8 +120,8 @@
          <div class="flash-message"></div>                                   
 
             <form method="POST" id="catgForm" action=" " class="form-horizontal" enctype="multipart/form-data" role="form">
-                <input type="hidden" name="_token" value="dbDpnTylHfQoyf3GhOqOtfsZcb6gSOyS9V9i5t28">
 
+                <input type="hidden" name="_token" value="dbDpnTylHfQoyf3GhOqOtfsZcb6gSOyS9V9i5t28">
                 <div class="form-group">
                     <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
 
@@ -192,7 +192,13 @@
             <input type="text" value ="" name="othersField" id="otherField" style="display: none;" placeholder="writte.." />
             </div>
             </div>
-            
+
+            <div class="form-group">
+                    <label for="photos" class="col-md-3 control-label">Photos</label>
+                <div class="col-md-7">
+                    <input type="file" id="photos" name="photos" title="Upload" multiple />
+                </div>
+            </div>
 
                 
 
@@ -242,7 +248,10 @@
          $.ajax({
             url: "<?php echo base_url('insertData') ?>",
             type: "POST",
-            data: $('#catgForm').serialize(),
+            processData: false,
+            contentType: false,
+            data: new FormData(this),
+            // data: $('#catgForm').serialize(),
             dataType: "json",
             success: function (response) {
                nameErr.text(response.name ? response.name.message : '');

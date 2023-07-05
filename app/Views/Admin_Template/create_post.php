@@ -212,13 +212,18 @@
                                  </div>
                               </div> -->
                               <div class="form-group hidden">
-                                 <label for="category-id" class="col-md-3 control-label">Category <span class="text-danger">*</span></label>
+                                 <label for="category-id" class="col-md-3 control-label">Category <span class="text-danger"></span></label>
                                  <div class="col-md-7">
-                                    <select id="category" class="form-control" name="category">
-                                       <option>--Select one--</option>
-                                       <?php foreach ($data as $value): ?>
+                                 <select id="category" class="form-control" name="category">
+                                    <option value="">Select Category</option>
+                                    <?php foreach ($data as $value): ?>
                                        <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
+                                       <?php foreach ($subdata1 as $subcategory): ?>
+                                          <?php if ($subcategory->parents == $value['id']): ?>
+                                          <option value="<?php echo $subcategory->id; ?>">- <?php echo $subcategory->name; ?></option>
+                                          <?php endif; ?>
                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
                                     </select>
                                  </div>
                               </div>
@@ -366,6 +371,20 @@
              // $('#uriview').html(abc);
          });
       </script>
+
+
+      <!-- <script>
+         $(document).ready(function(){
+         $("#category").on("change",function(){
+            var selectedVal = $(this).find("option:selected" ).val();
+            
+            $('#subcategory > optgroup[label="'+selectedVal+'"]')
+               .show()
+               .siblings("optgroup")
+               .css("display","none");
+         });  
+         });
+      </script> -->
 
    </body>
 </html>

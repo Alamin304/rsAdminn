@@ -46,13 +46,11 @@
       <div class="col-sm-8 blog-main">
 
             <?php foreach ($data as $value): ?>  
-               <?php foreach($data1 as $value1): ?>
-                  <?php foreach($data2 as $value2): ?>
                         <!-- /.blog-post -->
                         <div class="blog-post">
                            <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
                               <figure>
-                                    <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
+                                 <img src="<?php echo base_url('uploads/' . $value['photos']); ?>" class="thumbnail" width="200px" />
                               </figure>
                            </a>
                            <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" class="blog-post-title" title="View this blog post">
@@ -61,7 +59,7 @@
                            <p class="blog-post-meta">August 15, 2017 by Admin</p>
                            <p class="blog-post-meta">
                               <i class="fa fa-tags"></i> Tags:
-                              <a href="<?php echo base_url('edit_tags/' . $value2->id); ?>" class="tag" title="View posts with this tag"><?php echo '#' . $value2->name; ?></a>
+                              <a href="<?php echo base_url('edit_tags/'.$value['tag_into'][0]->id);?>" class="tag" title="View posts with this tag"><?php echo'#'.$value['tag_into'][0]->name; ?></a>
                            </p>
                            <?php echo $value['content']; ?>
                            <p>
@@ -69,8 +67,7 @@
                            </p>
                         </div>
                   <?php endforeach; ?>
-               <?php endforeach; ?>
-            <?php endforeach; ?>
+               
 
          <?php if ($pager) : ?>
                 <div id ="pagination" class="pagination">
@@ -143,6 +140,21 @@
             });
             });
          </script> -->
+
+
+         
+        <script>
+            
+            $.ajax({
+               url: <?php echo base_url('userhome') ?>,
+               type: 'GET',
+               dataType: 'json',
+               success: function(response) {
+                  
+               },
+              
+            });
+         </script>
 
    </body>
 </html>

@@ -161,7 +161,7 @@
                <label for="parent-id" class="col-md-4 control-label">Parent Category</label>
                <div class="col-md-10">
                <select id="parent-id" class="form-control" name="parent_id">
-               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>>-select one-</option>
+               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>><?php echo $value['id']; ?></option>
                         <?php foreach ($data2 as $value2): ?>
                             <option value="<?php echo $value2['id']; ?>"><?php echo $value2['name']; ?></option>
                         <?php endforeach; ?>
@@ -182,6 +182,17 @@
             <input type="text" value ="" name="othersField" id="otherField" style="display: none;" placeholder="writte.." />
             </div>
             </div>
+
+            <label for="photos" class="col-md-3 control-label">Photos:</label>
+               <div class="col-md-7">
+               <div style="display: flex;">
+               <a href="<?= base_url('edit_posts/' . $value['id']) ?>">
+               <img style="width:40px; height:40px;" src="<?= base_url('catphotos/'. $value['photos']) ?>" alt="no images">
+                  <input type="file" id="photos" name="photos" title="Upload" multiple />
+               </div>
+            </div>
+
+            
             
             <div class="form-group">
                <div class="col-md-6 col-md-offset-4">
@@ -254,7 +265,9 @@
          $.ajax({
             url: "<?php echo base_url('update_categories/'.$value['id']) ?>",
             type: "POST",
-            data: $('#catupdateform').serialize(),
+            processData: false,
+            contentType: false,
+            data: new FormData(this),
             dataType: "json",
             success: function (response) {
             //    nameErr.text(response.name ? response.name.message : '');

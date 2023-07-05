@@ -15,6 +15,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
     </head>
+
+    <style>
+    #but_add {
+        position: relative;
+        padding: 10px 20px;
+        background-color: #095776;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    #but_add:hover {
+        background-color: #072c3e;
+    }
+</style>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -122,23 +139,17 @@
     <div class="row">
         <div class="col-md-5">
          <div class="flash-message"></div>
-
-        
-
          <span class="d-none alert alert-success mb-3" id="message"></span>
-                                                        
-
             <form method="POST" id="form" action=" " name="form" class="form-horizontal" enctype="multipart/form-data" role="form">
                 <input type="hidden" name="_token" value="">
 
+                <div class='form'>
                 <div class="form-group">
                     <label for="name" class="col-md-4 control-label">Name <span class="text-danger">*</span></label>
-
                     <div class="col-md-6">
-                        <input type="text" id="name" class="form-control" name="name" value=""/>
+                        <input type="text" id="name" class="form-control" name="name[]" value=""/>
                         <span><?= validation_show_error('name')?></span>
                         <span style="color:red;" id= "nameErr"></span>
-                       
                     </div>
                 </div>
 
@@ -146,27 +157,34 @@
                     <label for="uri" class="col-md-4 control-label">URI <span class="text-danger">*</span></label>
 
                     <div class="col-md-6">
-                        <input type="text" id="uri" class="form-control" name="uri" value=""  />
+                        <input type="text" id="uri" class="form-control" name="uri[]" value=""  />
                         <span><?= validation_show_error('uri')?></span>
                         <span style="color:red;" id= "uriErr"></span>
                     </div>
                 </div>
+            </div>
 
+                
+                
+<!-- 
                 <div>
                     <label for =" " class =" col-md-4 control-label ">Check box</label>
                 <div class="col-md-6">
                     <input type="checkbox" id="checkbox" name="checkbox" value="1">
-                    <span><?= validation_show_error('checkbox')?></span>
-                    <span style="color:red;" id= "checkboxErr"></span>
+                    
                 </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
                         <button type="submit" name="submit" id="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
                         <!-- &nbsp;&nbsp;&nbsp;<a href="https://blog-demo.yumefave.com/admin/categories" class="text-muted">Cancel</a> -->
                     </div>
+                    </div>
                 </div>
+                <div class="col-md-2">
+                <input type='button' id='but_add' value='Add new'>
+               </div>
             </form>
         </div>
     </div>
@@ -194,31 +212,20 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url('assets/');?>js/scripts.js"></script>
 
-
-
-      <!-- <script>
-            $(document).ready(function () {
-            $("form").submit(function (event) {
-            var formData = {
-                name: $("#name").val(),
-                uri: $("#uri").val(),
-                superheroAlias: $("#superheroAlias").val(),
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "process.php",
-                data: formData,
-                dataType: "json",
-                encode: true,
-            }).done(function (data) {
-                console.log(data);
+        <script>
+            $(document).ready(function() {
+                $('#but_add').click(function() {
+                    var newForm = $('.form:last').clone();
+                    $(newForm).find('input[type="text"]').val('');
+                    $(newForm).insertAfter('.form:last');
+                });
             });
+        </script>
 
-            event.preventDefault();
-            });
-            });
-        </script> -->
+        
+
+
+
 
                 <script>
                     $(document).ready(function() {
@@ -248,17 +255,14 @@
              });
             </script>
 
-
-
-
         <script> 
-                            $('#name').keyup(function(){
-
-                    var abc = $(this).val();
-                    console.log(abc)
-                                $('#uri').val(abc);
-                                // $('#uriview').html(abc);
-                    });
+            $('#name').keyup(function(){
+            var abc = $(this).val();
+            console.log(abc)
+            $('#uri').val(abc);
+             // $('#uriview').html(abc);
+            });
         </script>
+
     </body>
 </html>

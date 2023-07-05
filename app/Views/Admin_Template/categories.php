@@ -156,52 +156,62 @@
                     </div>
                 </div> -->
             </div>
-<div class="table-responsive">
-  <table class="table table-striped">
-    <tbody>
 
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <?php foreach ($data as $value): ?>
+                            <tr>
+                                <td class="col-md-12">
+                                    <i class="fa fa-square" style="color: #d3d323;"></i>
+                                    &nbsp;
+                                    <a href="<?php echo base_url('edit_categories/' . $value['id']); ?>" title="View this category">
+                                        <strong><?php echo $value['name']; ?></strong>
+                                    </a>
+                                    <?php
+                                    $categoryPostCount = 0; 
+                                    foreach ($data2 as $row) {
+                                        if ($row->category == $value['id']) {
+                                            $categoryPostCount = $row->count;
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    <span class="text-muted">Posts (<?= $categoryPostCount ?>)</span>
+                                    <br>
 
-    <?php foreach ($data as $value): ?>
-    <tr>
-        <td class="col-md-12">
-            <i class="fa fa-square" style="color: #d3d323;"></i>
-            &nbsp;
-            <a href="<?php echo base_url('edit_categories/' . $value['id']); ?>" title="View this category">
-                <strong><?php echo $value['name']; ?></strong>
-            </a>
-            <?php
-            $postCount = 0; 
-            foreach ($data2 as $row) {
-                if ($row->category == $value['id']) {
-                    $postCount = $row->count;
-                    break;
-                }
-            }
-            ?>
-            <span class="text-muted">Posts (<?= $postCount ?>)</span>
-            <br>
+                                    <?php
+                                    $totalSubcategoryPostCount = 0;
+                                    foreach ($data1 as $subcategory): ?>
+                                        <?php if ($subcategory->parents == $value['id']): ?>
+                                            <i class="fa fa-angle-right" style="margin-left: 10px;"></i>
+                                            &nbsp;
+                                            <a href="<?php echo base_url('edit_categories/' . $subcategory->id); ?>" title="View this subcategory">
+                                                <strong><?php echo $subcategory->name; ?></strong>
+                                            </a>
+                                            <?php
+                                            $subcategoryPostCount = 0; 
+                                            foreach ($data2 as $row) {
+                                                if ($row->category == $subcategory->id) {
+                                                    $subcategoryPostCount = $row->count;
+                                                    break;
+                                                }
+                                            }
+                                            $totalSubcategoryPostCount += $subcategoryPostCount;
+                                            ?>
+                                            <span class="text-muted">Posts (<?= $subcategoryPostCount ?>)</span>
+                                            <br>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
 
-            <?php foreach ($data1 as $subcategory): ?>
-                    <?php if ($subcategory->parents == $value['id']): ?>
-                        <i class="fa fa-angle-right" style="margin-left: 10px;"></i>
-                        &nbsp;
-                        <a href="<?php echo base_url('edit_categories/' . $subcategory->id); ?>" title="View this subcategory">
-                            <strong><?php echo $subcategory->name; ?></strong>
-                        </a>
-                        <br>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                
-        </td>
-    </tr>
-<?php endforeach; ?>
-            
+                                    <span class="text-muted">Total Posts (<?= $categoryPostCount + $totalSubcategoryPostCount ?>)</span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>       
+                    </tbody>
+                </table>
+            </div>
 
-                
-                
-     </tbody>
- </table>
-</div>
 
             
             <div class="row">

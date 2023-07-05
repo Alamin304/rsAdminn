@@ -8,5 +8,5 @@ class add_tagsModel extends Model
 {
     protected $table = 'tags'; 
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name','URL','future']; 
+    protected $allowedFields = ['name','URL',]; 
 }

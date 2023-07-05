@@ -11,59 +11,59 @@ class add_tagsController extends BaseController
         
         return view('Admin_Template/add_tags');
     }
+    
 
     public function tags_insertData()
-    {
+{
+    $validation = \Config\Services::validation();
 
-        $validation = \Config\Services::validation();
+    $rules = [
+        'name.*' => 'required',
+        'uri.*' => 'required',
+    ];
 
-        $rules = [
-            'name' => 'required',
-            'uri' => 'required',
-            'checkbox' =>'required',
-            
-        ];
-
-        if (! $this->validate($rules)) {
-
-            // return view('Admin_Template/add_tags');
-
-            $response = [
-                'name' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a name..',
-                ],
-                'uri' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a uri..',
-                ],
-                'checkbox' =>[
-                    'status' =>'required',
-                    'message' => 'please check the box',
-                ],
-                
-            ];
-            return json_encode($response);
-        }
-
-        $addtagsModel = new add_tagsModel();
-        $data = [
-
-            'name' => $this->request->getPost('name'),
-            'URL' => $this->request->getPost('uri'),
-            'future' => $this->request->getPost('checkbox')
- 
-               ];
-        $addtagsModel->insert($data);
-        // $successMessage = "Category has been created successfully.";
-        $data = $addtagsModel->findAll();
+    if (! $this->validate($rules)) {
         $response = [
-            'success' => [
-                'status' => 'ok',
-                'message' => 'Data inserted successfully.',
+            'name' => [
+                'status' => 'required',
+                'message' => 'Please enter a name..',
+            ],
+            'uri' => [
+                'status' => 'required',
+                'message' => 'Please enter a uri..',
             ],
         ];
         return json_encode($response);
+    }
+
+    $addtagsModel = new add_tagsModel();
+
+    $nameArray = $this->request->getPost('name');
+    $uriArray = $this->request->getPost('uri');
+
+    $data = [];
+    foreach ($nameArray as $index => $name) {
+        $uri = $uriArray[$index];
+
+        $data[] = [
+            'name' => $name,
+            'URL' => $uri,
+        ];
+    }
+
+    if (!empty($data)) {
+        $addtagsModel->insertBatch($data);
+    }
+
+    $data = $addtagsModel->findAll();
+    $response = [
+        'success' => [
+            'status' => 'ok',
+            'message' => 'Data inserted successfully.',
+        ],
+    ];
+    return json_encode($response);
+
 
         return view('Admin_Template/add_tags', [
             'data' => $data,
@@ -109,14 +109,14 @@ class add_tagsController extends BaseController
       if ($this->request->getMethod() === 'put') {
         $name = $this->request->getPost('name');
         $URL = $this->request->getPost('uri');
-        $checkbox = $this->request->getPost('checkbox');
-        $checkbox = isset($checkbox) ? 1 : 0;
+        // $checkbox = $this->request->getPost('checkbox');
+        // $checkbox = isset($checkbox) ? 1 : 0;
 
         if ($name && $URL) {
             $data = [
                 'name' => $name,
                 'URL' => $URL,
-                'future' => $checkbox,
+                // 'future' => $checkbox,
             ];
             
                 $updattagModel->update([$id], $data); 
