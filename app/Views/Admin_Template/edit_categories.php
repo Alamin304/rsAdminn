@@ -161,7 +161,7 @@
                <label for="parent-id" class="col-md-4 control-label">Parent Category</label>
                <div class="col-md-10">
                <select id="parent-id" class="form-control" name="parent_id">
-               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>><?php echo $value['id']; ?></option>
+               <option value="0" <?php if ($value['parents'] == 0) echo "selected"; ?>><?php echo $value['name']; ?></option>
                         <?php foreach ($data2 as $value2): ?>
                             <option value="<?php echo $value2['id']; ?>"><?php echo $value2['name']; ?></option>
                         <?php endforeach; ?>

@@ -33,6 +33,7 @@ $routes->get('/', 'Home::index');
 
 $routes->get('/userhome','UserController::userhome');
 $routes->get('/readmore_content/(:any)','UserController::readmore/$1');
+$routes->get('/taghome/(:any)','UserController::taghome/$1');
 
 
 $routes->get('/categories', 'CategoriesController::categories');

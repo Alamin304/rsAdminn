@@ -38,44 +38,37 @@
          </div>
       </div>
 
-
-
-    <?php foreach ($data as $value): ?>
-    <div class="container blog-post-page">
-   <div class="blog-header">
-      <h1 class="blog-title"><?php echo $value['title']; ?></h1>
-   </div>
-   <div class="row">
-      <div class="col-sm-8 blog-main">
-      <img width="100%" height="450" scrolling="no" frameborder="no" src="<?php echo base_url('uploads/' . $value['photos']); ?>"></img>
-         <p><?php echo $value['content']; ?></p>
-         <p>Sitting silent by my side</p>
-         <p>Going on Holding hand</p>
-         <p>Walking through the nights</p>
-         <p>Hold me up Hold me tight</p>
-         <p>Lift me up to touch the sky</p>
-         <p>Teaching me to love with heart</p>
-         <p>Helping me open my mind</p>
-
-      </div>
-      <!-- /.blog-main -->
-      <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-         <div class="sidebar-module sidebar-module-inset">
-            <label>Author</label>
-            <div class="value">Admin</div>
-            <label>Source</label>
-            <div class="value">
-               <a href="https://soundcloud.com/nouvo206/proud-of-you-fiona-fung-nghe-nhac-mp3-hot-nhat" target="_blank"><?php echo $value['source']; ?></a>
+      <?php foreach ($data as $value): ?>
+         <div class="container blog-post-page">
+            <div class="blog-header">
+               <h1 class="blog-title"><?php echo $value['title']; ?></h1>
             </div>
-            <label>Posted</label>
-            <div class="value" title="Aug 15, 2017 7:34 am">Aug 15, 2017</div>
+            <div class="row">
+               <div class="col-sm-8 blog-main">
+                  <img width="100%" height="450" scrolling="no" frameborder="no" src="<?php echo base_url('uploads/' . $value['photos']); ?>"></img>
+                  <p><?php echo $value['content']; ?></p>
+                  <p>Sitting silent by my side</p>
+                  <p>Going on Holding hand</p>
+                  <p>Helping me open my mind</p>
+               </div>
+               <!-- /.blog-main -->
+               <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                  <div class="sidebar-module sidebar-module-inset">
+                     <label>Author</label>
+                     <div class="value">Admin</div>
+                     <label>Source</label>
+                     <div class="value">
+                        <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" target="_blank"><?php echo $value['source']; ?></a>
+                     </div>
+                     <label>Posted</label>
+                     <div class="value" title="Aug 15, 2017 7:34 am">Aug 15, 2017</div>
+                  </div>
+               </div>
+               <!-- /.blog-sidebar -->
+            </div>
+            <!-- /.row -->
          </div>
-      </div>
-      <!-- /.blog-sidebar -->
-   </div>
-   <!-- /.row -->
-</div>
-<?php endforeach;?>
+      <?php endforeach; ?>
 <!-- /.container -->
 
 

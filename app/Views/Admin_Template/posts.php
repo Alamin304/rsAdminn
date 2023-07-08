@@ -10,6 +10,19 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="<?php echo base_url('assets/');?>css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
+      <style>
+        .category-thumbnail {
+        vertical-align: middle;
+        margin-right: 5px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        }
+      </style>
+
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -134,14 +147,10 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tbody>
-                        <?php foreach ($data as $value): ?>
-                            <?php echo '<pre>';
-                                print_r($data);
-                                die();?>
-
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <?php foreach ($data as $value): ?>
                                     <tr>
                                         <td class="col-md-2">
                                             <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post">
@@ -149,36 +158,32 @@
                                             </a>
                                         </td>
                                         <td class="col-md-10">
-                                        <a href="<?php echo base_url('edit_categories/'.$value['category_into'][0]->id);?>" class="label label-default" style="background-color: #dce040;" title="View this category">
-                                            <img src="<?php echo base_url('catphotos/'. $value['category_photo'][0]['photos']); ?>" alt="Thumbnail" class="thumbnail">
-                                            <?php echo $value['category_into'][0]->name; ?>
-                                        </a>
-
+                                        <a href="<?= base_url('edit_categories/'.$value['category_into'][0]->id) ?>" class="category-label" title="View this category">
+                                            <img src="<?= base_url('catphotos/'. $value['category_into'][0]->photos) ?>" class="category-thumbnail" width="50px">
+                                            <strong><?= $value['category_into'][0]->name ?></strong></a>
                                             <a href="<?php echo base_url('edit_posts/' . $value['id']); ?>" title="Edit this post"><h3><?php echo $value['title']; ?></h3></a>
                                             <p><?php echo $value['content']; ?></p>
                                             <hr class="text-muted" />
                                             <small class="text-muted">
-                                                Tags:
-                                                <a href="<?php echo base_url('edit_tags/'.$value['tag_into'][0]->id);?>" class="tag" title="View posts with this tag"><?php echo'#'.$value['tag_into'][0]->name; ?></a>
-                                                <br />
-                                                <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>
-                                                &middot; 2 views
+                                            Tags:
+                                            <a href="<?php echo base_url('edit_tags/'.$value['tag_into'][0]->id);?>" class="tag" title="View posts with this tag"><?php echo'#'.$value['tag_into'][0]->name; ?></a>
+                                            <br />
+                                            <?php echo $value['type']; ?> &middot; Admin &middot; <span title="Aug 14, 2017 9:35 pm">1 minuts ago</span>
+                                            &middot; 2 views
                                             </small>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                           
-                    </tbody>
-                </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-            <?php if ($pager) : ?>
-                <div id ="pagination" class="pagination">
-                 <?= $pager->links() ?>
-                </div>
-            <?php endif; ?>
-              
-            </div>
+                    <?php if ($pager) : ?>
+                        <div id ="pagination" class="pagination">
+                        <?= $pager->links() ?>
+                        </div>
+                    <?php endif; ?>
+     </div>
        
 <!-- 
             <ul class="pagination" role="navigation">

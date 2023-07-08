@@ -42,9 +42,9 @@
       <h1 class="blog-title">Blog</h1>
       <p class="lead blog-description"> Blog / News Portal</p>
    </div>
+  <div id = "blogflex" class="blog">
    <div class="row">
       <div class="col-sm-8 blog-main">
-
             <?php foreach ($data as $value): ?>  
                         <!-- /.blog-post -->
                         <div class="blog-post">
@@ -59,21 +59,22 @@
                            <p class="blog-post-meta">August 15, 2017 by Admin</p>
                            <p class="blog-post-meta">
                               <i class="fa fa-tags"></i> Tags:
-                              <a href="<?php echo base_url('edit_tags/'.$value['tag_into'][0]->id);?>" class="tag" title="View posts with this tag"><?php echo'#'.$value['tag_into'][0]->name; ?></a>
+                              <a href="<?php echo base_url('taghome/'.$value['tag_into'][0]->id);?>" class="tag" title="View posts with this tag"><?php echo'#'.$value['tag_into'][0]->name; ?></a>
                            </p>
                            <?php echo $value['content']; ?>
                            <p>
                               <a href="<?php echo base_url('readmore_content/' . $value['id']); ?>" title="View this blog post"><small>read more &raquo;</small></a>
                            </p>
                         </div>
-                  <?php endforeach; ?>
+                        <?php endforeach; ?>
                
 
-         <?php if ($pager) : ?>
+           <?php if ($pager) : ?>
                 <div id ="pagination" class="pagination">
                  <?= $pager->links() ?>
                 </div>
             <?php endif; ?>
+            
 
          <nav>
             <!-- Add navigation elements here -->
@@ -95,13 +96,6 @@
                      <li><a href="#">May 2017</a></li>
                      <li><a href="#">April 2017</a></li>
                      <li><a href="#">March 2017</a></li>
-                     <li><a href="#">February 2017</a></li>
-                     <li><a href="#">January 2017</a></li>
-                     <li><a href="#">December 2016</a></li>
-                     <li><a href="#">November 2016</a></li>
-                     <li><a href="#">October 2016</a></li>
-                     <li><a href="#">September 2016</a></li>
-                     <li><a href="#">August 2016</a></li>
                   </ol>
                </div>
             </div>
@@ -114,6 +108,7 @@
          <p>&copy; Copyright 2017 Company Inc.</p>
          <p>All Rights Reserved.</p>
       </footer>
+      </div>
       <!-- Bootstrap core JavaScript
          ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
@@ -122,27 +117,30 @@
       <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
       <script src="/js/ie10-viewport-bug-workaround.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- 
-        <script>
-            $(document).on('click', '.pagination a', function(e) {
-            e.preventDefault();
-            var url = $(this).attr('href');
-            
-            $.ajax({
-               url: url,
-               type: 'GET',
-               dataType: 'json',
-               success: function(response) {
-                  $('#pagination').html(response.pagination);
-                  $('#data').html(response.data);
-               },
-              
-            });
-            });
-         </script> -->
 
 
-         
+
+         <script>
+            function loadPage(page) {
+               $.ajax({
+                     url: '<?php echo base_url('userhome') ?>',
+                     type: 'GET',
+                     data: { page: page },
+                     success: function(response) {
+                        $('#blogflex').html(response.output);
+                     }
+               });
+            }
+
+            $(document).ready(function() {
+               $(document).on('click', '#pagination a', function(e) {
+                     e.preventDefault();
+                     var page = $(this).attr('href').split('page=')[1];
+                     loadPage(page);
+               });
+            });
+         </script>
+
         <script>
             
             $.ajax({
@@ -150,9 +148,13 @@
                type: 'GET',
                dataType: 'json',
                success: function(response) {
-                  
+                  var blog = '';
+                for(var i = 0; i < resposne.length; i++){
+                    blog = blog + '<div class="col-sm-8 blog-main">';
+                    
                },
-              
+               // $('#blogflex').html(blog);
+            }
             });
          </script>
 
