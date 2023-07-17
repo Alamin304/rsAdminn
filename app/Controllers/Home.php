@@ -6,6 +6,6 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('Admin_Template/index');
+        return view('Admin_Template/home');
     }
 }

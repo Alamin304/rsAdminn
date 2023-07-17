@@ -31,31 +31,43 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('/userhome','UserController::userhome');
-$routes->get('/readmore_content/(:any)','UserController::readmore/$1');
-$routes->get('/taghome/(:any)','UserController::taghome/$1');
+$routes->get('/users', 'UserController::users');
+$routes->post('/add_users', 'UserController::addUsers');
+$routes->post('/update_user/(:any)', 'UserController::updateuser/$1');
+$routes->post('/delete_user/(:any)', 'UserController::deleteuser/$1');
+
+$routes->get('edit_user/(:any)', 'UserController::editUser/$1');
+$routes->get('edit_user_password/(:any)', 'UserController::editUserPassword/$1');
 
 
-$routes->get('/categories', 'CategoriesController::categories');
-$routes->get('/add_categories', 'add_categoryController::add_categories');
-$routes->post('/insertData', 'add_categoryController::category_insertData');
-$routes->get('/edit_categories/(:any)', 'add_categoryController::edit_categories/$1');
-$routes->put('/update_categories/(:any)', 'add_categoryController::update_categories/$1');
+// $routes->get('/upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
+
+$routes->post('upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
 
 
-$routes->get('/posts', 'postsController::posts');
-$routes->get('/create_post', 'create_postController::create_post');
-$routes->post('/postinsertData', 'create_postController::post_insertData');
-$routes->get('/edit_posts/(:any)', 'create_postController::edit_posts/$1');
-$routes->put('/update_posts/(:any)', 'create_postController::update_posts/$1');
-$routes->get('/search', 'postsController::posts');
 
 
-$routes->get('/tags', 'tagsController::tags');
-$routes->get('/add_tags', 'add_tagsController::add_tags');
-$routes->post('/taginsertData', 'add_tagsController::tags_insertData');
-$routes->get('/edit_tags/(:any)', 'add_tagsController::edit_tags/$1');
-$routes->put('/update_tags/(:any)', 'add_tagsController::update_tags/$1');
+
+
+
+
+
+$routes->get('/plan', 'PlanController::Plan');
+$routes->post('/add_plan', 'PlanController::addPlan');
+$routes->get('/edit_plan/(:any)', 'PlanController::editPlan/$1');
+$routes->post('/update_plan/(:any)', 'PlanController::updatePlan/$1');
+
+
+
+$routes->get('/settings', 'SettingController::settings');
+$routes->post('/brand_setting', 'SettingController::brand_setting');
+$routes->post('/email_setting', 'SettingController::email_setting');
+$routes->post('/recaptch_setting', 'SettingController::recaptch_setting');
+
+$routes->post('/update_brand_setting/(:any)', 'SettingController::update_brand_setting/$1');
+$routes->post('/update_email_setting/(:any)', 'SettingController::update_email_setting/$1');
+$routes->post('/update_recaptch_setting/(:any)', 'SettingController::update_recaptch_setting/$1');
+
 
 
 

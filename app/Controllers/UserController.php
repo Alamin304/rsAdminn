@@ -1,150 +1,267 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\create_postModel;
-use CodeIgniter\Pager\PagerRenderer;
-use App\Models\add_categoryModel;
-use App\Models\add_tagsModel;
+use App\Models\AddUserModel;
+use App\Models\AddPlanModel;
 
 class UserController extends BaseController
 {
-    public function userhome()
-{
-   $db = \Config\Database::connect();
-   $catmodel = new add_categoryModel();
-   $catData = $catmodel->where('parents', 0)->findAll();
+    public function users()
+    {
 
-   $tagsmodel = new add_tagsModel();
-   $tagData = $tagsmodel->findAll();
+        $db = \Config\Database::connect();
 
-   $postmodel = new create_postModel();
-   $search = $this->request->getGet('search');
+        $adduserModel = new AddUserModel();
+        $data = $adduserModel->findAll();
 
-   if ($search) {
-      $data = $postmodel->like('title', $search)->findAll();
-      $totalCount = count($data);
-      $pager = null;
-   } else {
-      $perPage = 3;
-      $data = $postmodel->paginate($perPage);
-      $pager = $postmodel->pager;
-      $totalCount = $postmodel->pager->getTotal();
-   }
+        // $query = $db->table('addplan')
+        // ->join('manageuser', 'plan_id = addplan.id')
+        // ->get();
+        // $results = $query->getResult();
+        // $data = $results;
+        // echo '<pre>';
+        // print_r($data);
+        // die();
 
-   $myData = [];
-
-   foreach ($data as $allvalue) {
-      $allvalue['category_into'] = $db->table('categorys')
-         ->where('id', $allvalue['category'])
-         ->get()
-         ->getResult();
-
-      $allvalue['tag_into'] = $db->table('tags')
-         ->where('id', $allvalue['tags'])
-         ->get()
-         ->getResult();
-
-      $myData[] = $allvalue;
-   }
-
-   if ($this->request->isAJAX()) {
-      $output = view('User_Side/userhome', [
-         'data' => $myData,
-         'pager' => $pager,
-         'totalCount' => $totalCount,
-      ]);
-      return $this->response->setJSON(['output' => $output]);
-   } else {
-      return view('User_Side/userhome', [
-         'data' => $myData,
-         'pager' => $pager,
-         'totalCount' => $totalCount,
-      ]);
-   }
-}
+        
+        $addplanModel = new AddPlanModel();
+        $data1 = $addplanModel->findAll();
 
 
-public function readmore($id)
-{
-    $postmodel = new create_postModel();
+        foreach ($data as $allvalue) {
+        
+            $allvalue['plan_into'] = $db->table('addplan')
+                ->where('id', $allvalue['plan_id'])
+                ->get()
+                ->getResult();
+
+                $myData[]=$allvalue;
+                
+        }
+        // echo '<pre>';
+        // print_r($myData);
+        // die();
+
+        return view('Admin_Template/users', [
+            'data' => $myData,
+            'data1' => $data1,
+        ]);
+
+    }
+
+
+
+
+    public function addUsers()
+    {
     
-    $data = array($postmodel->find($id));
+        $validation = \Config\Services::validation();
 
-    // $data = $postmodel->find($id);
-    
-    //  echo '<pre>';
-    //  print_r($data);
-    //  die();
-    
-    return view('User_Side/readmore_content', [
-        'data' => $data,
-    ]);
-}
+        $rules = [
+            'name' => 'required',
+            'email' => 'required',
+            'password' =>'required',
+        ];
+
+        if (! $this->validate($rules)) {
+
+            $response = [
+                'name' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a name',
+                ],
+                'email' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a email',
+                ],
+                'password' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a password',
+                ],
+                
+            ];
+            return json_encode($response);
+        }
+
+        $adduserModel = new AddUserModel();
+        $data = [
+
+            'name' => $this->request->getPost('name'),
+            'email' => $this->request->getPost('email'),
+            'password' => $this->request->getPost('password'),
+            
+            
+        ];
+                $adduserModel->insert($data);
+            
+            $data = $adduserModel->findAll();
+            // echo '<pre>';
+            // print_r($data);
+            // die();
+
+            $response = [
+                'success' => [
+                    'status' => 'ok',
+                    'message' => 'Data inserted successfully.',
+                ],
+            ];
+            return json_encode($response);
+
+            return view('Admin_Template/users', [
+                'data' => $data,
+                'successMessage' => $successMessage,
+            ]);
+    }
 
 
 
-public function taghome(){
+    // public function upgradePlan($id)
+    // { 
 
-    $db = \Config\Database::connect();
-    $postmodel = new create_postModel();
-    $data = $postmodel->findAll();
 
-    $myData = [];
+    //     $db = \Config\Database::connect();
 
-   foreach ($data as $allvalue) {
-      $allvalue['tag_into'] = $db->table('tags')
-         ->where('id', $allvalue['tags'])
-         ->get()
-         ->getResult();
+    //     $adduserModel = new AddUserModel();
+    //     $data = $adduserModel->findAll();
 
-      $myData[] = $allvalue;
-   }
-//    echo '<pre>'; print_r($myData);
-//    die();
+    //     foreach ($data as $allvalue) {
+        
+    //         $allvalue['plan_into'] = $db->table('addplan')
+    //             ->where('id', $allvalue['plan_id'])
+    //             ->get()
+    //             ->getResult();
 
-    return view('User_Side/taghome',[
-        'data' => $myData,
-     ]);
-}
+    //             $myData[]=$allvalue;
+                
+    //     }
 
-// public function taghome($id)
-// {
+    //     if ($this->request->isAJAX()) {
+    //         $tableContent = view('User_Side/table_content', [
+    //            'data' => $myData,
+    //         ]);
+    //         return $this->response->setJSON(['tableContent' => $tableContent]);
+    //      } else {
+    //         return view('User_Side/users', [
+    //            'data' => $myData,
+    //         ]);
+    //      }
+      
+        
 
-//     $postmodel = new create_postModel();
-    
-//     $data = $postmodel->findAll();
+    // }
 
-//     $myData = [];
 
-//    foreach ($data as $allvalue) {
-//       $allvalue['category_into'] = $db->table('categorys')
-//          ->where('id', $allvalue['category'])
-//          ->get()
-//          ->getResult();
+    public function upgradePlan($id)
+    {
+        // $userId = $this->request->getVar('id');
+        // $planId = $this->request->getVar('plan_id');
+        // $isChecked = $this->request->getVar('isChecked');
 
-//       $allvalue['tag_into'] = $db->table('tags')
-//          ->where('id', $allvalue['tags'])
-//          ->get()
-//          ->getResult();
+        // $addUserModel = new AddUserModel();
+        // $addPlanModel = new AddPlanModel();
 
-//       $myData[] = $allvalue;
-//    }
-    
-    
-//     // $data = $postmodel->find($id);
-    
-//     //  echo '<pre>';
-//     //  print_r($data);
-//     //  die();
-    
-//     // return view('User_Side/tags_content', [
-//     //     // 'data' => $data,
-//     // ]);
+        // $user = $addUserModel->find($userId);
+        // $plan = $addPlanModel->find($planId);
 
-//     return view('User_Side/taghome', [
-//         'data' => $myData,
-//      ]);
-// }
+        // if ($user && $plan) {
+        //     $updateData = [
+        //         'plan_id' => $isChecked ? $planId : null
+        //     ];
+        //     $addUserModel->update($userId, $updateData);
+
+        //     $response = [
+        //         'planname' => $plan['planname'],
+        //         'duration' => $plan['duration'],
+        //         'mxusers' => $plan['mxusers'],
+        //         'mxcustomer' => $plan['mxcustomer'],
+        //         'mxvendor' => $plan['mxvendor']
+        //     ];
+
+        //     return $this->response->setJSON($response);
+        // }
+
+        // $errorResponse = ['error' => 'User or plan not found'];
+        // return $this->response->setJSON($errorResponse);
+    }
+
+
+
+    public function editUser($id)
+    {
+        $adduserModel = new AddUserModel();
+        $data = $adduserModel->find($id);
+
+      return $this->response->setJSON($data);
+                // return view('Admin_Template/user');
+
+    }
+
+    public function editUserPassword($id)
+    {
+        $adduserModel = new AddUserModel();
+        $data = $adduserModel->find($id);
+        // echo '<pre>';
+        // print_r($data);
+        // die();
+        
+        
+      return $this->response->setJSON($data);
+                // return view('Admin_Template/user');
+
+    }
+
+
+
+    public function updateuser($id)
+                {
+                    $adduserModel = new AddUserModel();
+                    $data = $adduserModel->find($id);
+
+                    if ($this->request->getMethod() === 'post') {
+                        $name = $this->request->getPost('name');
+                        $email = $this->request->getPost('email');
+                        $password = $this->request->getPost('passwordInput');
+
+                        $data = [
+                            'name' => $name,
+                            'email' => $email,
+                            'password' => password_hash($password, PASSWORD_DEFAULT),
+                        ];
+
+                        $adduserModel->update($id, $data);
+
+                        $response = [
+                            'success' => true,
+                            'message' => 'Data updated successfully.'
+                        ];
+
+                        return $this->response->setJSON($response);
+                    }
+
+                    return view('Admin_Template/user', ['data' => $user]);
+                }
+
+
+
+
+    public function deleteuser($id)
+                {
+                    $adduserModel = new AddUserModel();
+                    $user = $adduserModel->find($id);
+
+                    if ($user) {
+                        $adduserModel->delete($id);
+
+                        $response = [
+                            'success' => true,
+                            'message' => 'User deleted successfully.'
+                        ];
+                    } 
+
+                    return $this->response->setJSON($response);
+                }
+
+
 
 
 }
