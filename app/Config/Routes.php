@@ -36,19 +36,20 @@ $routes->post('/add_users', 'UserController::addUsers');
 $routes->post('/update_user/(:any)', 'UserController::updateuser/$1');
 $routes->post('/delete_user/(:any)', 'UserController::deleteuser/$1');
 
+$routes->post('update_password/(:any)', 'UserController::updatePassword/$1');
+
 $routes->get('edit_user/(:any)', 'UserController::editUser/$1');
 $routes->get('edit_user_password/(:any)', 'UserController::editUserPassword/$1');
 
 
 // $routes->get('/upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
 
-$routes->post('upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
+
+$routes->get('/upgrade_user_plan', 'UserController::upgradeUserPlan');
 
 
 
-
-
-
+// $routes->post('upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
 
 
 

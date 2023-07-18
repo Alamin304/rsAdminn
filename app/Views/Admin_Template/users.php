@@ -163,7 +163,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary saveChanges" data-id="">Save Changes</button>
+                    <button type="button" class="btn btn-primary savechanges" data-id="">Save Changes</button>
                   </div>
                 </div>
               </div>
@@ -221,26 +221,24 @@
                                           <th>Users</th>
                                           <th>Customers</th>
                                           <th>Vendors</th>
-                                          
+                                          <td>
                                       </tr>
                                   </thead>
                                   <tbody>
                                   <?php foreach ($data1 as $tablevalue): ?>
                                     <tr>
                                     <td><?php echo $tablevalue['planname']; ?>($<?php echo $tablevalue['price']; ?>) / <?php echo $tablevalue['price']; ?></td>
-                                          
                                           <td><?php echo $tablevalue['mxusers']; ?></td>
-                                          
                                           <td><?php echo $tablevalue['mxcustomer']; ?></td>
-                                          
                                           <td><?php echo $tablevalue['mxvendor']; ?></td>
                                         <td>
-                                        <input class='input-switch switch' type="checkbox" id="<?= $tablevalue['id'] ?>" />
+                                        <input class='input-switch switch' type="checkbox" value="<?= $tablevalue['id'] ?>" id ="<?= $tablevalue['id']?>" />
                                           <label class="label-switch" for="<?= $tablevalue['id'] ?>"></label>
                                           <span class="info-text"></span>
                                         </td>
                                     </tr>
                                   <?php endforeach; ?>
+                                  <input type="hidden" id="userId" name="userid" value="" >
                                   </tbody>
                               </table>
                               </div>
@@ -350,51 +348,38 @@ $(document).ready(function() {
 });
 </script> -->
 
+<!-- ----upgrade Plan-------- -->
 <script>
 $(document).ready(function() {
    $('.upgradePlanButton').click(function() {
       var userId = $(this).data('id');
+      $('#userId').val(userId);
       $('#myplanModal').modal('show');
    });
 
-  //  $('.switch').change(function() {
-  //     var isChecked = $(this).is(':checked');
-  //     var userId = $(this).data('id');
-  //     var planId = $(this).attr('id');
+   $('.switch').click(function() {
+    var id = $('#userId').val();
+    var planid = $(this).val();
 
+    // alert(planid);
 
-      
-  //  });
+        $.ajax({
+        url:"<?php echo base_url('upgrade_user_plan') ?>",
+        method: 'GET',
+        data: {id,planid},
+        dataType: "json",
+        success: function(response) {
+            if (response.status === 'success') {
+              alert('Upgrade plan successful');
+              window.location.reload();
+            } else {
+              alert('Upgrade plan failed');
+            }
+          }
+        })
+   });
 });
 </script>
-
-<!-- //  $('.input-switch').change(function() {
-  //     var isChecked = $(this).is(':checked');
-  //     var userId = $(this).data('id');
-  //     var planId = $(this).data('plan_id');
-
-
-  //     $.ajax({
-  //        url:"<?php// echo base_url('upgrade_plan/') ?>" + userId,
-        
-  //        method: 'POST',
-  //        data: {
-  //           planId: planId
-  //        },
-  //        success: function(response) {
-
-  //           console.log(response);
-
-  //           var planName = response.planname;
-  //           $('.card[data-id="' + userId + '"]').find('.font-bold').text(planName);
-  //        },
-  //        error: function(xhr, status, error) {
-
-  //           console.error(error);
-  //        }
-  //     });
-  //  }); -->
-
 
 
 
@@ -462,63 +447,52 @@ $(document).ready(function() {
           <!-- ---edit user name email---- -->
 
           <script>
-            $(document).ready(function() {
-              $('.editButton').click(function() {
-                var editid = $(this).data('id');
-                // alert(editid);
-                
+    $(document).ready(function() {
+        $('.editButton').click(function() {
+            var editid = $(this).data('id');
 
             $.ajax({
-            url:"<?php echo base_url('edit_user/') ?>" + editid,
-            type:"GET",
-            dataType:"json",
-            success: function(response) {
-              $('#nameInput').val(response.name);
-              $('#emailInput').val(response.email);
-              $('#idInput').val(response.id);
-              $('#editModal').modal('show');
-            
-            console.log(response);
-            }
+                url: "<?php echo base_url('edit_user/') ?>" + editid,
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    $('#nameInput').val(response.name);
+                    $('#emailInput').val(response.email);
+                    $('#idInput').val(response.id);
+                    $('#editModal').modal('show');
+
+                    console.log(response);
+                }
             });
-            });
-              });
-              </script>
+        });
+
+        $('.savechanges').click(function() {
+            var edituserid = $(this).data('id');
+            console.log(edituserid);
+            var name = $('#nameInput' + edituserid).val();
+            var email = $('#emailInput' + edituserid).val();
 
 
-
-      <!-- <script>
-        $(document).ready(function() {
-          $('.editButton').click(function() {
-            var edituser = $(this).data('id');
-            
-            $('.saveChanges').click(function() {
-              var edituser = $(this).data('id');
-              var name = $('#nameInput' + edituser).val();
-              var email = $('#emailInput' + edituser).val();
-              
-              $.ajax({
-                url: "<?php// echo base_url('update_user/') ?>" + edituser,
+            $.ajax({
+                url: "<?php echo base_url('update_user/') ?>" + edituserid,
                 type: "POST",
                 data: { name: name, email: email },
                 dataType: "json",
                 success: function(response) {
-                  if (response.success) {
-                    alert(response.message);
-                    $('#editModal' + edituser).modal('hide');
-                    window.location.reload();
-                  }
+                    if (response.success) {
+                        alert(response.message);
+                        $('#editModal'+ edituserid).modal('hide');
+                        window.location.reload();
+                    }
                 }
-              });
             });
-          });
         });
-
-        </script> -->
+    });
+</script>
         
 
 
-        // <!-- ---edit user password---- -->
+         <!-- ---edit user password---- -->
 
 
         <script>
@@ -544,11 +518,13 @@ $(document).ready(function() {
 
 
 
+
+
         <script>
           $(document).ready(function() {
             $('.resetButton').click(function() {
                 var editpassword = $(this).data('id');
-                $('#editresetModal').modal('show');
+                // $('#editresetModal').modal('show');
 
                 $('.saveChanges').click(function() {
                     var password = $('#passwordInput' + editpassword).val();
@@ -559,7 +535,7 @@ $(document).ready(function() {
                         return;
                     }
 
-                    var url = "<?php echo base_url('update_user/') ?>" + editpassword;
+                    var url = "<?php echo base_url('update_password/') ?>" + editpassword;
                     $.ajax({
                         url: url,
                         type: "POST",
@@ -569,6 +545,7 @@ $(document).ready(function() {
                             if (response.success) {
                                 alert('Password reset successfully.');
                                 $('#editresetModal' + editpassword).modal('hide');
+                                window.location.reload();
                             } else {
                                 alert(response.message);
                             }
@@ -576,7 +553,7 @@ $(document).ready(function() {
                     });
                 });
             });
-        });
+          });
         </script>
 
 

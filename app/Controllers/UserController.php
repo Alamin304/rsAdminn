@@ -6,6 +6,13 @@ use App\Models\AddPlanModel;
 
 class UserController extends BaseController
 {
+
+    protected $db;
+
+    public function __construct(){
+        $this->db = \Config\Database::connect();
+    }
+
     public function users()
     {
 
@@ -23,7 +30,6 @@ class UserController extends BaseController
         // print_r($data);
         // die();
 
-        
         $addplanModel = new AddPlanModel();
         $data1 = $addplanModel->findAll();
 
@@ -34,7 +40,6 @@ class UserController extends BaseController
                 ->where('id', $allvalue['plan_id'])
                 ->get()
                 ->getResult();
-
                 $myData[]=$allvalue;
                 
         }
@@ -115,74 +120,132 @@ class UserController extends BaseController
 
 
 
-    // public function upgradePlan($id)
-    // { 
+    public function upgradeUserPlan()
+    { 
+        $id = $this->request->getGet('id');
+        $planid = $this->request->getGet('planid');
 
+$query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
 
-    //     $db = \Config\Database::connect();
+            // $query = $this->db->table('manageuser')
+            //     ->set('plan_id', $planid)
+            //     ->where('id', $id)
+            //     ->update();
 
-    //     $adduserModel = new AddUserModel();
-    //     $data = $adduserModel->findAll();
+            $res = $this->db->query($query);
+                    if ($res) {
+                        return $this->response->setJSON(['status' => 'success']);
+                    } else {
+                        return $this->response->setJSON(['status' => 'failed']);
+                    }
+}
 
-    //     foreach ($data as $allvalue) {
-        
-    //         $allvalue['plan_into'] = $db->table('addplan')
-    //             ->where('id', $allvalue['plan_id'])
-    //             ->get()
-    //             ->getResult();
+    // $userId = $this->request->getVar('id');
+    //     $planId = $this->request->getVar('plan_id');
+    //     $isChecked = $this->request->getVar('isChecked');
 
-    //             $myData[]=$allvalue;
-                
+    //     $addUserModel = new AddUserModel();
+    //     $addPlanModel = new AddPlanModel();
+
+    //     $user = $addUserModel->find($userId);
+    //     $plan = $addPlanModel->find($planId);
+
+    //     if ($user && $plan) {
+    //         $updateData = [
+    //             'plan_id' => $isChecked ? $planId : null
+    //         ];
+    //         $addUserModel->update($userId, $updateData);
+
+    //         $response = [
+    //             'planname' => $plan['planname'],
+    //             'duration' => $plan['duration'],
+    //             'mxusers' => $plan['mxusers'],
+    //             'mxcustomer' => $plan['mxcustomer'],
+    //             'mxvendor' => $plan['mxvendor']
+    //         ];
+
+    //         return $this->response->setJSON($response);
     //     }
 
-    //     if ($this->request->isAJAX()) {
-    //         $tableContent = view('User_Side/table_content', [
-    //            'data' => $myData,
-    //         ]);
-    //         return $this->response->setJSON(['tableContent' => $tableContent]);
-    //      } else {
-    //         return view('User_Side/users', [
-    //            'data' => $myData,
-    //         ]);
-    //      }
-      
-        
-
+    //     $errorResponse = ['error' => 'User or plan not found'];
+    //     return $this->response->setJSON($errorResponse);
     // }
 
 
-    public function upgradePlan($id)
-    {
-        // $userId = $this->request->getVar('id');
-        // $planId = $this->request->getVar('plan_id');
-        // $isChecked = $this->request->getVar('isChecked');
 
-        // $addUserModel = new AddUserModel();
-        // $addPlanModel = new AddPlanModel();
 
-        // $user = $addUserModel->find($userId);
-        // $plan = $addPlanModel->find($planId);
+    //  $query=   UPDATE table_name
+    //     SET column1 = value1, column2 = value2, ...
+    //     WHERE condition;
 
-        // if ($user && $plan) {
-        //     $updateData = [
-        //         'plan_id' => $isChecked ? $planId : null
-        //     ];
-        //     $addUserModel->update($userId, $updateData);
+        // echo $planid;
+        // return;
 
-        //     $response = [
-        //         'planname' => $plan['planname'],
-        //         'duration' => $plan['duration'],
-        //         'mxusers' => $plan['mxusers'],
-        //         'mxcustomer' => $plan['mxcustomer'],
-        //         'mxvendor' => $plan['mxvendor']
-        //     ];
 
-        //     return $this->response->setJSON($response);
+        // $db = \Config\Database::connect();
+
+        // $adduserModel = new AddUserModel();
+        // $data = $adduserModel->findAll();
+
+        // foreach ($data as $allvalue) {
+        
+        //     $allvalue['plan_into'] = $db->table('addplan')
+        //         ->where('id', $allvalue['plan_id'])
+        //         ->get()
+        //         ->getResult();
+
+        //         $myData[]=$allvalue;
+                
         // }
 
-        // $errorResponse = ['error' => 'User or plan not found'];
-        // return $this->response->setJSON($errorResponse);
-    }
+        // if ($this->request->isAJAX()) {
+        //     $tableContent = view('User_Side/table_content', [
+        //        'data' => $myData,
+        //     ]);
+        //     return $this->response->setJSON(['tableContent' => $tableContent]);
+        //  } else {
+        //     return view('User_Side/users', [
+        //        'data' => $myData,
+        //     ]);
+        //  }
+      
+        
+
+    
+
+
+    // public function upgradePlan($id)
+    // {
+    //     $userId = $this->request->getVar('id');
+    //     $planId = $this->request->getVar('plan_id');
+    //     $isChecked = $this->request->getVar('isChecked');
+
+    //     $addUserModel = new AddUserModel();
+    //     $addPlanModel = new AddPlanModel();
+
+    //     $user = $addUserModel->find($userId);
+    //     $plan = $addPlanModel->find($planId);
+
+    //     if ($user && $plan) {
+    //         $updateData = [
+    //             'plan_id' => $isChecked ? $planId : null
+    //         ];
+    //         $addUserModel->update($userId, $updateData);
+
+    //         $response = [
+    //             'planname' => $plan['planname'],
+    //             'duration' => $plan['duration'],
+    //             'mxusers' => $plan['mxusers'],
+    //             'mxcustomer' => $plan['mxcustomer'],
+    //             'mxvendor' => $plan['mxvendor']
+    //         ];
+
+    //         return $this->response->setJSON($response);
+    //     }
+
+    //     $errorResponse = ['error' => 'User or plan not found'];
+    //     return $this->response->setJSON($errorResponse);
+    // }
 
 
 
@@ -215,17 +278,20 @@ class UserController extends BaseController
     public function updateuser($id)
                 {
                     $adduserModel = new AddUserModel();
-                    $data = $adduserModel->find($id);
+                    $user = $adduserModel->find($id);
+                //     echo'<pre>';
+                    // print_r($user);
+                    // die();
 
                     if ($this->request->getMethod() === 'post') {
                         $name = $this->request->getPost('name');
                         $email = $this->request->getPost('email');
-                        $password = $this->request->getPost('passwordInput');
+                        
 
                         $data = [
                             'name' => $name,
                             'email' => $email,
-                            'password' => password_hash($password, PASSWORD_DEFAULT),
+                          
                         ];
 
                         $adduserModel->update($id, $data);
@@ -240,6 +306,33 @@ class UserController extends BaseController
 
                     return view('Admin_Template/user', ['data' => $user]);
                 }
+
+
+
+                public function updatePassword($id)
+                    {
+                        $adduserModel = new AddUserModel();
+                        $user = $adduserModel->find($id);
+
+                        if ($this->request->getMethod() === 'post') {
+                            $password = $this->request->getPost('passwordInput');
+
+                            $data = [
+                                'password' => password_hash($password, PASSWORD_DEFAULT),
+                            ];
+
+                            $adduserModel->update($id, $data);
+
+                            $response = [
+                                'success' => true,
+                                'message' => 'Password updated successfully.',
+                            ];
+
+                            return $this->response->setJSON($response);
+                        }
+
+                        return view('Admin_Template/user', ['data' => $user]);
+                    }
 
 
 
