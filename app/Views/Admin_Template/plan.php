@@ -135,58 +135,61 @@
       </div>
    </div>
 </div>
-<?php foreach ($data as $value): ?>
-<div class="row">
-<div class="plan_card">
-   <div class="card price-card price-1 wow animate__fadeInUp" data-wow-delay="0.2s" style="
-      visibility: visible;
-      animation-delay: 0.2s;
-      animation-name: fadeInUp;
-      ">
-      <div class="card-body">
-         <span class="price-badge bg-primary"><?php echo $value['planname']; ?></span>
-         <h1 class="mb-4 f-w-600 ">$<?php echo $value['price']; ?>
-            <small class="text-sm">/<?php echo $value['duration']; ?></small>
-         </h1>
-         <p class="mb-0">
-            Duration : <?php echo $value['duration']; ?><br/>
-         </p>
-         <div class="row ">
-            <div class="col-6">
-               <ul class="list-unstyled my-5">
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span><?php echo $value['mxusers']; ?> Users</li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span><?php echo $value['mxcustomer']; ?> Customers</li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span><?php echo $value['mxvendor']; ?> Vendors</li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span><?php echo $value['mxclient']; ?> Clients</li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span><?php echo $value['storlimit']; ?> MB  Storage</li>
-               </ul>
+
+
+            <?php foreach ($data as $value): ?>
+            <div class="row">
+            <div class="plan_card">
+            <div class="card price-card price-1 wow animate__fadeInUp" data-wow-delay="0.2s" style="
+               visibility: visible;
+               animation-delay: 0.2s;
+               animation-name: fadeInUp;
+               ">
+
+            <div class="card-body">
+            <span class="price-badge bg-primary"><?php echo $value['planname']; ?></span>
+            <h1 class="mb-4 f-w-600 ">$<?php echo $value['price']; ?>
+               <small class="text-sm">/<?php echo $value['duration']; ?></small>
+            </h1>
+            <p class="mb-0">
+               Duration : <?php echo $value['duration']; ?><br/>
+            </p>
+            <div class="row ">
+               <div class="col-6">
+                  <ul class="list-unstyled my-5">
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span><?php echo $value['mxusers']; ?> Users</li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span><?php echo $value['mxcustomer']; ?> Customers</li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span><?php echo $value['mxvendor']; ?> Vendors</li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span><?php echo $value['mxclient']; ?> Clients</li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span><?php echo $value['storlimit']; ?> MB Storage</li>
+                  </ul>
+               </div>
+               <div class="col-6">
+                  <ul class="list-unstyled my-5">
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span>
+                        CRM <?php echo ($value['CRM'] == 0) ? 'Disabled' : 'Enabled'; ?>
+                     </li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span>
+                        Project <?php echo ($value['project'] == 0) ? 'Disabled' : 'Enabled'; ?>
+                     </li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span>
+                        HRM <?php echo ($value['HRM'] == 0) ? 'Disabled' : 'Enabled'; ?>
+                     </li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span>
+                        Account <?php echo ($value['account'] == 0) ? 'Disabled' : 'Enabled'; ?>
+                     </li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span>
+                        POS <?php echo ($value['POS'] == 0) ? 'Disabled' : 'Enabled'; ?>
+                     </li>
+                     <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary fas fa-plus-circle"></i></i></span>
+                        ChatGPT <?php echo ($value['chatGPT'] == 0) ? 'Disabled' : 'Enabled'; ?>
+                     </li>
+                  </ul>
+               </div>
             </div>
-            <div class="col-6">
-               <ul class="list-unstyled my-5">
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span>Enable <?php echo $value['CRM']; ?></li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span>Enable <?php echo $value['project']; ?></li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span>Enable <?php echo $value['HRM']; ?></li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span>Enable <?php echo $value['account']; ?></li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span>Enable <?php echo $value['POS']; ?></li>
-                  <li class="white-sapce-nowrap"><span class="theme-avtar"><i class="text-primary ti ti-circle-plus"></i></span>Enable <?php echo $value['chatGPT']; ?></li>
-               </ul>
             </div>
-         </div>
-
-
-         <!-- <div class="col-4">
-            <a title="Edit Plan" href="#" class="btn btn-primary btn-icon m-1" data-size="lg" data-url="<?php// echo base_url('edit_plan/' . $value['id']); ?>" data-ajax-popup="true" data-title="Edit Plan" data-toggle="tooltip" data-original-title="Edit">
-            <i class="ti ti-edit">Edit</i>
-            </a>
-         </div> -->
-
-                  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal" onclick="redirectToEdit(<?php// echo $value['id']; ?>)">
-                     <i class="ti ti-edit">Edit</i>
-                  </button> -->
-                  <!-- <a href="<?php //echo base_url('edit_plan/' . $value['id']); ?>" title="Edit this Plan"> 
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
-                  <i class="ti ti-edit">Edit</i>
-                  </button></a> -->
+            
+            
 
 
                <div class="col">
@@ -257,37 +260,38 @@
                               </div>
 
                               <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" name="crm" id="crm" <?php if(isset($value['crm']) && $value['crm']) echo 'checked';?> value="1" >
+                              
+                              <input type="checkbox" class="form-check-input" id="crm" name="crm" <?php if(isset($value['crm']) && $value['crm']) echo 'checked';?> />
                                  <label class="form-check-label" for="crm">CRM</label>
                                  <span style="color:red;" id= "crmErr"></span>
                               </div>
 
                               <div class="form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" name="project" id="project" <?php if(isset($value['project']) && $value['project']) echo 'checked';?> value="1" >
+                                 <input class="form-check-input" type="checkbox" name="project" id="project" <?php if(isset($value['project']) && $value['project']) echo 'checked';?> value="1" />
                                  <label class="form-check-label" for="project">Project</label>
                                  <span style="color:red;" id="projectErr"></span>
                               </div>
 
                               <div class="form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" name="hrm" id="hrm" <?php if(isset($value['hrm']) && $value['hrm']) echo 'checked';?> value="1">
+                                 <input class="form-check-input" type="checkbox" name="hrm" id="hrm" <?php if(isset($value['hrm']) && $value['hrm']) echo 'checked';?> value="1" />
                                  <label class="form-check-label" for="hrm">HRM</label>
                                  <span style="color:red;" id= "hrmErr"></span>
                               </div>
 
                               <div class="form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" name="account" id="account" <?php if(isset($value['account']) && $value['account']) echo 'checked';?> value="1">
+                                 <input class="form-check-input" type="checkbox" name="account" id="account" <?php if(isset($value['account']) && $value['account']) echo 'checked';?> value="1" />
                                  <label class="form-check-label" for="account">Account</label>
                                  <span style="color:red;" id= "accountErr"></span>
                               </div>
 
                               <div class="form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" name="pos" id="pos" <?php if(isset($value['pos']) && $value['pos']) echo 'checked';?> value="1" >
+                                 <input class="form-check-input" type="checkbox" name="pos" id="pos" <?php if(isset($value['pos']) && $value['pos']) echo 'checked';?> value="1" />
                                  <label class="form-check-label" for="pos">POS</label>
                                  <span style="color:red;" id= "posErr"></span>
                               </div>
 
                               <div class="form-check form-switch">
-                                 <input class="form-check-input" type="checkbox" name="chatgpt" id="chatgpt" <?php if(isset($value['chatgpt']) && $value['chatgpt']) echo 'checked';?> value="1">
+                                 <input class="form-check-input" type="checkbox" name="chatgpt" id="chatgpt" <?php if(isset($value['chatgpt']) && $value['chatgpt']) echo 'checked';?> value="1" />
                                  <label class="form-check-label" for="chatgpt">ChatGPT</label>
                                  <span style="color:red;" id= "chatgptErr"></span>
                               </div>

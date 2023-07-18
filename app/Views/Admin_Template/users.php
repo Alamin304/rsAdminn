@@ -153,6 +153,7 @@
                       <div class="mb-3">
                         <label for="nameInput" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" id="nameInput" value="">
+                        
                       </div>
                       <div class="mb-3">
                         <label for="emailInput" class="form-label">Email</label>
@@ -163,7 +164,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary savechanges" data-id="">Save Changes</button>
+                    <button type="button" class="btn btn-primary save" data-id="">Save Changes</button>
                   </div>
                 </div>
               </div>
@@ -446,13 +447,114 @@ $(document).ready(function() {
 
           <!-- ---edit user name email---- -->
 
-          <script>
+
+
+          <!-- <script>
+            $(document).ready(function() {
+                $('.editButton').click(function() {
+                    var editid = $(this).data('id');
+
+                    $.ajax({
+                        url: "<?php// echo base_url('edit_user/') ?>" + editid,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(response) {
+                            $('#nameInput').val(response.name);
+                            $('#emailInput').val(response.email);
+                            $('#idInput').val(response.id);
+                            $('#editModal').modal('show');
+
+                            console.log(response);
+                        }
+                    });
+                });
+            });
+        </script>
+
+
+            <script>
+            $(document).ready(function() {
+              $('.editButton').click(function() {
+                var edituserid = $(this).data('id');
+                // console.log(edituserid);
+
+                $('.save').click(function() {
+                    var name = $('#nameInput' + edituserid).val();
+                    var email = $('#emailInput' + edituserid).val();
+                    // console.log(name, email);
+
+                    $.ajax({
+                        url: "<?php //echo base_url('update_user/') ?>" + edituserid,
+                        type: "POST",
+                        data: { name: name, email: email },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.success) {
+                                alert(response.message);
+                                $('#editModal'+ edituserid).modal('hide');
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            });
+          });
+            </script> -->
+
+<!-- ---edit user name email---- -->
+
+        <script>
+              $(document).ready(function() {
+              $('.editButton').click(function() {
+                  var editid = $(this).data('id');
+                  // console.log(editid);
+                  $('.save').data('id', editid);
+
+                  $.ajax({
+                      url: "<?php echo base_url('edit_user/') ?>" + editid,
+                      type: "GET",
+                      dataType: "json",
+                      success: function(response) {
+                          $('#nameInput').val(response.name);
+                          $('#emailInput').val(response.email);
+                          $('#idInput').val(response.id);
+                          $('#editModal').modal('show');
+                      }
+                  });
+              });
+
+              $('.save').click(function() {
+                  var edituserid = $(this).data('id');
+                  console.log(edituserid);
+                  var name = $('#nameInput').val();
+                  var email = $('#emailInput').val();
+
+                  $.ajax({
+                      url: "<?php echo base_url('update_user/') ?>" + edituserid,
+                      type: "POST",
+                      data: { name: name, email: email },
+                      dataType: "json",
+                      success: function(response) {
+                          if (response.success) {
+                              alert(response.message);
+                              $('#editModal').modal('hide');
+                              window.location.reload();
+                          }
+                      }
+                  });
+              });
+          });
+        </script>
+
+
+
+          <!-- <script>
     $(document).ready(function() {
         $('.editButton').click(function() {
             var editid = $(this).data('id');
 
             $.ajax({
-                url: "<?php echo base_url('edit_user/') ?>" + editid,
+                url: "<?php// echo base_url('edit_user/') ?>" + editid,
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
@@ -474,7 +576,7 @@ $(document).ready(function() {
 
 
             $.ajax({
-                url: "<?php echo base_url('update_user/') ?>" + edituserid,
+                url: "<?php //echo base_url('update_user/') ?>" + edituserid,
                 type: "POST",
                 data: { name: name, email: email },
                 dataType: "json",
@@ -488,7 +590,7 @@ $(document).ready(function() {
             });
         });
     });
-</script>
+</script> -->
         
 
 

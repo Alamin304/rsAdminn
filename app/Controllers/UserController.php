@@ -125,52 +125,20 @@ class UserController extends BaseController
         $id = $this->request->getGet('id');
         $planid = $this->request->getGet('planid');
 
-$query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
+        $query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
 
             // $query = $this->db->table('manageuser')
             //     ->set('plan_id', $planid)
             //     ->where('id', $id)
             //     ->update();
 
-            $res = $this->db->query($query);
-                    if ($res) {
-                        return $this->response->setJSON(['status' => 'success']);
-                    } else {
-                        return $this->response->setJSON(['status' => 'failed']);
-                    }
+        $res = $this->db->query($query);
+                if ($res) {
+                    return $this->response->setJSON(['status' => 'success']);
+                } else {
+                    return $this->response->setJSON(['status' => 'failed']);
+                }
 }
-
-    // $userId = $this->request->getVar('id');
-    //     $planId = $this->request->getVar('plan_id');
-    //     $isChecked = $this->request->getVar('isChecked');
-
-    //     $addUserModel = new AddUserModel();
-    //     $addPlanModel = new AddPlanModel();
-
-    //     $user = $addUserModel->find($userId);
-    //     $plan = $addPlanModel->find($planId);
-
-    //     if ($user && $plan) {
-    //         $updateData = [
-    //             'plan_id' => $isChecked ? $planId : null
-    //         ];
-    //         $addUserModel->update($userId, $updateData);
-
-    //         $response = [
-    //             'planname' => $plan['planname'],
-    //             'duration' => $plan['duration'],
-    //             'mxusers' => $plan['mxusers'],
-    //             'mxcustomer' => $plan['mxcustomer'],
-    //             'mxvendor' => $plan['mxvendor']
-    //         ];
-
-    //         return $this->response->setJSON($response);
-    //     }
-
-    //     $errorResponse = ['error' => 'User or plan not found'];
-    //     return $this->response->setJSON($errorResponse);
-    // }
-
 
 
 
@@ -209,45 +177,7 @@ $query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
         //     ]);
         //  }
       
-        
-
     
-
-
-    // public function upgradePlan($id)
-    // {
-    //     $userId = $this->request->getVar('id');
-    //     $planId = $this->request->getVar('plan_id');
-    //     $isChecked = $this->request->getVar('isChecked');
-
-    //     $addUserModel = new AddUserModel();
-    //     $addPlanModel = new AddPlanModel();
-
-    //     $user = $addUserModel->find($userId);
-    //     $plan = $addPlanModel->find($planId);
-
-    //     if ($user && $plan) {
-    //         $updateData = [
-    //             'plan_id' => $isChecked ? $planId : null
-    //         ];
-    //         $addUserModel->update($userId, $updateData);
-
-    //         $response = [
-    //             'planname' => $plan['planname'],
-    //             'duration' => $plan['duration'],
-    //             'mxusers' => $plan['mxusers'],
-    //             'mxcustomer' => $plan['mxcustomer'],
-    //             'mxvendor' => $plan['mxvendor']
-    //         ];
-
-    //         return $this->response->setJSON($response);
-    //     }
-
-    //     $errorResponse = ['error' => 'User or plan not found'];
-    //     return $this->response->setJSON($errorResponse);
-    // }
-
-
 
     public function editUser($id)
     {
@@ -279,7 +209,7 @@ $query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
                 {
                     $adduserModel = new AddUserModel();
                     $user = $adduserModel->find($id);
-                //     echo'<pre>';
+                    // echo'<pre>';
                     // print_r($user);
                     // die();
 
@@ -287,18 +217,41 @@ $query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
                         $name = $this->request->getPost('name');
                         $email = $this->request->getPost('email');
                         
-
                         $data = [
                             'name' => $name,
                             'email' => $email,
                           
+                        ];
+                        $adduserModel->update($id, $data);
+
+                        $response = [
+                            'success' => true,
+                            'message' => 'Data updated successfully.'
+                        ];
+                        return $this->response->setJSON($response);
+                    }
+                    return view('Admin_Template/user', ['data' => $user]);
+                }
+
+
+
+            public function updatePassword($id)
+                {
+                    $adduserModel = new AddUserModel();
+                    $user = $adduserModel->find($id);
+
+                    if ($this->request->getMethod() === 'post') {
+                        $password = $this->request->getPost('passwordInput');
+
+                        $data = [
+                            'password' => password_hash($password, PASSWORD_DEFAULT),
                         ];
 
                         $adduserModel->update($id, $data);
 
                         $response = [
                             'success' => true,
-                            'message' => 'Data updated successfully.'
+                            'message' => 'Password updated successfully.',
                         ];
 
                         return $this->response->setJSON($response);
@@ -306,33 +259,6 @@ $query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
 
                     return view('Admin_Template/user', ['data' => $user]);
                 }
-
-
-
-                public function updatePassword($id)
-                    {
-                        $adduserModel = new AddUserModel();
-                        $user = $adduserModel->find($id);
-
-                        if ($this->request->getMethod() === 'post') {
-                            $password = $this->request->getPost('passwordInput');
-
-                            $data = [
-                                'password' => password_hash($password, PASSWORD_DEFAULT),
-                            ];
-
-                            $adduserModel->update($id, $data);
-
-                            $response = [
-                                'success' => true,
-                                'message' => 'Password updated successfully.',
-                            ];
-
-                            return $this->response->setJSON($response);
-                        }
-
-                        return view('Admin_Template/user', ['data' => $user]);
-                    }
 
 
 
@@ -350,8 +276,7 @@ $query = 'UPDATE manageuser SET plan_id = ' . $planid . ' WHERE id = ' . $id;
                             'message' => 'User deleted successfully.'
                         ];
                     } 
-
-                    return $this->response->setJSON($response);
+                 return $this->response->setJSON($response);
                 }
 
 

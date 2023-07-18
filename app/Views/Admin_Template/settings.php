@@ -173,19 +173,10 @@
                     </h6>
                     <hr class="my-2" />
                     <div class="theme-color themes-color" id="themeColorSetting">
-                    <input type="hidden" id="selectedColor" name="selectedColor" value="" />
-                      <a href="#!" class="" data-value="theme-1" onclick="check_theme('theme-1')"></a>
-                      <input type="radio" class="theme_color" name="color" value="theme-1" style="display: none;">
-                      <a href="#!" class=" " data-value="theme-2" onclick="check_theme('theme-2')"></a>
-                      <input type="radio" class="theme_color" name="color" value="theme-2" style="display: none;">
-                      <a href="#!" class="active_color" data-value="theme-3" onclick="check_theme('theme-3')"></a>
-                      <input type="radio" class="theme_color" name="color" value="theme-3" style="display: none;">
-                      <a href="#!" class="" data-value="theme-4" onclick="check_theme('theme-4')"></a>
-                      <input type="radio" class="theme_color" name="color" value="theme-4" style="display: none;">
-                      <a href="#!" class="" data-value="theme-5" onclick="check_theme('theme-5')"></a>
-                      <input type="radio" class="theme_color" name="color" value="theme-5" style="display: none;">
-                      
-                    </div>
+                  <label for="favcolor">Select your color:</label>
+                  <input type="color" id="favcolor" name="color_setting" value="<?= $value1['color_setting']; ?>"><br><br>
+                  <input type="text" id="colorValue" name="color_setting" value="<?= $value1['color_setting']; ?>">
+                </div>
                   </div>
                   <div class="col-lg-4 col-xl-4 col-md-4">
                     <h6 class="mt-2">
@@ -369,13 +360,16 @@
 
              <script>
                 $(document).ready(function() {
-                $('.theme-color a').click(function() {
-                    var selectedColor = $(this).data('value');
-                    $('#selectedColor').val(selectedColor);
+                  $('#favcolor').change(function() {
+                  var selectedColor = $(this).val();
+                  console.log('Selected color:', selectedColor);
+                  $('#colorValue').val(selectedColor);
                 });
 
                 $('#brandsetting').submit(function(e) {
                     e.preventDefault();
+                    
+                    
 
                     $.ajax({
                       url: "<?php echo base_url('update_brand_setting/').$value1['id']?>",
@@ -387,13 +381,45 @@
                       success: function(response) {
                           if (response.success) {
                             alert(response.message);
-                            window.location.reload();
+                            // window.location.reload();
                           }
                       }
                     });
                 });
               });
             </script>
+
+
+<script>
+
+// $(document).ready(function() {
+//     $('#colorValue').change(function() {
+//         var selectedColor = $(this).val();
+//         console.log('Selected color:', selectedColor);
+//     });
+
+//     $('#brandsetting').submit(function(e) {
+//         e.preventDefault();
+
+//         var colorValue = $('#colorValue').val();
+
+//         $.ajax({
+//             url: "<?php //echo base_url('update_brand_colore/').$value1['id']?>",
+//             type: "POST",
+//             data: {
+//                 color_setting: colorValue
+//             },
+//             dataType: "json",
+//             success: function(response) {
+//                 if (response.success) {
+//                     alert(response.message);
+                    
+//                 }
+//             }
+//         });
+//     });
+// });
+// </script>
 
 
 <!-- ------For Brand Setting------ -->

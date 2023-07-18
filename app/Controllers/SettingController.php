@@ -39,9 +39,12 @@ class SettingController extends BaseController
 
         
         if ($this->request->getMethod() === 'post') {
-            $logo_dark = $this->request->getfile('logo_dark')->getName();
-            $logo_light = $this->request->getfile('logo_light')->getName();
-            $favicon = $this->request->getfile('favicon')->getName();
+            $logo_dark = $this->request->getfile('logo_dark');
+            $logo_light = $this->request->getfile('logo_light');
+            $favicon = $this->request->getfile('favicon');
+            $logo_dark_name = $logo_dark->isValid() ? $logo_dark->getName() : $data1['logo_dark'];
+            $logo_light_name = $logo_light->isValid() ? $logo_light->getName() : $data1['logo_light'];
+            $favicon_name = $favicon->isValid() ? $favicon->getName() : $data1['favicon'];
             $title_text = $this->request->getPost('title_text');
             $footer_text = $this->request->getPost('footer_text');
             $default_language = $this->request->getPost('default_language');
@@ -49,14 +52,14 @@ class SettingController extends BaseController
             $landing_page = $this->request->getPost('display_landing_page') === 'on' ? 1 : 0;
             $signup_page = $this->request->getPost('enable_signup') === 'on' ? 1 : 0;
             $email_verification = $this->request->getPost('email_verification') === 'on' ? 1 : 0;
-            $color = $this->request->getPost('color_setting'); 
+            // $color = $this->request->getPost('color_setting'); 
             $sidebar_setting = $this->request->getPost('cust_theme_bg') === 'on' ? 1 : 0;
             $layout_setting = $this->request->getPost('cust_darklayout') === 'on' ? 1 : 0;
                 
             $data1 = [
-                'logo_dark' =>$logo_dark,
-                'logo_light' => $logo_light,
-                'favicon' => $favicon,
+                'logo_dark' =>$logo_dark_name,
+                'logo_light' => $logo_light_name,
+                'favicon' => $favicon_name,
                 'title_text' => $title_text,
                 'footer_text' => $footer_text,
                 'default_language' => $default_language,
@@ -64,7 +67,7 @@ class SettingController extends BaseController
                 'landing_page' => $landing_page,
                 'signup_page' => $signup_page,
                 'email_verification' => $email_verification,
-                'color_setting' => $color,
+                // 'color_setting' => $color,
                 'sidebar_setting' => $sidebar_setting,
                 'layout_setting' => $layout_setting,
 
@@ -81,6 +84,30 @@ class SettingController extends BaseController
          return view('Admin_Template/settings', ['data1' => $data1,]);
     }
 
+
+
+    // public function updateColor($id)
+    // {
+       
+
+    //     $brandModel = new BrandModel();
+    //     $data = $brandModel->find($id);
+
+    //     if ($this->request->getMethod() === 'post') {
+    //         $color = $this->request->getPost('color_setting');
+
+    //         $data['color_setting'] = $color;
+
+    //         $brandModel->update($id, $data);
+
+    //         $response = [
+    //             'success' => true,
+    //             'message' => 'Color updated successfully.'
+    //         ];
+    //         return $this->response->setJSON($response);
+    //     }
+        
+    // }
 
 
 

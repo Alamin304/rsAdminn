@@ -33,7 +33,7 @@ $routes->get('/', 'Home::index');
 
 $routes->get('/users', 'UserController::users');
 $routes->post('/add_users', 'UserController::addUsers');
-$routes->post('/update_user/(:any)', 'UserController::updateuser/$1');
+$routes->post('update_user/(:any)', 'UserController::updateuser/$1');
 $routes->post('/delete_user/(:any)', 'UserController::deleteuser/$1');
 
 $routes->post('update_password/(:any)', 'UserController::updatePassword/$1');
@@ -65,6 +65,7 @@ $routes->post('/brand_setting', 'SettingController::brand_setting');
 $routes->post('/email_setting', 'SettingController::email_setting');
 $routes->post('/recaptch_setting', 'SettingController::recaptch_setting');
 
+$routes->post('/update_brand_colore/(:any)', 'SettingController::updateColor/$1');
 $routes->post('/update_brand_setting/(:any)', 'SettingController::update_brand_setting/$1');
 $routes->post('/update_email_setting/(:any)', 'SettingController::update_email_setting/$1');
 $routes->post('/update_recaptch_setting/(:any)', 'SettingController::update_recaptch_setting/$1');
