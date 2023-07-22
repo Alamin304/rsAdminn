@@ -62,7 +62,8 @@
                                         <div>
                                             <h4 class="mb-1">Product Sales</h4>
                                             <p>Total Earnings of the Month</p>
-                                            <h3 class="m-0">$ 12,555</h3>
+                                            <h3 class="m-0">$ 12,555</h3><br>
+                                            <h1>Demo Admin</h1>
                                         </div>
                                         <div>
                                             <ul>

@@ -31,45 +31,45 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('/users', 'UserController::users');
-$routes->post('/add_users', 'UserController::addUsers');
-$routes->post('update_user/(:any)', 'UserController::updateuser/$1');
-$routes->post('/delete_user/(:any)', 'UserController::deleteuser/$1');
+$routes->get('/services', 'ServicesController::Services');
+$routes->post('/add_services', 'ServicesController::AddServices');
+$routes->get('edit_services/(:any)', 'ServicesController::EditServices/$1');
+$routes->post('update_service/(:any)', 'ServicesController::UpdateServices/$1');
+$routes->post('/delete_services/(:any)', 'ServicesController::DeleteServices/$1');
+$routes->post('update_services_status/(:any)', 'ServicesController::UpdateServicesstatus/$1');
 
-$routes->post('update_password/(:any)', 'UserController::updatePassword/$1');
+// ---Service Pricing--
+$routes->get('service_pricing/(:any)', 'ServicesController::ServicePricing/$1');
+$routes->post('/add_service_pricing', 'ServicesController::AddServicePricing');
+$routes->get('edit_service_pricing/(:any)', 'ServicesController::EditServicePricing/$1');
+$routes->post('update_service_pricing/(:any)', 'ServicesController::UpdateServicePricing/$1');
+$routes->post('/delete_service_pricing/(:any)', 'ServicesController::DeleteServicePricing/$1');
+$routes->post('update_services_pricing_status/(:any)', 'ServicesController::UpdateServicesPricingStatus/$1');
 
-$routes->get('edit_user/(:any)', 'UserController::editUser/$1');
-$routes->get('edit_user_password/(:any)', 'UserController::editUserPassword/$1');
-
-
-// $routes->get('/upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
-
-
-$routes->get('/upgrade_user_plan', 'UserController::upgradeUserPlan');
-
-
-
-// $routes->post('upgrade_plan/(:any)', 'UserController::upgradePlan/$1');
-
-
-
-$routes->get('/plan', 'PlanController::Plan');
-$routes->post('/add_plan', 'PlanController::addPlan');
-$routes->get('/edit_plan/(:any)', 'PlanController::editPlan/$1');
-$routes->post('/update_plan/(:any)', 'PlanController::updatePlan/$1');
+// ----Addons Service-----
+$routes->get('addons_service/(:any)', 'ServicesController::AddonsService/$1');
+$routes->post('/add_addons_service', 'ServicesController::AddAddonsService');
+$routes->get('edit_addons_service/(:any)', 'ServicesController::EditAddonsService/$1');
+$routes->post('update_addons_service/(:any)', 'ServicesController::UpdateAddonsService/$1');
+$routes->post('delete_addons_service/(:any)', 'ServicesController::DeleteAddonsService/$1');
+$routes->post('update_services_addons_status/(:any)', 'ServicesController::UpdateServicesAddonsStatus/$1');
 
 
+// ---Unit Pricing Services---
+$routes->get('unit_pricing/(:any)', 'ServicesController::UnitPricing/$1');
+$routes->post('/add_unit_pricing', 'ServicesController::AddUnitPricing');
+$routes->get('edit_unit_pricing/(:any)', 'ServicesController::EditUnitPricing/$1');
+$routes->post('update_unit_pricing/(:any)', 'ServicesController::UpdateUnitPricing/$1');
+$routes->post('delete_unit_pricing/(:any)', 'ServicesController::DeleteUnitPricing/$1');
+$routes->post('update_unit_status/(:any)', 'ServicesController::UpdateUnitstatus/$1');
 
-$routes->get('/settings', 'SettingController::settings');
-$routes->post('/brand_setting', 'SettingController::brand_setting');
-$routes->post('/email_setting', 'SettingController::email_setting');
-$routes->post('/recaptch_setting', 'SettingController::recaptch_setting');
 
-$routes->post('/update_brand_colore/(:any)', 'SettingController::updateColor/$1');
-$routes->post('/update_brand_setting/(:any)', 'SettingController::update_brand_setting/$1');
-$routes->post('/update_email_setting/(:any)', 'SettingController::update_email_setting/$1');
-$routes->post('/update_recaptch_setting/(:any)', 'SettingController::update_recaptch_setting/$1');
 
+
+// ---For Staff---
+
+$routes->get('/staffhome', 'StaffController::Staff');
+$routes->post('/add_staff', 'StaffController::AddStaff');
 
 
 

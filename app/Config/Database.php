@@ -29,7 +29,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'database' => 'mainadmin',
+        'database' => 'demoadmin',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

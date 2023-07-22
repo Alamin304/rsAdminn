@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<title>ALAMIN</title>
+<title>DemoAdmin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -296,14 +296,20 @@
                     </li>
 
                     <li>
-                        <a href="<?php echo base_url('users');?>" aria-expanded="false">
-                        <i class="fa-duotone fa-user"></i><span class="nav-text">User</span>
+                        <a href="<?php echo base_url('services');?>" aria-expanded="false">
+                        <i class="fas fa-laptop-code"></i><span class="nav-text">Services</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="<?php echo base_url('plan'); ?>" aria-expanded="false">
-                        <i class="fas fa-tasks"></i><span class="nav-text">Plan</span>
+                        <a href="<?php echo base_url('staffhome'); ?>" aria-expanded="false">
+                        <i class="fas fa-tasks"></i><span class="nav-text">Staff</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<?php echo base_url('CRM'); ?>" aria-expanded="false">
+                        <i class="fas fa-users"></i><span class="nav-text">CRM</span>
                         </a>
                     </li>
                     
@@ -313,92 +319,13 @@
                             <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Settings</span>
                         </a> -->
 
-                        <li>
-                        <a href="<?php echo base_url('settings'); ?>" class="dash-link">
+                        <!-- <li>
+                        <a href="<?php //echo base_url('settings'); ?>" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span class="dash-mtext">Settings</span>
                         </a>
-                        
-                    </li>
-                    <li class="nav-label">Apps</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-envelope menu-icon"></i> <span class="nav-text">Email</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./email-inbox.html">Inbox</a></li>
-                            <li><a href="./email-read.html">Read</a></li>
-                            <li><a href="./email-compose.html">Compose</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">Apps</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-calender.html">Calender</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">UI Components</li>
-                    <li>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-layers menu-icon"></i><span class="nav-text">Components</span>
-                        </a>
-                        <ul aria-expanded="false"> -->
-                            <li><a href="./uc-nestedable.html">Nestedable</a></li>
-                            <li><a href="./uc-noui-slider.html">Noui Slider</a></li>
-                            <li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
-                            <li><a href="./uc-toastr.html">Toastr</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="widgets.html" aria-expanded="false">
-                            <i class="icon-badge menu-icon"></i><span class="nav-text">Widget</span>
-                        </a>
-                    </li>
-                    <li class="nav-label">Forms</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-note menu-icon"></i><span class="nav-text">Forms</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./form-basic.html">Basic Form</a></li>
-                            <li><a href="./form-validation.html">Form Validation</a></li>
-                            <li><a href="./form-step.html">Step Form</a></li>
-                            <li><a href="./form-editor.html">Editor</a></li>
-                            <li><a href="./form-picker.html">Picker</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Table</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Table</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./table-basic.html" aria-expanded="false">Basic Table</a></li>
-                            <li><a href="./table-datatable.html" aria-expanded="false">Data Table</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Pages</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-lock.html">Lock Screen</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                    <li><a href="./page-error-403.html">Error 403</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                    </li> -->
+
+                    
             </div>
         </div>
         <!--**********************************
@@ -437,17 +364,20 @@
 
         <?= $this->renderSection('homecontent') ?>
 
-        <?= $this->renderSection('userscontent') ?>
+        <?= $this->renderSection('servicescontent') ?>
 
         <?=$this->renderSection('plancontent') ?>
 
         <?=$this->renderSection('settingcontent') ?>
 
-        <?=$this->renderSection('brandsettingcontent') ?>
+        <?=$this->renderSection('addons_service_content') ?>
 
-        <?=$this->renderSection('emailsettingcontent') ?>
+        <?=$this->renderSection('staffhomecontent') ?>
 
-        <?=$this->renderSection('recaptchsettingcontent') ?>
+        <?=$this->renderSection('unit_pricing_content') ?>
+
+        <?=$this->renderSection('services_pricing') ?>
+
 
 
 
