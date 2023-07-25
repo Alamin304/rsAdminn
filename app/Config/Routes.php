@@ -70,8 +70,26 @@ $routes->post('update_unit_status/(:any)', 'ServicesController::UpdateUnitstatus
 
 $routes->get('/staffhome', 'StaffController::Staff');
 $routes->post('/add_staff', 'StaffController::AddStaff');
+// $routes->get('staff_details/(:any)', 'StaffController::EditUnitPricing/$1');
+$routes->get('edit_staff/(:any)', 'StaffController::EditStaff/$1');
+$routes->post('update_staff/(:any)', 'StaffController::UpdateStaff/$1');
 
 
+
+// ----For CRM----
+$routes->get('/CRM', 'CRMController::CRM');
+$routes->post('/add_CRM', 'CRMController::AddCRM');
+$routes->get('edit_CRM/(:any)', 'CRMController::editCRM/$1');
+$routes->post('update_CRM/(:any)', 'CRMController::UpdateCRM/$1');
+$routes->post('delete_CRM/(:any)', 'CRMController::DeleteCRM/$1');
+
+
+// ----For Messages----
+$routes->get('/messages', 'CRMController::Messages');
+$routes->post('/add_Messages', 'CRMController::AddMessages');
+
+
+$routes->get('/sms_messages', 'CRMController::SmsMessages');
 
 /*
  * --------------------------------------------------------------------

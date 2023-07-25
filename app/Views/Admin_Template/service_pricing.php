@@ -158,45 +158,51 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="pricingid" value="<?php echo $id; ?>"> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <label for="methodTitle"> Method Name:</label> <input type="text" class="form-control" id="methodTitleInput" name="methodTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <label for="methodTitle"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" class="btn btn-primary updateprice">Update</button> </div> </form></td></tr>');
+                
               });
-            $('.editbtnab').click(function() {
+            $('.editbtn').click(function() {
               var pricingId = $(this).data('id');
               console.log(pricingId);
-              $('.updatechange').data('id', pricingId);
+              // $('.updateprice').data('id', pricingId);
               
               $.ajax({
                       url: "<?php echo base_url('edit_service_pricing/') ?>" + pricingId,
                       type: "GET",
                       dataType: "json",
                       success: function(response) {
-                          $('#serviceTitleInput').val(response.service_title);
+                          $('#pricingTitleInput').val(response.methodName);
                           $('#idInput').val(response.id);
                       }
                   }); 
                });
             
-                  $('.updatechange').click(function() {
-                    var editserviceid = $(this).data('id');
-                    console.log(editserviceid);
-                    var title = $('#serviceTitleInput').val();
                   
+                    // var title = $('#pricingTitleInput').val();
+                    // $('.updateprice').click(function() {
+                    // var pricingId = $(this).data('id');
+                    // console.log(pricingId);
+
+                    $('.updateprice').click(function() {
+                      // alert('abc');
+                      var pricingId = $(this).data('id');
+                      console.log(pricingId);
+                    
                   
                     $.ajax({
-                      url: "<?php echo base_url('update_service/') ?>" + editserviceid,
-                      type: "POST",
-                      data: { color_tag: color, service_title: title, service_description: description },
+                      url: "<?php echo base_url('update_service_pricing/') ?>" + pricingId,
+                      type: 'POST',
+                      data: $(this).serialize(),
                       dataType: "json",
-                      processData: false,
-                      contentType: false,
                       success: function(response) {
                         if (response.success) {
                           alert(response.message);
-                          $('#editServiceModal').modal('hide');
+                          
                           window.location.reload();
                                 }
                             }
                         });
+                        
                   });
                 });
               </script>

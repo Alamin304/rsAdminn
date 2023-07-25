@@ -296,6 +296,35 @@ $id = $this->request->getPost('id');
                 // return view('Admin_Template/user');
 
     }
+
+
+
+    public function UpdateServicePricing($id)
+    {
+        
+        $ServicePriceModel = new ServicePriceModel();
+        $data = $ServicePriceModel->find($id);
+
+        
+        if ($this->request->getMethod() === 'post') {
+            $name = $this->request->getPost('methodName');
+   
+            $data = [
+                'methodName' =>$name,
+            ];
+
+            $ServicePriceModel->update([$id],$data);
+            $response = [
+                'success' => true,
+                'message' => 'Data updated successfully.'
+            ];
+            return $this->response->setJSON($response);
+        }
+        $data = $ServicePriceModel->find([$id]); 
+         return view('Admin_Template/service_pricing', ['data' => $data,]);
+    }
+
+
     
 
 

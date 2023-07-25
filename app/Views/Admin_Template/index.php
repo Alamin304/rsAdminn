@@ -11,16 +11,28 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <!-- Pignose Calender -->
     <link href="<?php echo base_url('assets/');?>plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <!-- Chartist -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/');?>plugins/chartist/css/chartist.min.css">
-    <link rel="stylesheet" href="<?php echo base_url('assets/');?>plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+  
     <!-- Custom Stylesheet -->
-    <link href="<?php echo base_url('assets/');?>css/style.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css">
+
+
+<!-- -- for datatable-- -->
+    <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"  rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"  rel="stylesheet" type="text/css">
+
+
+
+   
+
+    <link href="<?php echo base_url('assets/');?>css/style.css" rel="stylesheet">
+
+
+
+
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -29,19 +41,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 
 
-    <script src="https://demo.rajodiya.com/erpgo-saas/js/html5shiv.js"></script>
+
 
     <link rel="icon" href="https://demo.rajodiya.com/erpgo-saas/storage/uploads/logo//favicon.png" type="image" sizes="16x16">
     <!--bootstrap switch-->
-    <link rel="stylesheet" href="https://demo.rajodiya.com/erpgo-saas/assets/css/plugins/bootstrap-switch-button.min.css">
-    <link rel="stylesheet" href="https://demo.rajodiya.com/erpgo-saas/assets/css/style.css" id="style">
-    <link rel="stylesheet" href="https://demo.rajodiya.com/erpgo-saas/assets/css/customizer.css">
-    <link rel="stylesheet" href="https://demo.rajodiya.com/erpgo-saas/css/custom.css" id="main-style-link">
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- ---selectpicker--- -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+    
+    <script src="<?php echo base_url('assets/');?>js/custom.min.js"></script>
+   
+
+   
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
 
 
 
@@ -368,7 +391,11 @@
 
         <?=$this->renderSection('plancontent') ?>
 
-        <?=$this->renderSection('settingcontent') ?>
+        <?=$this->renderSection('CRMcontent') ?>
+
+        <?=$this->renderSection('CRM_Messages_content') ?>
+        
+        <?=$this->renderSection('editCRMcontent') ?>
 
         <?=$this->renderSection('addons_service_content') ?>
 
@@ -409,13 +436,8 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="<?php echo base_url('assets/');?>plugins/common/common.min.js"></script>
-    <script src="<?php echo base_url('assets/');?>js/custom.min.js"></script>
-    <script src="<?php echo base_url('assets/');?>js/settings.js"></script>
-    <script src="<?php echo base_url('assets/');?>js/gleek.js"></script>
-    <script src="<?php echo base_url('assets/');?>js/styleSwitcher.js"></script>
-    <script src="<?php echo base_url('assets/');?>js/dashboard/dashboard-1.js"></script>
-
+   
+    
 
     
 

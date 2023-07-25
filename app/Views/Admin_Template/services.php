@@ -7,7 +7,7 @@
     display: inline-block;
     width: 15px;
     height: 15px;
-    border-radius: 50%;
+    border-radius: 10%;
     margin-right: 5px;
   }
 
@@ -106,7 +106,7 @@
             <td>
             
               <div class="service-info">
-                <span class="color-badge" style="background-color: #00a87e;"></span>
+                <span class="color-badge" style="background-color: <?php echo $value['color_tag']; ?>"></span>
                 
                 <span class="service-title"><?php echo $value['service_title']; ?> </span>
               </div>
@@ -158,7 +158,7 @@
             <div class="theme-color themes-color" id="themeColorSetting">
             <label for="colorTagInput">Color Tag:</label>
                   <input type="color" id="favcolor" name="color_setting" ><br><br>
-                  <input type="text" id="colorValue"  class="form-control" name="color_setting" >
+                  <!-- <input type="text" id="colorValue"  class="form-control" name="color_setting" > -->
                   <span style="color:red;" id="colorErr"></span>
             </div>
           </div>
@@ -249,12 +249,12 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <input type="text" id="colorValue"  class="form-control" name="color_setting" > <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription" value="" ></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary updatechange" data-id="">Save Changes</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription" value="" ></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary serviceupdate" data-id="">Save Changes</button> </div> </form></td></tr>');
               });
-            $('.editbtnab').click(function() {
+            $('.editbtn').click(function() {
               var serviceId = $(this).data('id');
               console.log(serviceId);
-              $('.updatechange').data('id', serviceId);
+              // $('.serviceupdate').data('id', serviceId);
               
               $.ajax({
                       url: "<?php echo base_url('edit_services/') ?>" + serviceId,
@@ -273,7 +273,8 @@
                   }); 
                });
             
-                  $('.updatechange').click(function() {
+                  $('.serviceupdate').click(function() {
+                    // alert('abc');
                     var editserviceid = $(this).data('id');
                     console.log(editserviceid);
                     var color = $('#favcolor').val();
@@ -300,50 +301,7 @@
                 });
                 </script>
 
-<!-- ---edit user name email---- -->
 
-        <!-- <script>
-              $(document).ready(function() {
-              $('.editButton').click(function() {
-                  var editid = $(this).data('id');
-                  // console.log(editid);
-                  $('.save').data('id', editid);
-
-                  $.ajax({
-                      url: "<?php //echo base_url('edit_user/') ?>" + editid,
-                      type: "GET",
-                      dataType: "json",
-                      success: function(response) {
-                          $('#nameInput').val(response.name);
-                          $('#emailInput').val(response.email);
-                          $('#idInput').val(response.id);
-                          $('#editModal').modal('show');
-                      }
-                  });
-              });
-
-              $('.save').click(function() {
-                  var edituserid = $(this).data('id');
-                  console.log(edituserid);
-                  var name = $('#nameInput').val();
-                  var email = $('#emailInput').val();
-
-                  $.ajax({
-                      url: "<?php// echo base_url('update_user/') ?>" + edituserid,
-                      type: "POST",
-                      data: { name: name, email: email },
-                      dataType: "json",
-                      success: function(response) {
-                          if (response.success) {
-                              alert(response.message);
-                              $('#editModal').modal('hide');
-                              window.location.reload();
-                          }
-                      }
-                  });
-              });
-          });
-        </script> -->
 
 
 
