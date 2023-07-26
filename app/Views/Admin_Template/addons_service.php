@@ -194,6 +194,7 @@
                           // $('#serviceImageInput').val(response.service_image);
                           $('#addonsid').val(response.id);
                           // $('#editServiceModal').modal('show');
+
                       }
                   }); 
                });

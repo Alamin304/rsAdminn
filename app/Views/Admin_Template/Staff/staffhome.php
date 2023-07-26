@@ -1,12 +1,6 @@
 <?= $this->extend('Admin_Template/index') ?> 
 <?= $this->section('staffhomecontent') ?>
 
-
-
-
-
-
-
     <style>
         #nameList {
             float: left;
@@ -21,9 +15,6 @@
             border: 1px solid #ccc;
         }
     </style>
-
-
-
 
 
 
@@ -70,11 +61,12 @@
          <?php foreach ($data as $value): ?>
         <ul id="names">
             <li class="nameItem" data-id="<?= $value['id'] ?>"><strong><?php echo $value['Name']; ?></strong></li>
+            <a class="deleteButton" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
         </ul>
         <?php endforeach; ?>
     </div>
     <div id="content">
-        <p id="selectedNameContent"> <input type="text" name="Id" id="idInput" value="">
+         <input type="text" name="Id" id="idInput" value="">
         
 
         <form method="POST" id="staffupdateform" action="" class="form-horizontal" role="form">
@@ -142,27 +134,25 @@
                      <div class="form-group">
                     <label for="Service" class="col-md-4 control-label">Service:</label>
                     <div class="col-md-6">
-                    <select class="selectpicker" multiple data-live-search="true" id="service" name ="service">
+                    <select class="selectpicker" multiple data-live-search="true" id="service" name ="service[]">
                     <?php foreach ($data2 as $value2): ?>
                     <option value="<?php echo $value2['id']; ?>"><?php echo $value2['service_title']; ?></option>
                     <?php endforeach; ?>
                     </select>
                     </div>
                     </div>
-                
                      <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                         <button type="submit" name="submit" id="submit" class="btn btn-primary save">Save</button>
                         </div>
                      </div>
-                     
                   </form>
                     </p>
                     </div>
+                    
 
+                    
     <div id="content">
-        <p id="selectedNameContent"> <input type="text" name="Id" id="idInput" value="">
-
         <div class="table-responsive ser_staffpayment_append">
     <table id="staff-payments-details" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
@@ -174,13 +164,12 @@
                 <th>Order Date</th>
                 <th>Order Time</th>
                 <th>Commission</th>
-                
-                <th>Action</th>
+
             </tr>
         </thead>
         <tbody>
+        <?php foreach ($data1 as $value1): ?>
             <tr>
-            <?php foreach ($data1 as $value1): ?>
                 <td>1</td>
                 <td><?= $value1['client']?></td>
                 <td><?= $value1['staff_name']?></td>
@@ -189,23 +178,57 @@
                 <td><?= $value1['order_time']?></td>
                 <td><?= $value1['commission_total']?></td>
                 <td>
-                    <button class="btn btn-primary btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
+                <!-- <a href="#" class="btn btn-warning btn-sm editbtn" data-id="<?php //echo $value1['id']; ?>">
+                  <i class="fa fa-pencil"></i> Edit
+                </a>
+                    <a href="#" class="btn btn-danger btn-sm Deletebtn" data-id="<?php //echo $value1['id']; ?>">
+                  <i class="fa fa-trash"></i> Delete
+                </a> -->
+                    
                 </td>
-                <?php endforeach; ?>
             </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
-</div>
+   </div>
     </p>
     </div>
 
+    
 
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".selectpicker").select2();
+        });
+    </script>
+
+<!-- ---for delete--- -->
 
 
-
-
+<script>
+$(document).ready(function() {
+    $('.deleteButton').click(function(e) {
+        e.preventDefault();
+        var staffId = $(this).data('id');
+        console.log (staffId);
+        $.ajax({
+            url: "<?php echo base_url('delete_staff/') ?>" + staffId,
+            type: "POST",
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    window.location.reload();
+                } else {
+                    alert(response.message);
+                }
+            },
+           
+        });
+    });
+});
+</script>
 
 
 
@@ -230,7 +253,7 @@
                           $('#country').val(response.country);
                           $('#zip').val(response.zip);
                         //   $('#booking').val(response.Booking);
-                        //   $('#service').val(response.service_title);
+                        //   $('#service').val(response.service);
 
                           $('#idInput').val(response.id);
                         //   $('#editModal').modal('show');
@@ -281,22 +304,23 @@
                     var passwordErr = $('#passwordErr');
                     var formData = $("#myForm").serialize();
                     console.log(formData);
-                    $.ajax({
-                    url: " <?php echo base_url('add_staff') ?> ",
-                    type: 'POST',
-                    data: formData,
-                    dataType: "json",
-                    success: function(response) {
-                        nameErr.text(response.name ? response.name.message : '');
-                        emailErr.text(response.email ? response.email.message : '');
-                        passwordErr.text(response.password ? response.password.message : '');
-                        if (response.success) {
-                        alert(response.success.message);
-                        $('#myForm')[0].reset();
-                        window.location.reload();
+
+                        $.ajax({
+                        url: " <?php echo base_url('add_staff') ?> ",
+                        type: 'POST',
+                        data: formData,
+                        dataType: "json",
+                        success: function(response) {
+                            nameErr.text(response.name ? response.name.message : '');
+                            emailErr.text(response.email ? response.email.message : '');
+                            passwordErr.text(response.password ? response.password.message : '');
+                            if (response.success) {
+                            alert(response.success.message);
+                            $('#myForm')[0].reset();
+                            window.location.reload();
+                            }
                         }
-                    }
-                    });
+                        });
         
             });
         });
@@ -307,7 +331,27 @@
 
             <script>
                 $(document).ready(function() {
+
+                $('.selectpicker').on('change', function() {
+                var crmids = $(this).find('option:selected').map(function() {
+                return $(this).data('id');
+                }).get();
+                console.log(crmids);
+                });
+
                 $('#staffupdateform').submit(function(e) {e.preventDefault();
+
+                var crmids = $('.selectpicker').find('option:selected').map(function() {
+                return $(this).data('id');
+                }).get();
+                console.log(crmids);
+
+                var formData = $('#staffupdateform').serialize();
+                crmids.forEach(function(id) {
+                formData.append('service[]', id);
+                });
+
+
             $.ajax({
                 url: "<?php echo base_url('update_staff/').$value['id']?>",
                 type: "POST",

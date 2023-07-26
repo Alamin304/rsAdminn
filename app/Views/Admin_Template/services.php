@@ -249,7 +249,7 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription" value="" ></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary serviceupdate" data-id="">Save Changes</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription" value="" ></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="submit" name="submit" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
               });
             $('.editbtn').click(function() {
               var serviceId = $(this).data('id');
@@ -273,7 +273,7 @@
                   }); 
                });
             
-                  $('.serviceupdate').click(function() {
+                   $("body").delegate(".save", "click", function(){
                     // alert('abc');
                     var editserviceid = $(this).data('id');
                     console.log(editserviceid);
@@ -292,8 +292,8 @@
                       success: function(response) {
                         if (response.success) {
                           alert(response.message);
-                          $('#editServiceModal').modal('hide');
-                          window.location.reload();
+                          // $('#editServiceModal').modal('hide');
+                          // window.location.reload();
                                 }
                             }
                         });
@@ -343,7 +343,7 @@
         $("body").delegate(".myservice_status", "change", function() {
             var checkbox = $(this);
             var isChecked = checkbox.prop('checked') ? 1 : 0;
-            var statusMsg = isChecked ? 'Enabled' : 'Disabled';
+            var statusMsg = isChecked ? 'Enable' : 'Disable';
             $.ajax({
                 url: "<?php echo base_url('update_services_status/') ?>" + checkbox.data('id'), 
                 type: "POST",
@@ -353,7 +353,7 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.success) {
-                        alert('Status updated: ' + statusMsg);
+                        alert('Status  ' + statusMsg);
                     } else {
                         alert('Failed to update status.');
                     }

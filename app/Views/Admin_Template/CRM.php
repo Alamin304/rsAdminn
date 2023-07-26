@@ -175,9 +175,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <select class="multiple" multiple="multiple">
+                <select class="multiple" name="crmid[]" multiple="multiple">
                 <?php foreach ($data as $value): ?>
-                <option value="<?php echo $value['id']; ?>"><?php echo $value['first_name']; ?></option>
+                <option data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']; ?></option>
                 <?php endforeach; ?>
                 </select>
             
@@ -319,37 +319,74 @@
 
    <!-- ---For send Messages--- -->
 
-        <script>
-            $(document).ready(function() {
-            $("#openModal").click(function() {
+
+
+
+   <!-- <script>
+      $(document).ready(function() {
+          $('.multiple').on('change', function() {
+              var selectedIds = $(this).find('option:selected').map(function() {
+                  return $(this).data('id');
+              }).get();
+              console.log(selectedIds);
+          });
+      });
+    </script> -->
+
+
+    <script>
+    $(document).ready(function() {
+        $('.multiple').on('change', function() {
+            var crmids = $(this).find('option:selected').map(function() {
+                return $(this).data('id');
+            }).get();
+            console.log(crmids);
+        });
+
+        $("#openModal").click(function() {
             $("#mymessageModal").modal("show");
-             });
-              $('#MessageForm').submit(function(e) {
-                e.preventDefault();
-                var SubjectErr = $('#SubjectErr');
-                var MessageErr = $('#MessageErr');
-                // var AttachmentErr = $('#AttachmentErr');
-                $.ajax({
-                  url: " <?php echo base_url('add_Messages') ?> ",
-                  type: "POST",
-                  processData: false,
-                  contentType: false,
-                  data: new FormData($('#MessageForm')[0]),
-                  dataType: "json",
-                  success: function(response) {
+        });
+
+        $('#MessageForm').submit(function(e) {
+            e.preventDefault();
+
+            var SubjectErr = $('#SubjectErr');
+            var MessageErr = $('#MessageErr');
+            // var AttachmentErr = $('#AttachmentErr');
+
+            var crmids = $('.multiple').find('option:selected').map(function() {
+                return $(this).data('id');
+            }).get();
+            console.log(crmids);
+
+            var formData = new FormData($('#MessageForm')[0]);
+            crmids.forEach(function(id) {
+                formData.append('crm_id[]', id);
+            });
+
+            $.ajax({
+                url: "<?php echo base_url('add_Messages') ?>",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+                dataType: "json",
+                success: function(response) {
                     SubjectErr.text(response.Subject ? response.Subject.message : '');
                     MessageErr.text(response.Message ? response.Message.message : '');
                     // AttachmentErr.text(response.Attachment ? response.Attachment.message : '');
                     if (response.success) {
-                      alert(response.success.message);
-                      $('#MessageForm')[0].reset();
-                      window.location.reload();
+                        alert(response.success.message);
+                        $('#MessageForm')[0].reset();
+                        window.location.reload();
                     }
-                  }
-                });
-              });
+                }
             });
-        </script>
+        });
+    });
+</script>
+
+
 
 
 

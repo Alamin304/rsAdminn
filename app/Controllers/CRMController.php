@@ -234,10 +234,71 @@ class CRMController extends BaseController
         $SmsMessagesModel = new SmsMessagesModel();
         $data1 = $SmsMessagesModel->findAll();
 
+        $db = \Config\Database::connect();
+
+        $query = "SELECT * FROM crm left JOIN messages ON crm.id = messages.crm_id";
+
+        $result = $db->query($query);
+        $data3[] = $result->getResult();
+        // echo '<pre>';print_r($data3);die();
+
         return view('Admin_Template/messages', [
             'data'=>$data,
             'data1'=>$data1,
+            'data3'=>$data3,
             
+          
+        ]);
+
+    }
+
+    // ---For Showing Customer name ---
+
+    public function ShowCustomer($id)
+    {
+
+        $MessagesModel = new MessagesModel();
+        $data = $MessagesModel->find($id);
+
+        // $CrmModel = new CrmModel();
+        // $data2 = $CrmModel->findAll();
+
+        $db = \Config\Database::connect();
+
+        // $crmidsArray = json_decode($data['crm_id'], true);
+
+        // $myData = [];
+
+        // foreach ($data as $allvalue) {
+        //     $allvalue['crmid_messages'] = $db->table('crm')
+        //         ->where('id', $allvalue['crm_id'])
+        //         ->get()
+        //         ->getResult();
+
+        //         $myData[]=$allvalue;
+                
+        // }
+
+            $query = "SELECT * FROM crm left JOIN messages ON crm.id = messages.crm_id";
+
+            $result = $db->query($query);
+            $data3 = $result->getResult();
+
+
+
+        // echo '<pre>';
+        // print_r($data3);
+        // die();
+
+        
+
+        // $query = "SELECT crm.*, messages.*FROM messages JOIN crm ON crm.id = messages.crm_id";
+        //  $result = $db->query($query);
+        //  $data2 = $result->getResult();
+
+
+        return view('Admin_Template/messages', [
+            'data'=>$data,
           
         ]);
 
@@ -281,11 +342,16 @@ class CRMController extends BaseController
         if ($photos->isValid() && !$photos->hasMoved()) {
             $photos->move(ROOTPATH . 'public/MessageAttachment');
         }
+
+        $crmidsArray = $_POST['crm_id'];
+        $crmidsJSON = json_encode($crmidsArray);
+        // $crmidsArray = json_decode($row['crm_id'], true);
         $data = [
 
             'message_subject' => $this->request->getPost('Subject'),
             'message' => $this->request->getPost('Message'),
             'attachment' => $photos->getName(),
+            'crm_id' => $crmidsJSON,
             
             
             

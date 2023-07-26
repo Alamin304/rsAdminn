@@ -313,14 +313,14 @@ $id = $this->request->getPost('id');
                 'methodName' =>$name,
             ];
 
-            $ServicePriceModel->update([$id],$data);
+            $ServicePriceModel->update($id,$data);
             $response = [
                 'success' => true,
                 'message' => 'Data updated successfully.'
             ];
             return $this->response->setJSON($response);
         }
-        $data = $ServicePriceModel->find([$id]); 
+        $data = $ServicePriceModel->find($id); 
          return view('Admin_Template/service_pricing', ['data' => $data,]);
     }
 
@@ -629,6 +629,16 @@ public function AddAddonsService()
                 'data' => $data,
                 'successMessage' => $successMessage,
             ]);
+    }
+
+    public function EditUnitPricing($id)
+    {
+        $Unitprice = new UnitModel();
+        $data = $Unitprice->find($id);
+
+      return $this->response->setJSON($data);
+                // return view('Admin_Template/user');
+
     }
 
 

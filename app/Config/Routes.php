@@ -73,6 +73,7 @@ $routes->post('/add_staff', 'StaffController::AddStaff');
 // $routes->get('staff_details/(:any)', 'StaffController::EditUnitPricing/$1');
 $routes->get('edit_staff/(:any)', 'StaffController::EditStaff/$1');
 $routes->post('update_staff/(:any)', 'StaffController::UpdateStaff/$1');
+$routes->post('delete_staff/(:any)', 'StaffController::DeleteStaff/$1');
 
 
 
@@ -88,7 +89,7 @@ $routes->post('delete_CRM/(:any)', 'CRMController::DeleteCRM/$1');
 $routes->get('/messages', 'CRMController::Messages');
 $routes->post('/add_Messages', 'CRMController::AddMessages');
 
-
+$routes->get('/messages_customer/(:any)', 'CRMController::ShowCustomer/$1');
 $routes->get('/sms_messages', 'CRMController::SmsMessages');
 
 /*

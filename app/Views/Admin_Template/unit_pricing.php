@@ -138,32 +138,41 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Lable:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="button" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Lable:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="submit" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
               });
-            $('.editbtnab').click(function() {
+            $('.editbtn').click(function() {
               var unitpricingId = $(this).data('id');
-              console.log(pricingId);
-              $('.updatechange').data('id', unitpricingId);
+              console.log(unitpricingId);
+              // $('.updatechange').data('id', unitpricingId);
               
               $.ajax({
                       url: "<?php echo base_url('edit_unit_pricing/') ?>" + unitpricingId,
                       type: "GET",
                       dataType: "json",
                       success: function(response) {
-                          $('#serviceTitleInput').val(response.service_title);
-                          $('#idInput').val(response.id);
+                          $('#unitTitleInput').val(response.unit_name);
+                          $('#duration').val(response.duration);
+                          $('#baseprice').val(response.base_price);
+                          $('#minlimit').val(response.min_limit);
+                          $('#maxlimit').val(response.max_limit);
+                          $('#optionallabel').val(response.optional_label)
+                          $('#optionalunitsymbol').val(response.optional_unit_symbol)
+
+                          
+                          $('#idput').val(response.id);
+
                       }
                   }); 
                });
             
                   $('.updatechange').click(function() {
-                    var editserviceid = $(this).data('id');
-                    console.log(editserviceid);
+                    var unitpricingid = $(this).data('id');
+                    console.log(unitpricingid);
                     var title = $('#serviceTitleInput').val();
                   
                   
                     $.ajax({
-                      url: "<?php echo base_url('update_service/') ?>" + editserviceid,
+                      url: "<?php echo base_url('update_service/') ?>" + unitpricingid,
                       type: "POST",
                       data: { color_tag: color, service_title: title, service_description: description },
                       dataType: "json",
@@ -221,7 +230,7 @@
         $("body").delegate(".myservice_status", "change", function() {
             var checkbox = $(this);
             var isChecked = checkbox.prop('checked') ? 1 : 0;
-            var statusMsg = isChecked ? 'Enabled' : 'Disabled';
+            var statusMsg = isChecked ? 'Enable' : 'Disable';
             $.ajax({
                 url: "<?php echo base_url('update_unit_status/') ?>" + checkbox.data('id'), 
                 type: "POST",
@@ -231,7 +240,7 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.success) {
-                        alert('Status updated: ' + statusMsg);
+                        alert('Status ' + statusMsg);
                     } else {
                         alert('Failed to update status.');
                     }

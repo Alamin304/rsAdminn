@@ -1,18 +1,21 @@
 <?= $this->extend('Admin_Template/index') ?>
 <?= $this->section('CRM_Messages_content') ?>
 
+
+
+
+  
+
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
     <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Email Messages</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link active" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="true">SMS Messages</a>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
     <div class="table-responsive ser_staffpayment_append">
-      <table id="staffdetails" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
+      <table id="messagesdetails" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th>Subject</th>
@@ -27,44 +30,10 @@
           <tr>
             <td><?= $value['message_subject']?></td>
             <td><?= $value['message']?></td>
-            <td><a href="<?php echo base_url('MessageAttachment/'.$value['attachment']. $value['id']); ?>" class="btn btn-warning btn-sm editbtn">See Attachment</a></td>
+            <td><a href="<?php echo base_url('MessageAttachment/'.$value['attachment']); ?>" class="btn btn-warning btn-sm editbtn">See Attachment</a></td>
             <td><?= $value['date']?></td>
             <td>
-              <a href="<?php echo base_url('edit_CRM/'. $value['id']); ?>" class="btn btn-warning btn-sm editbtn">
-                <i class="fa fa-pencil"></i> Edit
-              </a>
-              <a href="#" class="btn btn-danger btn-sm Deletebtn" data-id="<?php echo $value['id']; ?>">
-                <i class="fa fa-trash"></i> Delete
-              </a>
-            </td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="tab-pane fade show active" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-  <div class="table-responsive ser_staffpayment_append">
-      <table id="smsdetails" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-          <tr>
-            <th>Messages</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($data1 as $value1): ?>
-          <tr>
-            <td><?= $value1['messages']?></td>
-            <td><?= $value1['date']?></td>
-            <td>
-              <a href="<?php echo base_url('edit_CRM/'. $value1['id']); ?>" class="btn btn-warning btn-sm editbtn">
-                <i class="fa fa-pencil"></i> Edit
-              </a>
-              <a href="#" class="btn btn-danger btn-sm Deletebtn" data-id="<?php echo $value1['id']; ?>">
-                <i class="fa fa-trash"></i> Delete
-              </a>
+            <button type="button" class="btn btn-primary usersbtn" data-id="<?= $value['id'] ?>"> <i class="fas fa-users"></i><span class="nav-text"></span></button>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -74,5 +43,89 @@
   </div>
 </div>
 
+
+
+
+
+<!-- Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Customer List</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            <p>ID: <span id="customerId"></span></p>
+                <ul>
+                    <li>Name: <span id="customer"></span></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+      $(document).ready(function() {
+
+      $(".usersbtn").click(function() {
+        var id = $(this).data('id');
+        console.log(id);
+        $("#customerId").text(id);
+        
+
+          $("#myModal").modal("show");
+      });
+    });
+  </script>
+
+
+<!-- 
+<script>
+      $(document).ready(function() {
+
+      $(".usersbtn").click(function() {
+        var custid = $(this).data('id');
+        console.log(custid);
+        // $("#customerId").text(id);
+          $.ajax({
+                      url: "<?php //echo base_url('messages_customer/') ?>" + custid,
+                      type: "GET",
+                      dataType: "json",
+                      success: function(response) {
+                          $('#customer').val(response.crm_id);
+                        
+                        $("#customerId").text(custid);
+                          $("#myModal").modal("show");
+                      }
+                  });
+
+      });
+    });
+  </script> -->
+
+
+
+<!-- ---for Downloading table Data----- -->
+
+<script>
+        $(document).ready(function() {
+            $('#messagesdetails').DataTable( {
+            searching: true,
+            info : true,
+            paging: true,
+            dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf'
+            ]
+        });
+        });
+        </script>
 
 <?= $this->endSection() ?>

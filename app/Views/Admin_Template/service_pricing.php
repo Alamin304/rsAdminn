@@ -48,9 +48,11 @@
             <th>Delete</th>
           </tr>
         </thead>
-        <?php foreach ($data as $value): ?>
         <tbody>
-          <tr>
+        <?php 
+        $i=1;
+        foreach ($data as $value): ?>
+          <tr id = "trid<?php echo $i?>" >
             <td>
               <div class="service-info">
                 <span class="service-title"><?php echo $value['methodName']; ?> </span>
@@ -85,13 +87,12 @@
                   <i class="fa fa-trash"></i> Delete
                 </a>
               </div>
-             
             </td>
-            
           </tr>
+          <?php
+        $i++;
+        endforeach; ?>
         </tbody>
-        
-        <?php endforeach; ?>
       </table>
       
       <div class="modal-body">
@@ -158,13 +159,13 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <label for="methodTitle"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" class="btn btn-primary updateprice">Update</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodTitle"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="submit" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
                 
               });
             $('.editbtn').click(function() {
               var pricingId = $(this).data('id');
               console.log(pricingId);
-              // $('.updateprice').data('id', pricingId);
+              // $('.save').data('id', pricingId);
               
               $.ajax({
                       url: "<?php echo base_url('edit_service_pricing/') ?>" + pricingId,
@@ -183,12 +184,12 @@
                     // var pricingId = $(this).data('id');
                     // console.log(pricingId);
 
-                    $('.updateprice').click(function() {
+                      // $('.save').click(function() {
+                      $("body").delegate(".save", "click", function(){
                       // alert('abc');
                       var pricingId = $(this).data('id');
                       console.log(pricingId);
                     
-                  
                     $.ajax({
                       url: "<?php echo base_url('update_service_pricing/') ?>" + pricingId,
                       type: 'POST',
@@ -198,7 +199,7 @@
                         if (response.success) {
                           alert(response.message);
                           
-                          window.location.reload();
+                          // window.location.reload();
                                 }
                             }
                         });
@@ -245,7 +246,7 @@
             $("body").delegate(".myservice_status", "change", function() {
                 var checkbox = $(this);
                 var isChecked = checkbox.prop('checked') ? 1 : 0;
-                var statusMsg = isChecked ? 'Enabled' : 'Disabled';
+                var statusMsg = isChecked ? 'Enable' : 'Disable';
                 $.ajax({
                     url: "<?php echo base_url('update_services_pricing_status/') ?>" + checkbox.data('id'), 
                     type: "POST",
@@ -255,7 +256,7 @@
                     dataType: "json",
                     success: function(response) {
                         if (response.success) {
-                            alert('Status updated: ' + statusMsg);
+                            alert('Status ' + statusMsg);
                         } else {
                             alert('Failed to update status.');
                         }

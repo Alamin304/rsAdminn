@@ -48,7 +48,6 @@ class StaffController extends BaseController
     public function AddStaff()
     {
     
-       
         $validation = \Config\Services::validation();
 
         $rules = [
@@ -140,7 +139,9 @@ class StaffController extends BaseController
             $zip = $this->request->getPost('zip');
             // $Booking = $this->request->getPost('Booking');
             $Booking = $this->request->getPost('Booking') === 'on' ? 1 : 0;
-            $service = $this->request->getPost('service');
+            // $service = $this->request->getPost('service');
+            $serviceidsArray = $_POST['service'];
+            $service = json_encode($serviceidsArray);
            
            
             $data = [
@@ -169,6 +170,25 @@ class StaffController extends BaseController
         $data = $StaffModel->find([$id]); 
          return view('Admin_Template/Staff/stafhome', ['data' => $data,]);
     }
+
+
+
+    public function DeleteStaff($id)
+    {
+        $StaffModel = new AllStaffModel();
+        $data = $StaffModel->find($id);
+
+        if ($data) {
+            $StaffModel->delete($id);
+
+            $response = [
+                'success' => true,
+                'message' => 'Staff deleted successfully.'
+            ];
+        } 
+     return $this->response->setJSON($response);
+    }
+
 
 
 
