@@ -144,7 +144,7 @@
         <?php foreach ($data as $value): ?>
             <tr>
             
-                <td><?= $value['first_name']?></td>
+                <td><?= $value['first_name']." " .$value['last_name'];?></td>
                 <td><?= $value['preferred_email_address']?></td>
                 <td><?= $value['phone']?></td>
                 <td><?= $value['zip_code']?></td>
@@ -175,9 +175,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <select class="multiple" name="crmid[]" multiple="multiple">
+                <select class="multiple" style="width:200px;" name="crmid[]" multiple="multiple">
                 <?php foreach ($data as $value): ?>
-                <option data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']; ?></option>
+                <option data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']." " .$value['last_name']; ?></option>
                 <?php endforeach; ?>
                 </select>
             
@@ -259,31 +259,31 @@
                     var noteErr = $('#noteErr');
                     var formData = $("#myForm").serialize();
                     console.log(formData);
-                    $.ajax({
-                    url: " <?php echo base_url('add_CRM') ?> ",
-                    type: 'POST',
-                    data: formData,
-                    dataType: "json",
-                    success: function(response) {
-                        
-                        emailErr.text(response.email ? response.email.message : '');
-                        passwordErr.text(response.password ? response.password.message : '');
-                        nameErr.text(response.firstname ? response.firstname.message : '');
-                        lastnameErr.text(response.lastname ? response.lastname.message : '');
-                        phoneErr.text(response.phone ? response.phone.message : '');
-                        streetErr.text(response.street ? response.street.message : '');
-                        zipErr.text(response.zip ? response.zip.message : '');
-                        cityErr.text(response.city ? response.city.message : '');
-                        stateErr.text(response.state ? response.state.message : '');
-                        noteErr.text(response.note ? response.note.message : '');
+                        $.ajax({
+                        url: " <?php echo base_url('add_CRM') ?> ",
+                        type: 'POST',
+                        data: formData,
+                        dataType: "json",
+                        success: function(response) {
+                            
+                            emailErr.text(response.email ? response.email.message : '');
+                            passwordErr.text(response.password ? response.password.message : '');
+                            nameErr.text(response.firstname ? response.firstname.message : '');
+                            lastnameErr.text(response.lastname ? response.lastname.message : '');
+                            phoneErr.text(response.phone ? response.phone.message : '');
+                            streetErr.text(response.street ? response.street.message : '');
+                            zipErr.text(response.zip ? response.zip.message : '');
+                            cityErr.text(response.city ? response.city.message : '');
+                            stateErr.text(response.state ? response.state.message : '');
+                            noteErr.text(response.note ? response.note.message : '');
 
-                        if (response.success) {
-                        alert(response.success.message);
-                        $('#myForm')[0].reset();
-                        window.location.reload();
+                            if (response.success) {
+                            alert(response.success.message);
+                            $('#myForm')[0].reset();
+                            window.location.reload();
+                            }
                         }
-                    }
-                    });
+                        });
         
             });
         });

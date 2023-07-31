@@ -126,6 +126,10 @@ class StaffController extends BaseController
         $StaffModel = new AllStaffModel();
         $data = $StaffModel->find($id);
 
+        // $photos = $this->request->getFile('photos');
+        // if ($photos->isValid() && !$photos->hasMoved()) {
+        //     $photos->move(ROOTPATH . 'public/staff');
+        // }
         
         if ($this->request->getMethod() === 'post') {
             $name = $this->request->getPost('name');
@@ -142,6 +146,7 @@ class StaffController extends BaseController
             // $service = $this->request->getPost('service');
             $serviceidsArray = $_POST['service'];
             $service = json_encode($serviceidsArray);
+            // $photos = $this->request->getfile('photos')->getName();
            
            
             $data = [
@@ -156,6 +161,7 @@ class StaffController extends BaseController
                 'zip' => $zip,
                 'Booking' => $Booking,
                 'service' => $service,
+                // 'staff_image'=> $photos,
                
 
             ];
@@ -188,8 +194,6 @@ class StaffController extends BaseController
         } 
      return $this->response->setJSON($response);
     }
-
-
 
 
 }

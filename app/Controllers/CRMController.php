@@ -234,18 +234,18 @@ class CRMController extends BaseController
         $SmsMessagesModel = new SmsMessagesModel();
         $data1 = $SmsMessagesModel->findAll();
 
-        $db = \Config\Database::connect();
+        // $db = \Config\Database::connect();
 
-        $query = "SELECT * FROM crm left JOIN messages ON crm.id = messages.crm_id";
+        // $query = "SELECT * FROM messages right JOIN crm ON messages.id = crm.id";
 
-        $result = $db->query($query);
-        $data3[] = $result->getResult();
-        // echo '<pre>';print_r($data3);die();
+        // $result = $db->query($query);
+        // $data3 = $result->getResult();
+
 
         return view('Admin_Template/messages', [
             'data'=>$data,
             'data1'=>$data1,
-            'data3'=>$data3,
+            // 'data3'=>$data3,
             
           
         ]);
@@ -260,8 +260,17 @@ class CRMController extends BaseController
         $MessagesModel = new MessagesModel();
         $data = $MessagesModel->find($id);
 
-        // $CrmModel = new CrmModel();
-        // $data2 = $CrmModel->findAll();
+        // echo '<pre>';
+        // print_r($data);
+        // die();
+
+
+        $CrmModel = new CrmModel();
+        $data2 = $CrmModel->findAll();
+        
+        // echo '<pre>';
+        // print_r($data2);
+        // die();
 
         $db = \Config\Database::connect();
 
@@ -279,16 +288,14 @@ class CRMController extends BaseController
                 
         // }
 
-            $query = "SELECT * FROM crm left JOIN messages ON crm.id = messages.crm_id";
+            $query = "SELECT * FROM messages right JOIN crm ON messages.id = crm.id";
 
             $result = $db->query($query);
             $data3 = $result->getResult();
 
-
-
-        // echo '<pre>';
-        // print_r($data3);
-        // die();
+            // echo '<pre>';
+            // print_r($data3);
+            // die();
 
         
 
@@ -299,6 +306,7 @@ class CRMController extends BaseController
 
         return view('Admin_Template/messages', [
             'data'=>$data,
+            'data3' => $data3,
           
         ]);
 
@@ -366,7 +374,7 @@ class CRMController extends BaseController
             $response = [
                 'success' => [
                     'status' => 'ok',
-                    'message' => 'Data inserted successfully.',
+                    'message' => 'Messages Sent successfully.',
                 ],
             ];
             return json_encode($response);

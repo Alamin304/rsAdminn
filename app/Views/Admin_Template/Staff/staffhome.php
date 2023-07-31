@@ -61,6 +61,7 @@
          <?php foreach ($data as $value): ?>
         <ul id="names">
             <li class="nameItem" data-id="<?= $value['id'] ?>"><strong><?php echo $value['Name']; ?></strong></li>
+            <img style="width:40px; height:40px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
             <a class="deleteButton" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
         </ul>
         <?php endforeach; ?>
@@ -134,7 +135,7 @@
                      <div class="form-group">
                     <label for="Service" class="col-md-4 control-label">Service:</label>
                     <div class="col-md-6">
-                    <select class="selectpicker" multiple data-live-search="true" id="service" name ="service[]">
+                    <select class="selectpicker" style="width:200px;" multiple data-live-search="true" id="service" name ="service[]">
                     <?php foreach ($data2 as $value2): ?>
                     <option value="<?php echo $value2['id']; ?>"><?php echo $value2['service_title']; ?></option>
                     <?php endforeach; ?>
@@ -266,7 +267,6 @@ $(document).ready(function() {
                   var edituserid = $(this).data('id');
                   console.log(edituserid);
                   
-
                   $.ajax({
                       url: "<?php echo base_url('update_staff/') ?>" + edituserid,
                       type: "POST",
@@ -275,7 +275,7 @@ $(document).ready(function() {
                       success: function(response) {
                           if (response.success) {
                               alert(response.message);
-                              $('#editModal').modal('hide');
+                            //   $('#editModal').modal('hide');
                               window.location.reload();
                           }
                       }
@@ -355,7 +355,8 @@ $(document).ready(function() {
             $.ajax({
                 url: "<?php echo base_url('update_staff/').$value['id']?>",
                 type: "POST",
-                data: $('#staffupdateform').serialize(),
+                // data: $('#staffupdateform').serialize(),
+                data:formData,
                 dataType: "json",
                 success: function(response)
                 {

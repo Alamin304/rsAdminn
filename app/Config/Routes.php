@@ -89,7 +89,7 @@ $routes->post('delete_CRM/(:any)', 'CRMController::DeleteCRM/$1');
 $routes->get('/messages', 'CRMController::Messages');
 $routes->post('/add_Messages', 'CRMController::AddMessages');
 
-$routes->get('/messages_customer/(:any)', 'CRMController::ShowCustomer/$1');
+$routes->get('messages_customer/(:any)', 'CRMController::ShowCustomer/$1');
 $routes->get('/sms_messages', 'CRMController::SmsMessages');
 
 /*

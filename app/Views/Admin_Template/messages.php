@@ -2,7 +2,15 @@
 <?= $this->section('CRM_Messages_content') ?>
 
 
+<style>
 
+.badge-danger{padding: 3px 5px !important;
+    border: 1px solid !important;
+    top: initial !important;
+    margin: -11px 0px !important;
+    position: absolute !important;
+}
+</style>
 
   
 
@@ -33,7 +41,8 @@
             <td><a href="<?php echo base_url('MessageAttachment/'.$value['attachment']); ?>" class="btn btn-warning btn-sm editbtn">See Attachment</a></td>
             <td><?= $value['date']?></td>
             <td>
-            <button type="button" class="btn btn-primary usersbtn" data-id="<?= $value['id'] ?>"> <i class="fas fa-users"></i><span class="nav-text"></span></button>
+            <button type="button" class="btn btn-primary usersbtn" data-id="<?= $value['id'] ?>"> <i class="fas fa-users"></i><span class="nav-text"></span>
+            <span class="badge badge-danger"><?= count(json_decode($value['crm_id']))?></span></button>
             </td>
           </tr>
           <?php endforeach; ?>
@@ -58,7 +67,9 @@
             <div class="modal-body">
             <p>ID: <span id="customerId"></span></p>
                 <ul>
-                    <li>Name: <span id="customer"></span></li>
+                
+                    <li> <span id="customer"></span></li>
+                   
                 </ul>
             </div>
             <div class="modal-footer">
@@ -71,7 +82,7 @@
 
 
 
-<script>
+<!-- <script>
       $(document).ready(function() {
 
       $(".usersbtn").click(function() {
@@ -83,32 +94,33 @@
           $("#myModal").modal("show");
       });
     });
-  </script>
+  </script> -->
 
 
-<!-- 
+
 <script>
       $(document).ready(function() {
 
       $(".usersbtn").click(function() {
         var custid = $(this).data('id');
         console.log(custid);
+        $("#customerId").text(custid);
+          $("#myModal").modal("show");
         // $("#customerId").text(id);
           $.ajax({
-                      url: "<?php //echo base_url('messages_customer/') ?>" + custid,
-                      type: "GET",
-                      dataType: "json",
-                      success: function(response) {
-                          $('#customer').val(response.crm_id);
-                        
-                        $("#customerId").text(custid);
-                          $("#myModal").modal("show");
-                      }
-                  });
+                url: "<?php echo base_url('messages_customer/') ?>" + custid,
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    $('#customer').val(response.crm_id);
+                  
 
-      });
-    });
-  </script> -->
+                }
+            });
+
+          });
+        });
+  </script>
 
 
 
