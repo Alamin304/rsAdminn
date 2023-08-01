@@ -253,19 +253,19 @@ public function AddServicePricing()
             ];
             return json_encode($response);
         }
-$id = $this->request->getPost('id');
-// echo $id;
-// die();
-        $ServicePriceModel = new ServicePriceModel();
-        $data = [
+            $id = $this->request->getPost('id');
+            // echo $id;
+            // die();
+            $ServicePriceModel = new ServicePriceModel();
+            $data = [
 
             'methodName' => $this->request->getPost('methodName'),
             'services_id' => $id,
            
             
             
-        ];
-                $ServicePriceModel->insert($data);
+            ];
+            $ServicePriceModel->insert($data);
             
             $data = $ServicePriceModel->findAll();
             // echo '<pre>';
@@ -447,6 +447,7 @@ public function AddAddonsService()
 
         $Addons = new AddonsModel();
         $id = $this->request->getPost('id');
+
         $images = $this->request->getFile('image');
         if ($images->isValid() && !$images->hasMoved()) {
             $images->move(ROOTPATH . 'public/addons_service_photos');
@@ -494,6 +495,51 @@ public function AddAddonsService()
                 // return view('Admin_Template/user');
 
     }
+
+
+
+
+    public function UpdateAddonsService($id) 
+    {
+
+        $Addons = new AddonsModel();
+        $data = $Addons->find($id);
+
+        $images = $this->request->getFile('image');
+        if ($images->isValid() && !$images->hasMoved()) {
+            $images->move(ROOTPATH . 'public/addons_service_photos');
+        }
+        
+        if ($this->request->getMethod() === 'post') {
+            $name = $this->request->getPost('titleName');
+            $duration = $this->request->getPost('duration');
+            $price = $this->request->getPost('price');
+            $maxqty = $this->request->getPost('maxqty');
+            $mulqty = $this->request->getPost('mulqty');
+
+
+            $data = [
+                'addon_title' =>$name,
+                'duration' =>$duration,
+                // 'addons_service_image' => $images->getName(),
+                'basic_price' =>$minlimit,
+                'max_qty' =>$maxlimit,
+                'multiple_qty' =>$optionallabel,
+                
+
+            ];
+
+            $Addons->update($id,$data);
+            $response = [
+                'success' => true,
+                'message' => 'Data updated successfully.'
+            ];
+            return $this->response->setJSON($response);
+        }
+        $data = $Addons->find($id); 
+        return view('Admin_Template/unit_pricing', ['data' => $data,]);
+
+       }
 
 
 
@@ -640,6 +686,51 @@ public function AddAddonsService()
                 // return view('Admin_Template/user');
 
     }
+
+
+
+
+
+            public function UpdateUnitPricing($id) 
+            {
+
+                $Unitprice = new UnitModel();
+                $data = $Unitprice->find($id);
+
+                
+                if ($this->request->getMethod() === 'post') {
+                    $name = $this->request->getPost('unitTitle');
+                    $duration = $this->request->getPost('duration');
+                    $baseprice = $this->request->getPost('baseprice');
+                    $minlimit = $this->request->getPost('minlimit');
+                    $maxlimit = $this->request->getPost('maxlimit');
+                    $optionallabel = $this->request->getPost('optionallabel');
+                    $optionalunitsymbol = $this->request->getPost('optionalunitsymbol');
+
+
+                    $data = [
+                        'unit_name' =>$name,
+                        'duration' =>$duration,
+                        'base_price' =>$baseprice,
+                        'min_limit' =>$minlimit,
+                        'max_limit' =>$maxlimit,
+                        'optional_label' =>$optionallabel,
+                        'optional_unit_symbol' =>$optionalunitsymbol,
+
+                    ];
+
+                    $Unitprice->update($id,$data);
+                    $response = [
+                        'success' => true,
+                        'message' => 'Data updated successfully.'
+                    ];
+                    return $this->response->setJSON($response);
+                }
+                $data = $Unitprice->find($id); 
+                return view('Admin_Template/unit_pricing', ['data' => $data,]);
+
+               }
+
 
 
     public function DeleteUnitPricing($id)

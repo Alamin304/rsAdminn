@@ -137,7 +137,7 @@
                     <div class="col-md-6">
                     <select class="selectpicker" style="width:200px;" multiple data-live-search="true" id="service" name ="service[]">
                     <?php foreach ($data2 as $value2): ?>
-                    <option value="<?php echo $value2['id']; ?>"><?php echo $value2['service_title']; ?></option>
+                    <option selected value="<?php echo $value2['id']; ?>"><?php echo $value2['service_title']; ?></option>
                     <?php endforeach; ?>
                     </select>
                     </div>

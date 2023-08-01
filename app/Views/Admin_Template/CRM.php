@@ -18,8 +18,22 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <div class="modal-body">
-                      <form method="POST" id="MessageForm" action="" class="form-horizontal" enctype="multipart/form-data" role="form">
+
+                        <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="ex1-tab-1" data-mdb-toggle="tab" href="#ex1-tabs-1" role="tab" aria-controls="ex1-tabs-1" aria-selected="true">Email</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="tab" href="#ex1-tabs-2" role="tab" aria-controls="ex1-tabs-2" aria-selected="false">SMS</a>
+                        </li>
+                        </ul>
+                        <div class="tab-content" id="ex1-content">
+                        <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+
+
+                        <div class="modal-body">
+                    <!-- <h3>Email</h2> -->
+                      <form method="POST" id="MessageForm" action="" class="form-horizontal" role="form">
                         <div class="form-group">
                           <label for="Subject">Subject:</label>
                           <input type="text" name="Subject" class="form-control" id="Subject" placeholder="Write your Subject">
@@ -37,9 +51,24 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       <button type="submit" name="submit" id="submit" class="btn btn-primary">Submit</button>
                     </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+
+                        <div class="form-group">
+                          <label for="Message">Message:</label>
+                          <textarea type="text" name="SmsMessage" class="form-control" id="SmsMessage" placeholder="Write your Sms Message" value=""></textarea>
+                          <span style="color:red;" id="SmsMessageErr"></span>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" name="submit" id="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        </div>
+                    </div>
+
+                    
                   </div>
                   </form>
                 </div>
@@ -177,7 +206,7 @@
             <div class="col-md-6">
                 <select class="multiple" style="width:200px;" name="crmid[]" multiple="multiple">
                 <?php foreach ($data as $value): ?>
-                <option data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']." " .$value['last_name']; ?></option>
+                <option selected data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']." " .$value['last_name']; ?></option>
                 <?php endforeach; ?>
                 </select>
             
@@ -188,7 +217,7 @@
       <i class="fas fa-users"></i><span class="nav-text">All Messages</span>
     </a>
     </div>
-        </div>
+    </div>
     </div>
 
 <!-- <div class="row">

@@ -91,6 +91,7 @@ $routes->post('/add_Messages', 'CRMController::AddMessages');
 
 $routes->get('messages_customer/(:any)', 'CRMController::ShowCustomer/$1');
 $routes->get('/sms_messages', 'CRMController::SmsMessages');
+$routes->post('/add_Sms_Messages', 'CRMController::AddSmsMessages');
 
 /*
  * --------------------------------------------------------------------

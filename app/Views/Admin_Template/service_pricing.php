@@ -159,7 +159,7 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodTitle"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="submit" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodName"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodName" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
                 
               });
             $('.editbtn').click(function() {
@@ -187,11 +187,11 @@
                       // $('.save').click(function() {
                       $("body").delegate(".save", "click", function(){
                       // alert('abc');
-                      var pricingId = $(this).data('id');
-                      console.log(pricingId);
+                      var pricing = $(this).data('id');
+                      console.log(pricing);
                     
                     $.ajax({
-                      url: "<?php echo base_url('update_service_pricing/') ?>" + pricingId,
+                      url: "<?php echo base_url('update_service_pricing/') ?>" + pricing,
                       type: 'POST',
                       data: $(this).serialize(),
                       dataType: "json",

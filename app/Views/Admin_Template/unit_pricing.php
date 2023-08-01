@@ -138,11 +138,11 @@
               $('.editbtn').click(function() {
                 // alert('abc');
               $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Lable:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="submit" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
+                $(this).parent().parent().parent().after('<tr class="editform" ><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Lable:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="button" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
               });
             $('.editbtn').click(function() {
               var unitpricingId = $(this).data('id');
-              console.log(unitpricingId);
+              // console.log(unitpricingId);
               // $('.updatechange').data('id', unitpricingId);
               
               $.ajax({
@@ -150,6 +150,8 @@
                       type: "GET",
                       dataType: "json",
                       success: function(response) {
+
+                        
                           $('#unitTitleInput').val(response.unit_name);
                           $('#duration').val(response.duration);
                           $('#baseprice').val(response.base_price);
@@ -157,35 +159,33 @@
                           $('#maxlimit').val(response.max_limit);
                           $('#optionallabel').val(response.optional_label)
                           $('#optionalunitsymbol').val(response.optional_unit_symbol)
-
-                          
                           $('#idput').val(response.id);
 
                       }
                   }); 
                });
-            
-                  $('.updatechange').click(function() {
-                    var unitpricingid = $(this).data('id');
-                    console.log(unitpricingid);
-                    var title = $('#serviceTitleInput').val();
+
+               $("body").delegate("#submit", "click", function(){
+                      // alert('abc');
+                    var unitpricing = $(this).data('id');
+                    console.log(unitpricing);
+                    
                   
                   
                     $.ajax({
-                      url: "<?php echo base_url('update_service/') ?>" + unitpricingid,
+                      url: "<?php echo base_url('update_unit_pricing/') ?>" + unitpricing,
                       type: "POST",
-                      data: { color_tag: color, service_title: title, service_description: description },
+                      data: $(this).serialize(),
                       dataType: "json",
-                      processData: false,
-                      contentType: false,
                       success: function(response) {
                         if (response.success) {
                           alert(response.message);
-                          $('#editServiceModal').modal('hide');
+         
                           window.location.reload();
                                 }
                             }
                         });
+                        
                   });
                 });
               </script>

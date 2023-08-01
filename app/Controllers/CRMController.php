@@ -388,19 +388,60 @@ class CRMController extends BaseController
 
 
 
-    // public function SmsMessages()
-    // {
+        public function AddSmsMessages()
+        {
 
-    //     $SmsMessagesModel = new SmsMessagesModel();
-    //     $data = $SmsMessagesModel->findAll();
+            $validation = \Config\Services::validation();
 
-    //     return view('Admin_Template/messages', [
-    //         'data'=>$data,
-            
-          
-    //     ]);
+            $rules = [
+                'SmsMessage' => 'required',
+                // 'Attachment' =>'required',
+            ];
+    
+            if (! $this->validate($rules)) {
+    
+                $response = [
+                    'SmsMessage' => [
+                        'status' => 'required',
+                        'message' => 'Please writte your Message',
+                    ],
+                ];
+                return json_encode($response);
+            }
+    
+            $MessagesModel = new MessagesModel();
+    
+            $crmidsArray = $_POST['crm_id'];
+            $crmidsJSON = json_encode($crmidsArray);
+            $data = [
+    
+                'messages' => $this->request->getPost('SmsMessage'),
+                'crm_id' => $crmidsJSON,
+                
+                
+                
+            ];
+               
+            $SmsMessagesModel = new SmsMessagesModel();
+            $data = $SmsMessagesModel->findAll();
+                // echo '<pre>';
+                // print_r($data);
+                // die();
+    
+                $response = [
+                    'success' => [
+                        'status' => 'ok',
+                        'message' => 'SMS Messages Sent successfully.',
+                    ],
+                ];
+                return json_encode($response);
+    
+                return view('Admin_Template/CRM', [
+                    'data' => $data,
+                    'successMessage' => $successMessage,
+                ]);
 
-    // }
+        }
 
 
 

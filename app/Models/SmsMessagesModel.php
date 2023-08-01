@@ -8,5 +8,5 @@ class SmsMessagesModel extends Model
 {
     protected $table = 'sms_messages'; 
     protected $primaryKey = 'id';
-    protected $allowedFields = ['messages','date',]; 
+    protected $allowedFields = ['messages','crm_id','date',]; 
 }
