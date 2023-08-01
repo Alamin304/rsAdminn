@@ -133,14 +133,15 @@ class ServicesController extends BaseController
                         $color = $this->request->getPost('color_setting');
                         $servicesTitle = $this->request->getPost('serviceTitle');
                         $desc = $this->request->getPost('serviceDescription');
-                        $image = $this->request->getPost('serviceImage');
-                        $img = $image->isValid() ? $image->getName() : $services['serviceImage'];
+                        // $photos = $this->request->getfile('serviceImage')->getName();
+                        // $image = $this->request->getPost('serviceImage');
+                        // $img = $image->isValid() ? $image->getName() : $services['serviceImage'];
                         
                         $data = [
-                            'color_tag' => color,
+                            'color_tag' => $color,
                             'service_title' => $servicesTitle,
                             'service_description' =>  $desc,
-                            'service_image' => $img->getName(),
+                            // 'service_image' => $photos,
                         ];
                         $ServiceModel->update($id, $data);
 

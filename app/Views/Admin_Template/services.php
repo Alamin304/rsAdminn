@@ -294,7 +294,7 @@
                         if (response.success) {
                           alert(response.message);
                           // $('#editServiceModal').modal('hide');
-                          // window.location.reload();
+                          window.location.reload();
                                 }
                             }
                         });
