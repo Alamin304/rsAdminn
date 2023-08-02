@@ -26,20 +26,26 @@ class StaffController extends BaseController
 
         $StaffModel = new AllStaffModel();
         $data = $StaffModel->findAll();
-
+        
         $StaffDetailsModel = new ServiceDetailsModel();
         $data1 = $StaffDetailsModel->findAll();
-        // echo '<pre>';print_r($data1);
-        // die();
-
+      
+        
         $ServiceModel = new AddServiceModel();
         $data2 = $ServiceModel->findAll();
-
+        
+    
+        // $matched_ids = [];
+        // foreach ($data as $value) {
+        //     $matched_ids[] = $value['service']; 
+        // }
+        //   echo '<pre>';print_r($matched_ids);die();
+        
         return view('Admin_Template/Staff/staffhome', [
-            'data'=>$data,
-            'data1'=>$data1,
+            'data' => $data,
+            'data1' => $data1,
             'data2' => $data2,
-          
+            // 'matched_ids' => $matched_ids,
         ]);
 
     }
@@ -52,26 +58,38 @@ class StaffController extends BaseController
 
         $rules = [
             'name' => 'required',
-            'email' => 'required',
-            'password' =>'required',
+            'email' => 'required|valid_email', 
+            'password' => 'required',
         ];
+    
 
-        if (! $this->validate($rules)) {
-
+        $validation->setRules($rules, [
+            'name' => [
+                'required' => 'Please enter a name.',
+            ],
+            'email' => [
+                'required' => 'Please enter an email.',
+                'valid_email' => 'Invalid email format.',
+            ],
+            'password' => [
+                'required' => 'Please enter a password.',
+            ],
+        ]);
+    
+        if (!$this->validate($rules)) {
             $response = [
                 'name' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a name',
+                    'status' => 'error',
+                    'message' => $validation->getError('name') ?: '',
                 ],
                 'email' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a email',
+                    'status' => 'error',
+                    'message' => $validation->getError('email') ?: '',
                 ],
                 'password' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a password',
+                    'status' => 'error',
+                    'message' => $validation->getError('password') ?: '',
                 ],
-                
             ];
             return json_encode($response);
         }
@@ -125,6 +143,9 @@ class StaffController extends BaseController
         
         $StaffModel = new AllStaffModel();
         $data = $StaffModel->find($id);
+        // echo '<pre>';
+        // print_r($data);
+        // die();
 
         // $photos = $this->request->getFile('photos');
         // if ($photos->isValid() && !$photos->hasMoved()) {
@@ -166,14 +187,14 @@ class StaffController extends BaseController
 
             ];
 
-            $StaffModel->update([$id],$data);
+            $StaffModel->update($id,$data);
             $response = [
                 'success' => true,
                 'message' => 'Data updated successfully.'
             ];
             return $this->response->setJSON($response);
         }
-        $data = $StaffModel->find([$id]); 
+        $data = $StaffModel->find($id); 
          return view('Admin_Template/Staff/stafhome', ['data' => $data,]);
     }
 

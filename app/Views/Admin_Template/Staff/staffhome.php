@@ -54,30 +54,48 @@
 
 
 
-    <div class="sidebar-header">
+<div class="sidebar-header">
         <button type="button" class="btn btn-primary" id="openModalBtn">Add Staff</button>
     </div>
     <div id="nameList">
-         <?php foreach ($data as $value): ?>
-        <ul id="names">
-            <li class="nameItem" data-id="<?= $value['id'] ?>"><strong><?php echo $value['Name']; ?></strong></li>
-            <img style="width:40px; height:40px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
-            <a class="deleteButton" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
-        </ul>
+    <ul id="names">
+        <?php foreach ($data as $value): ?>
+        
+            <li class="nameItem d-flex align-items-center mb-2" data-id="<?= $value['id'] ?>">
+               <div class ="d-flex align-items-center gap-2" >
+               <img style="width:40px; height:40px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
+                <strong><?php echo $value['Name']; ?></strong>
+               </div>
+                <a class="deleteButton ms-auto" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
+            </li>
+            
+            
+       
         <?php endforeach; ?>
+        </ul>
     </div>
     <div id="content">
-         <input type="text" name="Id" id="idInput" value="">
-        
+        <ul class="nav nav-tabs mt-3" id="myTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="staffInfoTab" data-bs-toggle="tab" href="#staffInfo" role="tab" aria-controls="staffInfo" aria-selected="true">Staff Information</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="staffPaymentsTab" data-bs-toggle="tab" href="#staffPayments" role="tab" aria-controls="staffPayments" aria-selected="false">Service Details</a>
+            </li>
+        </ul>
 
-        <form method="POST" id="staffupdateform" action="" class="form-horizontal" role="form">
-                     <div class="form-group">
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="staffInfo" role="tabpanel" aria-labelledby="staffInfoTab">
+                <input type="text" name="Id" id="idInput" value="">
+                <form method="POST" id="staffupdateform" action="" class="form-horizontal" role="form">
+                    <div class="form-group">
                         <label for="nameInput" class="col-md-4 control-label">Name:</label>
                         <div class="col-md-6">
-                           <input type="text" class="form-control" name="name" id="name" value=""> </input>
+                            <input type="text" class="form-control" name="name" id="name" value=""> </input>
                         </div>
-                     </div>
-                     <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="uri" class="col-md-4 control-label">Email:</label>
                         <div class="col-md-6">
                            <input type="text" class="form-control" name="email" id="email" value="" />
@@ -128,7 +146,8 @@
                      <div class="form-group">
                         <label for="Booking" class="col-md-4 control-label">Booking:</label>
                         <div class="col-md-6">
-                           <input type="checkbox" id ="booking" name="Booking" <?php echo $value['Booking'] ? 'checked' : ''; ?>>
+                           <!-- <input type="checkbox" id ="booking" name="Booking" <?php //echo $value['Booking'] ? 'checked' : ''; ?>> -->
+                           <input type="checkbox" id ="booking" name="Booking" <?php ($value['Booking']) ? 'checked' : ''; ?>>
                            <input type="hidden" name="status" value="0">
                         </div>
                      </div>
@@ -142,57 +161,48 @@
                     </select>
                     </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
-                        <button type="submit" name="submit" id="submit" class="btn btn-primary save">Save</button>
+                            <button type="submit" name="submit" data-id="" id="submit" class="btn btn-primary save">Save</button>
                         </div>
-                     </div>
-                  </form>
-                    </p>
                     </div>
-                    
-
-                    
-    <div id="content">
-        <div class="table-responsive ser_staffpayment_append">
-    <table id="staff-payments-details" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Clint Name</th>
-                <th>Staff Name</th>
-                <th>Service Name</th>
-                <th>Order Date</th>
-                <th>Order Time</th>
-                <th>Commission</th>
-
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($data1 as $value1): ?>
-            <tr>
-                <td>1</td>
-                <td><?= $value1['client']?></td>
-                <td><?= $value1['staff_name']?></td>
-                <td><?= $value1['service_name']?></td>
-                <td><?= $value1['order_date']?></td>
-                <td><?= $value1['order_time']?></td>
-                <td><?= $value1['commission_total']?></td>
-                <td>
-                <!-- <a href="#" class="btn btn-warning btn-sm editbtn" data-id="<?php //echo $value1['id']; ?>">
-                  <i class="fa fa-pencil"></i> Edit
-                </a>
-                    <a href="#" class="btn btn-danger btn-sm Deletebtn" data-id="<?php //echo $value1['id']; ?>">
-                  <i class="fa fa-trash"></i> Delete
-                </a> -->
-                    
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-   </div>
-    </p>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="staffPayments" role="tabpanel" aria-labelledby="staffPaymentsTab">
+  
+                <div class="table-responsive ser_staffpayment_append">
+                    <table id="staff-payments-details" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Clint Name</th>
+                                <th>Staff Name</th>
+                                <th>Service Name</th>
+                                <th>Order Date</th>
+                                <th>Order Time</th>
+                                <th>Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($data1 as $value1): ?>
+                                <tr>
+                                    <td>1</td>
+                                    <td><?= $value1['client']?></td>
+                                    <td><?= $value1['staff_name']?></td>
+                                    <td><?= $value1['service_name']?></td>
+                                    <td><?= $value1['order_date']?></td>
+                                    <td><?= $value1['order_time']?></td>
+                                    <td><?= $value1['commission_total']?></td>
+                                    <td>
+                                       
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     
@@ -235,9 +245,37 @@ $(document).ready(function() {
 
     <script>
         $(document).ready(function() {
+           var listid = $('#nameList ul li:first-child').attr('data-id');
+        //    alert(listid);
+        
+                $.ajax({
+                      url: "<?php echo base_url('edit_staff/') ?>" + listid,
+                      type: "GET",
+                      dataType: "json",
+                      success: function(response) {
+                          $('#name').val(response.Name);
+                          $('#email').val(response.Email);
+                          $('#description').val(response.description);
+                          $('#phone').val(response.phone);
+                          $('#address').val(response.address);
+                          $('#city').val(response.city);
+                          $('#state').val(response.state);
+                          $('#country').val(response.country);
+                          $('#zip').val(response.zip);
+                        //   $('#booking').val(response.Booking);
+                        //   $('#service').val(response.service);
+
+                          $('#idInput').val(response.id);
+                        //   $('#editModal').modal('show');
+                      }
+                  });
+            
+
             $('.nameItem').on('click', function() {
                 var editid = $(this).data('id');
+                // alert(editid);
                 console.log(editid);
+                $('.save').attr('data-id',editid)
 
                 $.ajax({
                       url: "<?php echo base_url('edit_staff/') ?>" + editid,
@@ -264,13 +302,15 @@ $(document).ready(function() {
               
 
               $('.save').click(function() {
-                  var edituserid = $(this).data('id');
+                  var edituserid = $(this).attr('data-id');
+                  alert(edituserid);
                   console.log(edituserid);
+                //   return false;
                   
                   $.ajax({
                       url: "<?php echo base_url('update_staff/') ?>" + edituserid,
                       type: "POST",
-                      data:$(this).serialize(),
+                      data:$('#staffupdateform').serialize(),
                       dataType: "json",
                       success: function(response) {
                           if (response.success) {
@@ -285,6 +325,50 @@ $(document).ready(function() {
     
     </script>
 
+
+
+           <script>
+                $(document).ready(function() {
+
+                $('.selectpicker').on('change', function() {
+                var crmids = $(this).find('option:selected').map(function() {
+                return $(this).data('id');
+                }).get();
+                console.log(crmids);
+                });
+
+                $('#staffupdateform').submit(function(e) {e.preventDefault();
+
+                var crmids = $('.selectpicker').find('option:selected').map(function() {
+                return $(this).data('id');
+                }).get();
+                console.log(crmids);
+
+                var formData = $('#staffupdateform').serialize();
+                crmids.forEach(function(id) {
+                formData.append('service[]', id);
+                });
+
+
+            $.ajax({
+                url: "<?php echo base_url('update_staff/') ?>" + edituserid,
+                type: "POST",
+                // data: $('#staffupdateform').serialize(),
+                data:formData,
+                dataType: "json",
+                success: function(response)
+                {
+
+                if (response.success) {
+                alert(response.message);
+                window.location.reload();
+                
+                        }
+                }
+                });
+            });
+            });
+            </script>
 
 
 
@@ -329,48 +413,7 @@ $(document).ready(function() {
 
    
 
-            <script>
-                $(document).ready(function() {
-
-                $('.selectpicker').on('change', function() {
-                var crmids = $(this).find('option:selected').map(function() {
-                return $(this).data('id');
-                }).get();
-                console.log(crmids);
-                });
-
-                $('#staffupdateform').submit(function(e) {e.preventDefault();
-
-                var crmids = $('.selectpicker').find('option:selected').map(function() {
-                return $(this).data('id');
-                }).get();
-                console.log(crmids);
-
-                var formData = $('#staffupdateform').serialize();
-                crmids.forEach(function(id) {
-                formData.append('service[]', id);
-                });
-
-
-            $.ajax({
-                url: "<?php echo base_url('update_staff/').$value['id']?>",
-                type: "POST",
-                // data: $('#staffupdateform').serialize(),
-                data:formData,
-                dataType: "json",
-                success: function(response)
-                {
-
-                if (response.success) {
-                alert(response.message);
-                window.location.reload();
-                
-                        }
-                }
-                });
-            });
-            });
-            </script>
+        
 
                
 

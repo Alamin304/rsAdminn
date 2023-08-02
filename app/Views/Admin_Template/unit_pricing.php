@@ -6,7 +6,7 @@
 <div class="tab-content ct-clean-services-right-details">
   <div class="tab-pane active col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-bordered" id ="tableid">
         <thead>
           <tr>
             <th>Title</th>
@@ -132,63 +132,67 @@
 <!-- ----for Edit--- -->
 
 
-<script>
-            $(document).ready(function() {
-              
-              $('.editbtn').click(function() {
-                // alert('abc');
-              $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Lable:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="button" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
-              });
-            $('.editbtn').click(function() {
-              var unitpricingId = $(this).data('id');
-              // console.log(unitpricingId);
-              // $('.updatechange').data('id', unitpricingId);
-              
-              $.ajax({
-                      url: "<?php echo base_url('edit_unit_pricing/') ?>" + unitpricingId,
-                      type: "GET",
-                      dataType: "json",
-                      success: function(response) {
+      <script>
+           $(document).ready(function() {
+          $('.editbtn').click(function() {
+            $('#tableid tr').remove('.editform');
 
-                        
-                          $('#unitTitleInput').val(response.unit_name);
-                          $('#duration').val(response.duration);
-                          $('#baseprice').val(response.base_price);
-                          $('#minlimit').val(response.min_limit);
-                          $('#maxlimit').val(response.max_limit);
-                          $('#optionallabel').val(response.optional_label)
-                          $('#optionalunitsymbol').val(response.optional_unit_symbol)
-                          $('#idput').val(response.id);
+            $(this).closest('tr').after('<tr class="editform"><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Label:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="button" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
 
-                      }
-                  }); 
-               });
+            var unitpricingId = $(this).data('id');
 
-               $("body").delegate("#submit", "click", function(){
-                      // alert('abc');
-                    var unitpricing = $(this).data('id');
-                    console.log(unitpricing);
-                    
-                  
-                  
-                    $.ajax({
-                      url: "<?php echo base_url('update_unit_pricing/') ?>" + unitpricing,
-                      type: "POST",
-                      data: $(this).serialize(),
-                      dataType: "json",
-                      success: function(response) {
-                        if (response.success) {
-                          alert(response.message);
-         
-                          window.location.reload();
-                                }
-                            }
-                        });
-                        
-                  });
-                });
-              </script>
+            $.ajax({
+              url: "<?php echo base_url('edit_unit_pricing/') ?>" + unitpricingId,
+              type: "GET",
+              dataType: "json",
+              success: function(response) {
+                $('#unitTitleInput').val(response.unit_name);
+                $('#duration').val(response.duration);
+                $('#baseprice').val(response.base_price);
+                $('#minlimit').val(response.min_limit);
+                $('#maxlimit').val(response.max_limit);
+                $('#optionallabel').val(response.optional_label);
+                $('#optionalunitsymbol').val(response.optional_unit_symbol);
+                $('#idput').val(response.id);
+              }
+            });
+          });
+
+          $("body").delegate(".updatechange", "click", function() {
+            var unitpricing = $('#idput').val();
+            console.log(unitpricing);
+
+            var formData = {
+              id: unitpricing,
+              unitTitle: $('#unitTitleInput').val(),
+              duration: $('#duration').val(),
+              baseprice: $('#baseprice').val(),
+              minlimit: $('#minlimit').val(),
+              maxlimit: $('#maxlimit').val(),
+              optionallabel: $('#optionallabel').val(),
+              optionalunitsymbol: $('#optionalunitsymbol').val()
+            };
+            console.log(formData);
+
+            $.ajax({
+              url: "<?php echo base_url('update_unit_pricing/') ?>" + unitpricing,
+              type: "POST",
+              data: formData,
+              dataType: "json",
+              success: function(response) {
+                if (response.success) {
+                  alert(response.message);
+                  window.location.reload();
+                }
+              }
+            });
+          });
+        });
+
+        </script>
+
+
+
 
 
 

@@ -163,67 +163,67 @@
 <!-- ------for edit ------ -->
 
 
-<script>
+         <script>
             $(document).ready(function() {
-              
-              $('.editbtn').click(function() {
-                // alert('abc');
-              $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><form id="addonsForm" method="POST" action="" role="form"> <input type="text" name="id" id="addonsid" value=""> <div class="form-group"> <label for="titleInput">Addon Title:</label> <input type="text" class="form-control" id="titleInput" name="titleName"> <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="durationInput">Duration (HH:mm):</label> <input type="" class="form-control" id="durationInput" name="duration"> <span style="color:red;" id="durationErr"></span> </div> <div class="form-group"> <label for="imageInput">Service Image:</label> <input type="file" class="form-control" id="imageInput" name="image"> <span style="color:red;" id="imageErr"></span> </div> <div class="form-group"> <label for="priceInput">Basic Price:</label> <input type="text" class="form-control" id="priceInput" name="price"> <span style="color:red;" id="priceErr"></span> </div> <div class="form-group"> <label for="maxqtyInput">Max Qty:</label> <input type="text" class="form-control" id="maxqtyInput" name="maxqty"> <span style="color:red;" id="maxqtyErr"></span> </div> <div class="form-group"> <label for="mulqtyInput">Multiple Qty:</label> <input type="text" class="form-control" id="mulqtyInput" name="mulqty"> <span style="color:red;" id="mulqtyErr"></span> </div> <div class="modal-footer"> <button type="button" class="btn btn-primary update" id="addonsBtn">Update</button> </div> </form></td></tr>');
-              });
             $('.editbtn').click(function() {
+              $('#tableid tr').remove('.editform');
+              $(this).closest('tr').after('<tr class="editform" ><td><form id="addonsForm" method="POST" action="" role="form"> <input type="text" name="id" id="addonsid" value=""> <div class="form-group"> <label for="titleInput">Addon Title:</label> <input type="text" class="form-control" id="titleInput" name="titleName"> <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="durationInput">Duration (HH:mm):</label> <input type="text" class="form-control" id="durationInput" name="duration"> <span style="color:red;" id="durationErr"></span> </div> <div class="form-group"> <label for="imageInput">Service Image:</label> <input type="file" class="form-control" id="imageInput" name="image"> <span style="color:red;" id="imageErr"></span> </div> <div class="form-group"> <label for="priceInput">Basic Price:</label> <input type="text" class="form-control" id="priceInput" name="price"> <span style="color:red;" id="priceErr"></span> </div> <div class="form-group"> <label for="maxqtyInput">Max Qty:</label> <input type="text" class="form-control" id="maxqtyInput" name="maxqty"> <span style="color:red;" id="maxqtyErr"></span> </div> <div class="form-group"> <label for="mulqtyInput">Multiple Qty:</label> <input type="text" class="form-control" id="mulqtyInput" name="mulqty"> <span style="color:red;" id="mulqtyErr"></span> </div> <div class="modal-footer"> <button type="button" class="btn btn-primary update" id="addonsBtn">Update</button> </div> </form></td></tr>');
+
               var addonsId = $(this).data('id');
               console.log(addonsId);
-              $('.updatechange').data('id', addonsId);
-              
-              $.ajax({
-                      url: "<?php echo base_url('edit_addons_service/') ?>" + addonsId,
-                      type: "GET",
-                      dataType: "json",
-                      processData: false,
-                      contentType: false,
-                      success: function(response) {
-                          
-                          $('#titleInput').val(response.addon_title);
-                          $('#durationInput').val(response.duration);
-                          $('#priceInput').val(response.basic_price);
-                          $('#maxqtyInput').val(response.max_qty);
-                          $('#mulqtyInput').val(response.multiple_qty);
-                          $('#maxqtyInput').val(response.max_qty);
-                          
-                          // $('#serviceImageInput').val(response.service_image);
-                          $('#addonsid').val(response.id);
-                          // $('#editServiceModal').modal('show');
+              $('#addonsBtn').data('id', addonsId);
 
-                      }
-                  }); 
-               });
-            
-               $("body").delegate(".update", "click", function(){
-                  // alert('abc');
-                    var addid = $(this).data('id');
-                    console.log(addid);
-                  
-                  
-                    $.ajax({
-                      url: "<?php echo base_url('update_addons_service/') ?>" + addid,
-                      type: "POST",
-                      data: $(this).serialize(),
-                      // data: new FormData(this),
-                      dataType: "json",
-                      processData: false,
-                      contentType: false,
-                      success: function(response) {
-                        if (response.success) {
-                          alert(response.message);
-                        
-                          window.location.reload();
-                                }
-                            }
-                        });
-                  });
-                });
-                </script>
+              $.ajax({
+                url: "<?php echo base_url('edit_addons_service/') ?>" + addonsId,
+                type: "GET",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  $('#titleInput').val(response.addon_title);
+                  $('#durationInput').val(response.duration);
+                  $('#priceInput').val(response.basic_price);
+                  $('#maxqtyInput').val(response.max_qty);
+                  $('#mulqtyInput').val(response.multiple_qty);
+                  $('#addonsid').val(response.id);
+                }
+              });
+            });
+
+            $("body").on("click", ".update", function() {
+              // var addid = $(this).data('id');
+              var addid = $('#addonsid').val();
+              console.log(addid);
+
+              var formData = new FormData($('#addonsForm')[0]);
+
+              var data = {
+              id: addid,
+              titleName: $('#titleInput').val(),
+              duration: $('#durationInput').val(),
+              price: $('#priceInput').val(),
+              maxqty: $('#maxqtyInput').val(),
+              mulqty: $('#mulqtyInput').val()
+            };
+            console.log(data);
+
+              $.ajax({
+                url: "<?php echo base_url('update_addons_service/') ?>" + addid,
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  if (response.success) {
+                    alert(response.message);
+                    window.location.reload();
+                  }
+                }
+              });
+            });
+          });
+          </script>
 
 
 <!-- ---for delete--- -->

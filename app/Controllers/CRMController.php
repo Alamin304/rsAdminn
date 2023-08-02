@@ -35,72 +35,102 @@ class CRMController extends BaseController
 
     public function AddCRM()
     {
-    
-       
         $validation = \Config\Services::validation();
 
-        $rules = [
-            
-            'email' => 'required',
-            'password' =>'required',
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'phone' =>'required',
-            'street' => 'required',
-            'zip' => 'required',
-            'city' =>'required',
-            'state' => 'required',
-            'note' => 'required',
-        ];
+            $rules = [
+                'email' => 'required|valid_email', 
+                'password' => 'required',
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'phone' => 'required',
+                'street' => 'required',
+                'zip' => 'required',
+                'city' => 'required',
+                'state' => 'required',
+                'note' => 'required',
+            ];
 
-        if (! $this->validate($rules)) {
 
-            $response = [
+            $validation->setRules($rules, [
                 'email' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a email',
+                    'required' => 'Please enter an email.',
+                    'valid_email' => 'Invalid email format.',
                 ],
                 'password' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a password',
+                    'required' => 'Please enter a password.',
                 ],
                 'firstname' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a firstname',
+                    'required' => 'Please enter a first name.',
                 ],
                 'lastname' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a lastname',
+                    'required' => 'Please enter a last name.',
                 ],
                 'phone' => [
-                    'status' => 'required',
-                    'message' => 'Please enter Your phone number',
+                    'required' => 'Please enter your phone number.',
                 ],
                 'street' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a street Address',
+                    'required' => 'Please enter a street address.',
                 ],
-
-                 'zip' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a zip code',
-                ], 
+                'zip' => [
+                    'required' => 'Please enter a zip code.',
+                ],
                 'city' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a city',
+                    'required' => 'Please enter a city.',
                 ],
                 'state' => [
-                    'status' => 'required',
-                    'message' => 'Please enter a state',
+                    'required' => 'Please enter a state.',
                 ],
                 'note' => [
-                    'status' => 'required',
-                    'message' => 'Please enter your note',
+                    'required' => 'Please enter your note.',
                 ],
-                
-            ];
-            return json_encode($response);
-        }
+            ]);
+
+            if (!$this->validate($rules)) {
+                $response = [
+                    'email' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('email') ?: '',
+                    ],
+                    'password' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('password') ?: '',
+                    ],
+                    'firstname' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('firstname') ?: '',
+                    ],
+                    'lastname' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('lastname') ?: '',
+                    ],
+                    'phone' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('phone') ?: '',
+                    ],
+                    'street' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('street') ?: '',
+                    ],
+                    'zip' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('zip') ?: '',
+                    ],
+                    'city' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('city') ?: '',
+                    ],
+                    'state' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('state') ?: '',
+                    ],
+                    'note' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('note') ?: '',
+                    ],
+                ];
+                return json_encode($response);
+            }
+
 
         $CrmModel = new CrmModel();
         $data = [

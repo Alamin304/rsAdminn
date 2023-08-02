@@ -153,59 +153,51 @@
 <!-- ----for Edit--- -->
 
 
-         <script>
-            $(document).ready(function() {
-              
-              $('.editbtn').click(function() {
-                // alert('abc');
-              $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodName"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodName" value="" > <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
-                
-              });
-            $('.editbtn').click(function() {
-              var pricingId = $(this).data('id');
-              console.log(pricingId);
-              // $('.save').data('id', pricingId);
-              
-              $.ajax({
-                      url: "<?php echo base_url('edit_service_pricing/') ?>" + pricingId,
-                      type: "GET",
-                      dataType: "json",
-                      success: function(response) {
-                          $('#pricingTitleInput').val(response.methodName);
-                          $('#idInput').val(response.id);
-                      }
-                  }); 
-               });
-            
-                  
-                    // var title = $('#pricingTitleInput').val();
-                    // $('.updateprice').click(function() {
-                    // var pricingId = $(this).data('id');
-                    // console.log(pricingId);
 
-                      // $('.save').click(function() {
-                      $("body").delegate(".save", "click", function(){
-                      // alert('abc');
-                      var pricing = $(this).data('id');
-                      console.log(pricing);
-                    
-                    $.ajax({
-                      url: "<?php echo base_url('update_service_pricing/') ?>" + pricing,
-                      type: 'POST',
-                      data: $(this).serialize(),
-                      dataType: "json",
-                      success: function(response) {
-                        if (response.success) {
-                          alert(response.message);
-                          
-                          // window.location.reload();
-                                }
-                            }
-                        });
-                        
+         <script>
+                $(document).ready(function() {
+                $('.editbtn').click(function() {
+
+                  $('#tableid tr').remove('.editform');
+                  $(this).closest('tr').after('<tr class="editform"><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodName"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodName" value=""> <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
+                  var pricingId = $(this).data('id');
+
+                  $.ajax({
+                    url: "<?php echo base_url('edit_service_pricing/') ?>" + pricingId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                      $('#pricingTitleInput').val(response.methodName);
+                      $('#idInput').val(response.id);
+                    }
                   });
                 });
+
+
+                $("body").on("click", ".save", function() {
+                  var pricing = $('#idInput').val();
+                  var name = $('#pricingTitleInput').val();
+                  console.log(pricing);
+                  console.log(name);
+
+                  var data = {
+                  id: pricing,
+                  methodName: name
+                };
+                  $.ajax({
+                    url: "<?php echo base_url('update_service_pricing/') ?>" + pricing,
+                    type: 'POST',
+                    data: data,
+                    dataType: "json",
+                    success: function(response) {
+                      if (response.success) {
+                        alert(response.message);
+                        window.location.reload();
+                      }
+                    }
+                  });
+                });
+              });
               </script>
 
 

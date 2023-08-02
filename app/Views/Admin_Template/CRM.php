@@ -236,6 +236,30 @@
                
 
 
+<script>
+  $(document).ready(function() {
+  
+    $('#ex1 a[data-mdb-toggle="tab"]').on('click', function(e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+    $('#MessageForm').submit(function(e) {
+      e.preventDefault();
+      var activeTabId = $('.tab-pane.active').attr('id');
+      if (activeTabId === 'ex1-tabs-1') {
+
+        var formData = $(this).serializeArray();
+        console.log(formData);
+      } else if (activeTabId === 'ex1-tabs-2') {
+ 
+        var smsFormData = $(this).serializeArray();
+        console.log(smsFormData);
+      }
+    });
+  });
+</script>
+
 
 
 <!-- <script>

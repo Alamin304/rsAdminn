@@ -239,67 +239,71 @@
           });
         });
   </script>
+  
+  <script>
+  var BASE_URL = "<?php echo base_url(); ?>";
+</script>
 
 
           <!-- ----Edit services--- -->
 
           <script>
             $(document).ready(function() {
-              
-              $('.editbtn').click(function() {
-                // alert('abc');
-              $('#tableid tr').remove('.editform')
-                $(this).parent().parent().parent().after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription" value="" ></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
-              });
             $('.editbtn').click(function() {
+              $('#tableid tr').remove('.editform');
+
+              $(this).closest('tr').after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription"></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
+
               var serviceId = $(this).data('id');
-              // console.log(serviceId);
-              // $('.serviceupdate').data('id', serviceId);
-              
+              $('#idInput').val(serviceId);
+
               $.ajax({
-                      url: "<?php echo base_url('edit_services/') ?>" + serviceId,
-                      type: "GET",
-                      dataType: "json",
-                      processData: false,
-                      contentType: false,
-                      success: function(response) {
-                          $('#favcolor').val(response.color_tag);
-                          $('#serviceTitleInput').val(response.service_title);
-                          $('#serviceDescriptionInput').val(response.service_description);
-                          // $('#serviceImageInput').val(response.service_image);
-                          $('#idInput').val(response.id);
-                          // $('#editServiceModal').modal('show');
-                      }
-                  }); 
-               });
-            
-                   $("body").delegate(".save", "click", function(){
-                    // alert('abc');
-                    var editserviceid = $(this).data('id');
-                    console.log(editserviceid);
-                    var color = $('#favcolor').val();
-                    var title = $('#serviceTitleInput').val();
-                    var desc = $('#serviceDescriptionInput').val();
-                    var img = $('#serviceImageInput').val();
-                  
-                    $.ajax({
-                      url: "<?php echo base_url('update_service/') ?>" + editserviceid,
-                      type: "POST",
-                      // data: new FormData(this),
-                      data: $(this).serialize(),
-                      dataType: "json",
-                      processData: false,
-                      contentType: false,
-                      success: function(response) {
-                        if (response.success) {
-                          alert(response.message);
-                          // $('#editServiceModal').modal('hide');
-                          window.location.reload();
-                                }
-                            }
-                        });
-                  });
-                });
+                url: "<?php echo base_url('edit_services/') ?>" + serviceId,
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                  $('#favcolor').val(response.color_tag);
+                  $('#serviceTitleInput').val(response.service_title);
+                  $('#serviceDescriptionInput').val(response.service_description);
+                  var imageUrl = BASE_URL + 'servicephotos/' + response.service_image;
+                  console.log(response.service_image);
+                  $('#serviceImageInput').attr('src', imageUrl);
+                  console.log(BASE_URL + 'servicephotos/');
+                              
+                }
+              });
+            });
+
+            $("body").delegate(".save", "click", function() {
+              var editserviceid = $('#idInput').val();
+              var color = $('#favcolor').val();
+              var title = $('#serviceTitleInput').val();
+              var desc = $('#serviceDescriptionInput').val();
+              var img = $('#serviceImageInput').val();
+
+              var formData = new FormData($('#serviceEditForm')[0]);
+              formData.append('color_setting', color);
+              formData.append('serviceTitle', title);
+              formData.append('serviceDescription', desc);
+              formData.append('serviceImage', img);
+
+              $.ajax({
+                url: "<?php echo base_url('update_service/') ?>" + editserviceid,
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                  if (response.success) {
+                    alert(response.message);
+                    // $('#editServiceModal').modal('hide');
+                    window.location.reload();
+                  }
+                }
+              });
+            });
+          });
                 </script>
 
 
