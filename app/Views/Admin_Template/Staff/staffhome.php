@@ -55,6 +55,7 @@
 
 
 <div class="sidebar-header">
+<h3>Staff Members<span>(<?= $totalCountStaff ?>)</span>
         <button type="button" class="btn btn-primary" id="openModalBtn">Add Staff</button>
     </div>
     <div id="nameList">
@@ -62,8 +63,8 @@
         <?php foreach ($data as $value): ?>
         
             <li class="nameItem d-flex align-items-center mb-2" data-id="<?= $value['id'] ?>">
-               <div class ="d-flex align-items-center gap-2" >
-               <img style="width:40px; height:40px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
+               <div class ="d-flex align-items-center" >
+               <img style="width:40px; height:40px; border-radius:50%; margin-right:20px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
                 <strong><?php echo $value['Name']; ?></strong>
                </div>
                 <a class="deleteButton ms-auto" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
@@ -89,6 +90,13 @@
             <div class="tab-pane fade show active" id="staffInfo" role="tabpanel" aria-labelledby="staffInfoTab">
                 <input type="text" name="Id" id="idInput" value="">
                 <form method="POST" id="staffupdateform" action="" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="staffImageInput">Staff Image:</label>
+                <div class="col-md-6">
+                    <input type="file" class="form-control-file" id="staffImageInput" name="staffImage">
+                    <img id="staffphoto" style="width:40px; height:40px; border-radius:50%; margin-right:20px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
+                </div>
+                </div>
                     <div class="form-group">
                         <label for="nameInput" class="col-md-4 control-label">Name:</label>
                         <div class="col-md-6">
@@ -147,8 +155,10 @@
                         <label for="Booking" class="col-md-4 control-label">Booking:</label>
                         <div class="col-md-6">
                            <!-- <input type="checkbox" id ="booking" name="Booking" <?php //echo $value['Booking'] ? 'checked' : ''; ?>> -->
-                           <input type="checkbox" id ="booking" name="Booking" <?php ($value['Booking']) ? 'checked' : ''; ?>>
-                           <input type="hidden" name="status" value="0">
+                           <input type="checkbox" id="booking" name="Booking" <?php echo $value['Booking'] == 1 ? 'checked' : ''; ?>>
+
+                           <!-- <input type="checkbox" id ="booking" name="Booking" <?php //($value['Booking']) ? 'checked' : ''; ?>> -->
+                           <!-- <input type="hidden" name="Booking" value="0"> -->
                         </div>
                      </div>
                      <div class="form-group">
@@ -169,12 +179,12 @@
                 </form>
             </div>
             <div class="tab-pane fade" id="staffPayments" role="tabpanel" aria-labelledby="staffPaymentsTab">
-  
+            
                 <div class="table-responsive ser_staffpayment_append">
                     <table id="staff-payments-details" class="display responsive nowrap table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>#Id</th>
                                 <th>Clint Name</th>
                                 <th>Staff Name</th>
                                 <th>Service Name</th>
@@ -186,7 +196,7 @@
                         <tbody>
                             <?php foreach ($data1 as $value1): ?>
                                 <tr>
-                                    <td>1</td>
+                                    <td><?= $value1['id']?></td>
                                     <td><?= $value1['client']?></td>
                                     <td><?= $value1['staff_name']?></td>
                                     <td><?= $value1['service_name']?></td>
@@ -215,6 +225,11 @@
     </script>
 
 <!-- ---for delete--- -->
+
+
+<script>
+  var BASE_URL = "<?php echo base_url(); ?>";
+</script>
 
 
 <script>
@@ -291,10 +306,20 @@ $(document).ready(function() {
                           $('#state').val(response.state);
                           $('#country').val(response.country);
                           $('#zip').val(response.zip);
-                        //   $('#booking').val(response.Booking);
+                          if (response.Booking == 1) {
+                                $('#booking').prop('checked', true);
+                            } else {
+                                $('#booking').prop('checked', false);
+                            }
+                         //   $('#booking').val(response.Booking);
                         //   $('#service').val(response.service);
 
                           $('#idInput').val(response.id);
+
+                          var imageUrl = BASE_URL + 'staff/' + response.staff_image;
+                           console.log(response.staff_image);
+                            $('#staffphoto').attr('src', imageUrl);
+                            console.log(BASE_URL + 'staff/');
                         //   $('#editModal').modal('show');
                       }
                   });
@@ -307,10 +332,13 @@ $(document).ready(function() {
                   console.log(edituserid);
                 //   return false;
                   
+                  var formData = new FormData($('#staffupdateform')[0]);
                   $.ajax({
                       url: "<?php echo base_url('update_staff/') ?>" + edituserid,
                       type: "POST",
-                      data:$('#staffupdateform').serialize(),
+                      data:formData,
+                      processData: false,
+                      contentType: false,
                       dataType: "json",
                       success: function(response) {
                           if (response.success) {

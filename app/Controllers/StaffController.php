@@ -26,15 +26,65 @@ class StaffController extends BaseController
 
         $StaffModel = new AllStaffModel();
         $data = $StaffModel->findAll();
+        $totalCountStaff = count($data);
         
         $StaffDetailsModel = new ServiceDetailsModel();
         $data1 = $StaffDetailsModel->findAll();
+        
       
         
         $ServiceModel = new AddServiceModel();
         $data2 = $ServiceModel->findAll();
         
+        // echo '<pre>';
+        // print_r($data2);
+        // die();
+
+
+                // $StaffModel = new AllStaffModel();
+                // $data4 = $StaffModel->select('all_staff.*, services.*')
+                //     ->join('services', 'all_staff.service = services.id', 'right') 
+                //     ->findAll();
+
+// echo '<pre>';
+// print_r($data4);
+// die();
+
+ 
+
+    // $query = $StaffModel->select('*')
+    //     ->join('services', 'all_staff.service = services.id', 'left') 
+    //     ->findAll();
+
+    // $query = $StaffModel->select('all_staff.*, services.id')
+    // ->join('services', 'all_staff.service = services.id', 'left') 
+    // ->findAll();
+            // echo '<pre>';
+            // print_r($query);
+            // die();
+
+// $selectedIds = [];
+
+//     foreach ($query as $row) {
+//         echo $row['service'];
+        
+//         $serviceData = json_decode($row['service'], true);
     
+//         if (is_array($serviceData) && !empty($serviceData)) {
+//             $selectedIds = array_merge($selectedIds, $serviceData);
+//         }
+//     }
+    
+
+//     $selectedIds = array_unique($selectedIds);
+
+
+        
+    // return $query;
+    // echo '<pre>';
+    //         print_r($serviceData);
+    //         die();
+
         // $matched_ids = [];
         // foreach ($data as $value) {
         //     $matched_ids[] = $value['service']; 
@@ -45,6 +95,9 @@ class StaffController extends BaseController
             'data' => $data,
             'data1' => $data1,
             'data2' => $data2,
+            'totalCountStaff'=>$totalCountStaff,
+            // 'data4' => $data4,
+            // 'selectedIds' => $selectedIds,
             // 'matched_ids' => $matched_ids,
         ]);
 
@@ -147,10 +200,7 @@ class StaffController extends BaseController
         // print_r($data);
         // die();
 
-        // $photos = $this->request->getFile('photos');
-        // if ($photos->isValid() && !$photos->hasMoved()) {
-        //     $photos->move(ROOTPATH . 'public/staff');
-        // }
+        
         
         if ($this->request->getMethod() === 'post') {
             $name = $this->request->getPost('name');
@@ -167,7 +217,12 @@ class StaffController extends BaseController
             // $service = $this->request->getPost('service');
             $serviceidsArray = $_POST['service'];
             $service = json_encode($serviceidsArray);
-            // $photos = $this->request->getfile('photos')->getName();
+
+                $photos = $this->request->getFile('staffImage');
+            if ($photos->isValid() && !$photos->hasMoved()) {
+                $photos->move(ROOTPATH . 'public/staff');
+            }
+                
            
            
             $data = [
@@ -182,7 +237,7 @@ class StaffController extends BaseController
                 'zip' => $zip,
                 'Booking' => $Booking,
                 'service' => $service,
-                // 'staff_image'=> $photos,
+                'staff_image'=> $photos->getName(),
                
 
             ];

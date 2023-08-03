@@ -174,6 +174,8 @@
           </div>
           <div class="form-group">
             <label for="serviceImageInput">Service Image:</label>
+            
+            
             <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage">
           </div>
           <div class="modal-footer">
@@ -252,7 +254,7 @@
             $('.editbtn').click(function() {
               $('#tableid tr').remove('.editform');
 
-              $(this).closest('tr').after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription"></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage" value=""> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
+              $(this).closest('tr').after('<tr class="editform" ><td><input type="text" name="hideid" id="idInput" value=""> <form id="serviceEditForm" method="POST" action="" enctype="multipart/form-data" role="form"> <div class="form-group"> <div class="theme-color themes-color" id="themeColorSetting"> <label for="colorTagInput">Color Tag:</label> <input type="color" id="favcolor" name="color_setting" value="" ><br><br> <span style="color:red;" id="colorErr"></span> </div> </div> <div class="form-group"> <label for="serviceTitleInput">Service Title:</label> <input type="text" class="form-control" id="serviceTitleInput" name="serviceTitle" value="" > <span style="color:red;" id="titleErr"></span> </div> <div class="form-group"> <label for="serviceDescriptionInput">Service Description:</label> <textarea class="form-control" id="serviceDescriptionInput" name="serviceDescription"></textarea> <span style="color:red;" id="desErr"></span> </div> <div class="form-group"> <label for="serviceImageInput">Service Image:</label> <input type="file" class="form-control-file" id="serviceImageInput" name="serviceImage"> <img id="serviceImage" style="width:40px; height:40px; border-radius:50%; margin-right:20px;" src="<?= base_url('servicephotos/'. $value['service_image']) ?>" alt="no images"> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
 
               var serviceId = $(this).data('id');
               $('#idInput').val(serviceId);
@@ -265,9 +267,11 @@
                   $('#favcolor').val(response.color_tag);
                   $('#serviceTitleInput').val(response.service_title);
                   $('#serviceDescriptionInput').val(response.service_description);
+                  // $('#serviceImage').attr(response.service_image);
+
                   var imageUrl = BASE_URL + 'servicephotos/' + response.service_image;
                   console.log(response.service_image);
-                  $('#serviceImageInput').attr('src', imageUrl);
+                  $('#serviceImage').attr('src', imageUrl);
                   console.log(BASE_URL + 'servicephotos/');
                               
                 }
