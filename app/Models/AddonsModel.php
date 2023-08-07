@@ -8,5 +8,5 @@ class AddonsModel extends Model
 {
     protected $table = 'addons_service'; 
     protected $primaryKey = 'id';
-    protected $allowedFields = ['addon_title','duration','addons_service_image','basic_price','max_qty','multiple_qty','status','services_id',]; 
+    protected $allowedFields = ['addon_title','duration','addons_service_image','icon','basic_price','max_qty','multiple_qty','status','services_id',]; 
 }

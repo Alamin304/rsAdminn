@@ -137,7 +137,7 @@
           $('.editbtn').click(function() {
             $('#tableid tr').remove('.editform');
 
-            $(this).closest('tr').after('<tr class="editform"><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameErr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="text" class="form-control" id="minlimit" name="minlimit" value="" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="text" class="form-control" id="maxlimit" name="maxlimit" value="" > <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Label:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="button" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
+            $(this).closest('tr').after('<tr class="editform"><td><form id="serviceEditForm" method="POST" action="" role="form"> <input type="text" name="id" id="idput" value=""> <div class="form-group"> <label for="methodTitle"> Unit Name:</label> <input type="text" class="form-control" id="unitTitleInput" name="unitTitle" value="" > <span style="color:red;" id="nameEr"></span> </div> <label for="durationTitle"> Duration:</label> <input type="text" class="form-control" id="duration" name="duration" value="" > <span style="color:red;" id="durErr"></span> </div> <label for="baseprice"> Base Price:</label> <input type="text" class="form-control" id="baseprice" name="baseprice" value="" > <span style="color:red;" id="baseErr"></span> </div> <label for="minlimit"> Min Limit:</label> <input type="number" class="form-control" id="minlimit" name="minlimit" > <span style="color:red;" id="minErr"></span> </div> <label for="maxlimit"> Max Limit:</label> <input type="number" class="form-control" id="maxlimit" name="maxlimit"> <span style="color:red;" id="maxErr"></span> </div> <label for="optionallabel"> Optional Label:</label> <input type="text" class="form-control" id="optionallabel" name="optionallabel" value="" > <span style="color:red;" id="optionErr"></span> </div>  <label for="optionalunitsymbol"> Optional Unit Symbol:</label> <input type="text" class="form-control" id="optionalunitsymbol" name="optionalunitsymbol" value="" > <span style="color:red;" id="symbolErr"></span> </div> <div class="modal-footer"> <button type="button" id= "submit" class="btn btn-primary updatechange" data-id="">Update</button> </div> </form></td></tr>');
 
             var unitpricingId = $(this).data('id');
 
@@ -161,6 +161,11 @@
           $("body").delegate(".updatechange", "click", function() {
             var unitpricing = $('#idput').val();
             console.log(unitpricing);
+            var unitEr = $('#nameEr');
+            var baseErr = $('#baseErr');
+            var durErr = $('#durErr');
+            var minErr = $('#minErr');
+            var maxErr = $('#maxErr');
 
             var formData = {
               id: unitpricing,
@@ -173,13 +178,19 @@
               optionalunitsymbol: $('#optionalunitsymbol').val()
             };
             console.log(formData);
-
+            
+            
             $.ajax({
               url: "<?php echo base_url('update_unit_pricing/') ?>" + unitpricing,
               type: "POST",
               data: formData,
               dataType: "json",
               success: function(response) {
+                unitEr.text(response.unitTitle ? response.unitTitle.message : '');
+                baseErr.text(response.baseprice ? response.baseprice.message : '');
+                durErr.text(response.duration ? response.duration.message : '');
+                minErr.text(response.minlimit ? response.minlimit.message : '');
+                maxErr.text(response.maxlimit ? response.maxlimit.message : '');
                 if (response.success) {
                   alert(response.message);
                   window.location.reload();

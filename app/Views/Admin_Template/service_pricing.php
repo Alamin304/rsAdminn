@@ -159,7 +159,7 @@
                 $('.editbtn').click(function() {
 
                   $('#tableid tr').remove('.editform');
-                  $(this).closest('tr').after('<tr class="editform"><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodName"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodName" value=""> <span style="color:red;" id="nameErr"></span> </div> <div class="modal-footer"> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
+                  $(this).closest('tr').after('<tr class="editform"><td> <input type="text" name="id" id="idInput" value=""> <form id="servicepriceEditForm" method="POST" action="" role="form"> <div class="form-group"> <label for="methodName"> Method Name:</label> <input type="text" class="form-control" id="pricingTitleInput" name="methodName" value=""> <span style="color:red;" id="methodEr"></span> </div> <div class="modal-footer"> <button type="button" id="submit" class="btn btn-primary save">Update</button> </div> </form></td></tr>');
                   var pricingId = $(this).data('id');
 
                   $.ajax({
@@ -177,6 +177,7 @@
                 $("body").on("click", ".save", function() {
                   var pricing = $('#idInput').val();
                   var name = $('#pricingTitleInput').val();
+                  var methodEr = $('#methodEr');
                   console.log(pricing);
                   console.log(name);
 
@@ -190,6 +191,7 @@
                     data: data,
                     dataType: "json",
                     success: function(response) {
+                      methodEr.text(response.methodName ? response.methodName.message : '');
                       if (response.success) {
                         alert(response.message);
                         window.location.reload();

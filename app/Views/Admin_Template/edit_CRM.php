@@ -53,7 +53,8 @@
                     </div>
                     <div class="form-group">
                         <label for="note">Special requests ( Notes ):</label>
-                        <textarea type="text" class="form-control" id="note" name="note" value="<?=$value['notes']; ?>"></textarea>
+                        <textarea type="text" class="form-control" id="note" name="note" rows="5"><?= $value['notes'] ?></textarea>
+                        
                         <span style="color:red;" id="noteErr"></span>
                     </div>
                     <button type="submit" name="submit" id="submit" class="btn btn-primary">Save</button>
@@ -66,6 +67,17 @@
             <script>
                     $(document).ready(function() {
                     $('#myForm').submit(function(e) {e.preventDefault();
+
+                    var emailErr = $('#emailErr');
+                    var passwordErr = $('#passwordErr');
+                    var nameErr = $('#nameErr');
+                    var lastnameErr = $('#lastnameErr');
+                    var phoneErr = $('#phoneErr');
+                    var streetErr = $('#streetErr');
+                    var zipErr = $('#zipErr');
+                    var cityErr = $('#cityErr');
+                    var stateErr = $('#stateErr');
+                    var noteErr = $('#noteErr');
                   $.ajax({
                      url: "<?php echo base_url('update_CRM/').$value['id']?>",
                      type: "POST",
@@ -73,6 +85,16 @@
                      dataType: "json",
                      success: function(response)
                       {
+                        emailErr.text(response.email ? response.email.message : '');
+                        passwordErr.text(response.password ? response.password.message : '');
+                        nameErr.text(response.firstname ? response.firstname.message : '');
+                        lastnameErr.text(response.lastname ? response.lastname.message : '');
+                        phoneErr.text(response.phone ? response.phone.message : '');
+                        streetErr.text(response.street ? response.street.message : '');
+                        zipErr.text(response.zip ? response.zip.message : '');
+                        cityErr.text(response.city ? response.city.message : '');
+                        stateErr.text(response.state ? response.state.message : '');
+                        noteErr.text(response.note ? response.note.message : '');
 
                      if (response.success) {
                      alert(response.message);

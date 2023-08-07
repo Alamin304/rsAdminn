@@ -38,7 +38,7 @@
           <tr>
             <td><?= $value['message_subject']?></td>
             <td><?= $value['message']?></td>
-            <td><a href="<?php echo base_url('MessageAttachment/'.$value['attachment']); ?>" class="btn btn-warning btn-sm editbtn">See Attachment</a></td>
+            <td> <a href="<?php echo base_url('MessageAttachment/'.$value['attachment']); ?>" target="_blank" class="btn btn-warning btn-sm editbtn">See Attachment</a></td>
             <td><?= $value['date']?></td>
             <td>
             <button type="button" class="btn btn-primary usersbtn" data-id="<?= $value['id'] ?>"> <i class="fas fa-users"></i><span class="nav-text"></span>
@@ -65,12 +65,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-            <p>ID: <span id="customerId"></span></p>
-                <ul>
-                
-                    <li> <span id="customer"></span></li>
-                   
-                </ul>
+            <p>Message id: <span id="customerId"></span></p>
+              <ul id="customerList"></ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,13 +108,16 @@
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
-                    // $('#customer').val(response.crm_id);
-                  
-
-                }
+                  var customerList = $("#customerList");
+                    customerList.empty(); 
+                    for (var i = 0; i < response.length; i++) {
+                        var listItem = '<li>' + response[i].Name + '</li>';
+                        customerList.append(listItem);
+                    }
+                },
+                
             });
-
-          });
+        });
         });
   </script>
 

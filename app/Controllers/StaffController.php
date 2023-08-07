@@ -218,10 +218,14 @@ class StaffController extends BaseController
             $serviceidsArray = $_POST['service'];
             $service = json_encode($serviceidsArray);
 
-                $photos = $this->request->getFile('staffImage');
-            if ($photos->isValid() && !$photos->hasMoved()) {
-                $photos->move(ROOTPATH . 'public/staff');
-            }
+            //     $photos = $this->request->getFile('staffImage');
+            // if ($photos->isValid() && !$photos->hasMoved()) {
+            //     $photos->move(ROOTPATH . 'public/staff');
+            // }
+
+
+            $image = $this->request->getfile('staffImage');
+            $img = $image->isValid() ? $image->getName() : $data['staff_image'];
                 
            
            
@@ -237,7 +241,7 @@ class StaffController extends BaseController
                 'zip' => $zip,
                 'Booking' => $Booking,
                 'service' => $service,
-                'staff_image'=> $photos->getName(),
+                'staff_image'=> $img,
                
 
             ];

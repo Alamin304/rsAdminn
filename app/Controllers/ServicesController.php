@@ -46,9 +46,10 @@ class ServicesController extends BaseController
         'color_setting' => 'required',
         'serviceTitle' => 'required',
         'serviceDescription' => 'required',
+        'serviceImage' => 'uploaded[serviceImage]|mime_in[serviceImage,image/png,image/jpg,image/jpeg]|max_size[serviceImage,5120]',
     ];
 
-    // Set custom error messages for each field
+
     $validation->setRules($rules, [
         'color_setting' => [
             'required' => 'Please select a Color.',
@@ -58,6 +59,9 @@ class ServicesController extends BaseController
         ],
         'serviceDescription' => [
             'required' => 'Please write your service Description.',
+        ],
+        'serviceImage' => [
+            'required' => 'please insert a image.',
         ],
     ]);
 
@@ -74,6 +78,10 @@ class ServicesController extends BaseController
             'serviceDescription' => [
                 'status' => 'error',
                 'message' => $validation->getError('serviceDescription') ?: '',
+            ],
+            'serviceImage' => [
+                'status' => 'error',
+                'message' => $validation->getError('serviceImage') ?: '',
             ],
         ];
         return json_encode($response);
@@ -134,25 +142,75 @@ class ServicesController extends BaseController
 
     public function UpdateServices($id)
                 {
+
+                    $validation = \Config\Services::validation();
+
+                    $rules = [
+                        'color_setting' => 'required',
+                        'serviceTitle' => 'required',
+                        'serviceDescription' => 'required',
+                        // 'serviceImage' => 'uploaded[serviceImage]|mime_in[serviceImage,image/png,image/jpg,image/jpeg]|max_size[serviceImage,5120]',
+                    ];
+                
+                    // Set custom error messages for each field
+                    $validation->setRules($rules, [
+                        'color_setting' => [
+                            'required' => 'Please select a Color.',
+                        ],
+                        'serviceTitle' => [
+                            'required' => 'Please write your service Title.',
+                        ],
+                        'serviceDescription' => [
+                            'required' => 'Please write your service Description.',
+                        ],
+                        // 'serviceImage' => [
+                        //     'required' => 'please insert a image.',
+                        // ],
+                    ]);
+                
+                    if (!$this->validate($rules)) {
+                        $response = [
+                            'color_setting' => [
+                                'status' => 'error',
+                                'message' => $validation->getError('color_setting') ?: '',
+                            ],
+                            'serviceTitle' => [
+                                'status' => 'error',
+                                'message' => $validation->getError('serviceTitle') ?: '',
+                            ],
+                            'serviceDescription' => [
+                                'status' => 'error',
+                                'message' => $validation->getError('serviceDescription') ?: '',
+                            ],
+                            // 'serviceImage' => [
+                            //     'status' => 'error',
+                            //     'message' => $validation->getError('serviceImage') ?: '',
+                            // ],
+                        ];
+                        return json_encode($response);
+                    }
+
+
                     $ServiceModel = new AddServiceModel();
                     $services = $ServiceModel->find($id);
-                    // echo'<pre>';
-                    // print_r($user);
-                    // die();
+                    // var_dump($services);
+                 
                     
                     if ($this->request->getMethod() === 'post') {
                         $color = $this->request->getPost('color_setting');
                         $servicesTitle = $this->request->getPost('serviceTitle');
                         $desc = $this->request->getPost('serviceDescription');
-                        $photos = $this->request->getfile('serviceImage')->getName();
-                        // $image = $this->request->getPost('serviceImage');
-                        // $img = $image->isValid() ? $image->getName() : $services['serviceImage'];
+                        // $photos = $this->request->getfile('serviceImage')->getName();
+                        $image = $this->request->getfile('serviceImage');
+                        $img = $image->isValid() ? $image->getName() : $services['service_image'];
+       
                         
                         $data = [
                             'color_tag' => $color,
                             'service_title' => $servicesTitle,
                             'service_description' =>  $desc,
-                            'service_image' => $photos,
+                            'service_image' => $img,
+                            
                         ];
                         $ServiceModel->update($id, $data);
 
@@ -314,6 +372,25 @@ public function AddServicePricing()
 
     public function UpdateServicePricing($id)
     {
+
+        $validation = \Config\Services::validation();
+
+        $rules = [
+            'methodName' => 'required',
+        ];
+        
+
+        if (! $this->validate($rules)) {
+
+            $response = [
+                'methodName' => [
+                    'status' => 'required',
+                    'message' => 'Please enter a Method name',
+                ],
+                
+            ];
+            return json_encode($response);
+        }
         
         $ServicePriceModel = new ServicePriceModel();
         $data = $ServicePriceModel->find($id);
@@ -430,8 +507,9 @@ public function AddAddonsService()
                 'titleName' => 'required',
                 'duration' => 'required',
                 // 'image' => 'required',
-                'price' => 'required',
-                'maxqty' => 'required',
+                // 'image' => 'uploaded[image]|mime_in[image,image/png,image/jpg,image/jpeg]|max_size[image,5120]',
+                'price' => 'numeric',
+                'maxqty' => 'numeric',
                 'mulqty' => 'required',
             ];
 
@@ -447,10 +525,10 @@ public function AddAddonsService()
                 //     'required' => 'Please insert an image.',
                 // ],
                 'price' => [
-                    'required' => 'Please enter your price.',
+                    'numeric' => 'Please enter a digit.',
                 ],
                 'maxqty' => [
-                    'required' => 'Please enter your maxqty.',
+                    'numeric' => 'Please enter a digit.',
                 ],
                 'mulqty' => [
                     'required' => 'Please enter your mulqty.',
@@ -499,6 +577,7 @@ public function AddAddonsService()
             'addon_title' => $this->request->getPost('titleName'),
             'duration' => $this->request->getPost('duration'),
             'addons_service_image' => $images->getName(),
+            'icon' => $this->request->getPost('icon'),
             'basic_price' => $this->request->getPost('price'),
             'max_qty' => $this->request->getPost('maxqty'),
             'multiple_qty' => $this->request->getPost('mulqty'),
@@ -544,6 +623,54 @@ public function AddAddonsService()
     public function UpdateAddonsService($id) 
     {
 
+
+
+        $validation = \Config\Services::validation();
+
+            $rules = [
+                'titleName' => 'required',
+                'duration' => 'required',
+                'price' => 'numeric',
+                'maxqty' => 'numeric',
+                
+            ];
+
+           
+            $validation->setRules($rules, [
+                'titleName' => [
+                    'required' => 'Please enter your titleName.',
+                ],
+                'duration' => [
+                    'required' => 'Please enter your duration.',
+                ],
+                'price' => [
+                    'numeric' => 'Please enter a digit.',
+                ],
+                'maxqty' => [
+                    'numeric' => 'Please enter a digit.',
+                ],
+                
+            ]);
+
+            if (!$this->validate($rules)) {
+                $response = [
+                    'titleName' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('titleName') ?: '',
+                    ],
+                    'price' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('price') ?: '',
+                    ],
+                    'maxqty' => [
+                        'status' => 'error',
+                        'message' => $validation->getError('maxqty') ?: '',
+                    ],
+                    
+                ];
+                return json_encode($response);
+            }
+
         $Addons = new AddonsModel();
         $data = $Addons->find($id);
 
@@ -556,14 +683,27 @@ public function AddAddonsService()
         if ($this->request->getMethod() === 'post') {
             $name = $this->request->getPost('titleName');
             $duration = $this->request->getPost('duration');
+            $image = $this->request->getfile('addonsimage');
+            $img = $image->isValid() ? $image->getName() : $data['addons_service_image'];
+
+            // $photos = $this->request->getfile('addonsimage')->getName();
+            $icon = $this->request->getPost('icon');
             $price = $this->request->getPost('price');
             $maxqty = $this->request->getPost('maxqty');
             $mulqty = $this->request->getPost('mulqty');
+
+            // $photos = $this->request->getFile('addonsimage');
+            // if ($photos->isValid() && !$photos->hasMoved()) {
+            //     $photos->move(ROOTPATH . 'public/addons_service_photos');
+            // }
+            
 
 
             $data = [
                 'addon_title' =>$name,
                 'duration' =>$duration,
+                'addons_service_image' => $img,
+                'icon' =>$icon,
                 // 'addons_service_image' => $images->getName(),
                 'basic_price' =>$price,
                 'max_qty' =>$maxqty,
@@ -572,15 +712,19 @@ public function AddAddonsService()
 
             ];
 
+
             $Addons->update($id,$data);
+            // echo '<pre>';print_r($data);die();
+
             $response = [
                 'success' => true,
                 'message' => 'Data updated successfully.'
             ];
             return $this->response->setJSON($response);
         }
+
         $data = $Addons->find($id); 
-        return view('Admin_Template/unit_pricing', ['data' => $data,]);
+        return view('Admin_Template/addons_service', ['data' => $data,]);
 
        }
 
@@ -667,7 +811,7 @@ public function AddAddonsService()
 
     $rules = [
         'unitName' => 'required',
-        'price' => 'required|integer',
+        'price' => 'required|numeric',
     ];
 
    
@@ -677,7 +821,7 @@ public function AddAddonsService()
         ],
         'price' => [
             'required' => 'Please enter a Price.',
-            'integer' => 'Please enter an integer value.',
+            'numeric' => 'Please enter a digit.',
         ],
     ]);
 
@@ -745,6 +889,68 @@ public function AddAddonsService()
 
             public function UpdateUnitPricing($id) 
             {
+
+                $validation = \Config\Services::validation();
+
+                $rules = [
+                    'unitTitle' => 'required',
+                    'baseprice' => 'required|numeric',
+                    'duration' => 'required',
+                    'minlimit' => 'permit_empty|numeric',
+                    'maxlimit' => 'permit_empty|numeric',
+                    
+                ];
+            
+               
+                $validation->setRules($rules, [
+                    'unitTitle' => [
+                        'required' => 'Please enter a unitName.',
+                    ],
+                    'baseprice' => [
+                        'required' => 'Please enter a baseprice.',
+                        'numeric' => 'Please enter an integer value.',
+                    ],
+                    'duration' => [
+                        'required' => 'Please enter a duration.',
+                    ],
+                    'minlimit' => [
+                        'numeric' => 'Please enter only digit.',
+                        // 'min' => 'The minimum value for minlimit is 0.',
+                    ],
+                    'maxlimit' => [
+                        'numeric' => 'Please enter only digit.',
+                        
+                    ],
+                  
+
+                ]);
+            
+                if (!$this->validate($rules)) {
+                    $response = [
+                        'unitTitle' => [
+                            'status' => 'error',
+                            'message' => $validation->getError('unitName') ?: '',
+                        ],
+                        'baseprice' => [
+                            'status' => 'error',
+                            'message' => $validation->getError('baseprice') ?: '',
+                        ],
+                        'duration' => [
+                            'status' => 'error',
+                            'message' => $validation->getError('duration') ?: '',
+                        ],
+                        'minlimit' => [
+                            'status' => 'error',
+                            'message' => $validation->getError('minlimit') ?: '',
+                        ],
+                        'maxlimit' => [
+                            'status' => 'error',
+                            'message' => $validation->getError('maxlimit') ?: '',
+                        ],
+                       
+                    ];
+                    return json_encode($response);
+                }
 
                 $Unitprice = new UnitModel();
                 $data = $Unitprice->find($id);

@@ -53,24 +53,27 @@
                     <div class="modal-footer">
                       <button type="submit" name="submit" id="submit" class="btn btn-primary">Submit</button>
                     </div>
+                    </form>
 
                         </div>
                         <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-
+                        <form method="POST" id="SmsMessageForm" action="" class="form-horizontal" role="form">
+                        <!-- <input type="text" id="crm" name="crm_id[]" /> -->
                         <div class="form-group">
                           <label for="Message">Message:</label>
                           <textarea type="text" name="SmsMessage" class="form-control" id="SmsMessage" placeholder="Write your Sms Message" value=""></textarea>
                           <span style="color:red;" id="SmsMessageErr"></span>
                         </div>
                         <div class="modal-footer">
-                        <button type="submit" name="submit" id="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="submit" id="smssubmit" class="btn btn-primary">Submit</button>
                         </div>
+                        </form>
                         </div>
                     </div>
 
                     
                   </div>
-                  </form>
+                  
                 </div>
               </div>
             </div>
@@ -205,20 +208,20 @@
         <div class="row">
             <div class="col-md-6">
                 <select class="multiple" style="width:200px;" name="crmid[]" multiple="multiple">
-                <?php foreach ($data as $value): ?>
-                <option selected data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']." " .$value['last_name']; ?></option>
-                <?php endforeach; ?>
+                    <?php foreach ($data as $value): ?>
+                    <option selected data-id="<?php echo $value['id']; ?>"><?php echo $value['first_name']." " .$value['last_name']; ?></option>
+                    <?php endforeach; ?>
                 </select>
             
           
-      <button type="button" class="btn btn-primary" id="openModal">Send Messages</button>
+          <button type="button" class="btn btn-primary" id="openModal">Send Messages</button>
    
-    <a href="<?php echo base_url('messages'); ?>" class="btn btn-primary" aria-expanded="false">
-      <i class="fas fa-users"></i><span class="nav-text">All Messages</span>
-    </a>
+     <a href="<?php echo base_url('messages'); ?>" class="btn btn-primary" aria-expanded="false">
+       <i class="fas fa-users"></i><span class="nav-text">All Messages</span>
+     </a>
     </div>
-    </div>
-    </div>
+   </div>
+  </div>
 
 <!-- <div class="row">
   <div class="col-md-6">
@@ -236,37 +239,11 @@
                
 
 
-<script>
-  $(document).ready(function() {
-  
-    $('#ex1 a[data-mdb-toggle="tab"]').on('click', function(e) {
-      e.preventDefault();
-      $(this).tab('show');
-    });
-
-    $('#MessageForm').submit(function(e) {
-      e.preventDefault();
-      var activeTabId = $('.tab-pane.active').attr('id');
-      if (activeTabId === 'ex1-tabs-1') {
-
-        var formData = $(this).serializeArray();
-        console.log(formData);
-      } else if (activeTabId === 'ex1-tabs-2') {
- 
-        var smsFormData = $(this).serializeArray();
-        console.log(smsFormData);
-      }
-    });
-  });
-</script>
 
 
 
-<!-- <script>
-        $(document).ready(function() {
-            $('#service').selectpicker();
-        });
-    </script> -->
+
+
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -318,7 +295,6 @@
                         data: formData,
                         dataType: "json",
                         success: function(response) {
-                            
                             emailErr.text(response.email ? response.email.message : '');
                             passwordErr.text(response.password ? response.password.message : '');
                             nameErr.text(response.firstname ? response.firstname.message : '');
@@ -416,6 +392,7 @@
             crmids.forEach(function(id) {
                 formData.append('crm_id[]', id);
             });
+            
 
             $.ajax({
                 url: "<?php echo base_url('add_Messages') ?>",
@@ -435,12 +412,75 @@
                     }
                 }
             });
+
+            
+        });
+
+        $('#SmsMessageForm').submit(function(e) {
+            e.preventDefault();
+            // var MessageErr = $('#MessageErr');
+
+            var crmids = $('.multiple').find('option:selected').map(function() {
+                return $(this).data('id');
+            }).get();
+            console.log(crmids);
+
+            var formData = new FormData($('#SmsMessageForm')[0]);
+            crmids.forEach(function(id) {
+              formData.append('crm_id[]', id);
+            });
+            
+
+            $.ajax({
+                url: "<?php echo base_url('add_Sms_Messages') ?>",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function(response) {
+                    // MessageErr.text(response.Message ? response.Message.message : '');
+                    // AttachmentErr.text(response.Attachment ? response.Attachment.message : '');
+                    if (response.success) {
+                        alert(response.success.message);
+                        $('#SmsMessageForm')[0].reset();
+                        window.location.reload();
+                    }
+                }
+            });
+
+            
         });
     });
 </script>
 
 
 
+
+
+
+
+<script>
+  $(document).ready(function() {
+  
+    $('#ex1 a[data-mdb-toggle="tab"]').on('click', function(e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+    $('#MessageForm').submit(function(e) {
+      e.preventDefault();
+      var activeTabId = $('.tab-pane.active').attr('id');
+      if (activeTabId === 'ex1-tabs-1') {
+
+        var formData = $(this).serializeArray();
+        console.log(formData);
+      } else if (activeTabId === 'ex1-tabs-2') {
+ 
+        var smsFormData = $(this).serializeArray();
+        console.log(smsFormData);
+      }
+    });
+  });
+</script>
 
 
 

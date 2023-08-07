@@ -14,6 +14,9 @@
             padding: 10px;
             border: 1px solid #ccc;
         }
+        .nameItem.active{
+            background: red;
+        }
     </style>
 
 
@@ -60,20 +63,20 @@
     </div>
     <div id="nameList">
     <ul id="names">
-        <?php foreach ($data as $value): ?>
-        
-            <li class="nameItem d-flex align-items-center mb-2" data-id="<?= $value['id'] ?>">
-               <div class ="d-flex align-items-center" >
-               <img style="width:40px; height:40px; border-radius:50%; margin-right:20px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
+    <?php foreach ($data as $value): ?>
+        <li class="nameItem d-flex align-items-center mb-2" data-id="<?= $value['id'] ?>">
+            <div class="d-flex align-items-center">
+                <?php
+                $staff_image = $value['staff_image'];
+                $default_image = 'staff/default.jpg';
+                ?>
+                <img style="width:40px; height:40px; border-radius:50%; margin-right:20px;" src="<?= empty($staff_image) ? $default_image : base_url('staff/' . $staff_image) ?>" alt="no images">
                 <strong><?php echo $value['Name']; ?></strong>
-               </div>
-                <a class="deleteButton ms-auto" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
-            </li>
-            
-            
-       
-        <?php endforeach; ?>
-        </ul>
+            </div>
+            <a class="deleteButton ms-auto" href="#!" data-id="<?= $value['id'] ?>">Delete</a>
+        </li>
+    <?php endforeach; ?>
+    </ul>
     </div>
     <div id="content">
         <ul class="nav nav-tabs mt-3" id="myTabs" role="tablist">
@@ -94,7 +97,7 @@
                     <label for="staffImageInput">Staff Image:</label>
                 <div class="col-md-6">
                     <input type="file" class="form-control-file" id="staffImageInput" name="staffImage">
-                    <img id="staffphoto" style="width:40px; height:40px; border-radius:50%; margin-right:20px;" src="<?= base_url('staff/'. $value['staff_image']) ?>" alt="no images">
+                    <img id="staffphoto" style="width:40px; height:40px; border-radius:50%; margin-right:20px;" alt="no images">
                 </div>
                 </div>
                     <div class="form-group">
@@ -261,6 +264,12 @@ $(document).ready(function() {
     <script>
         $(document).ready(function() {
            var listid = $('#nameList ul li:first-child').attr('data-id');
+        //    console.log(listid);
+          localStorage.setItem("staffff_id", listid);
+        var dd = localStorage.getItem('staffff_id');
+        $('#submit').attr('data-id',dd);
+         
+        //    console.log(123)
         //    alert(listid);
         
                 $.ajax({
@@ -277,11 +286,19 @@ $(document).ready(function() {
                           $('#state').val(response.state);
                           $('#country').val(response.country);
                           $('#zip').val(response.zip);
-                        //   $('#booking').val(response.Booking);
+                          if (response.Booking == 1) {
+                                $('#booking').prop('checked', true);
+                            } else {
+                                $('#booking').prop('checked', false);
+                            }
                         //   $('#service').val(response.service);
 
                           $('#idInput').val(response.id);
-                        //   $('#editModal').modal('show');
+
+                          var imageUrl = BASE_URL + 'staff/' + response.staff_image;
+                           console.log(response.staff_image);
+                            $('#staffphoto').attr('src', imageUrl);
+                            console.log(BASE_URL + 'staff/');
                       }
                   });
             
@@ -290,6 +307,7 @@ $(document).ready(function() {
                 var editid = $(this).data('id');
                 // alert(editid);
                 console.log(editid);
+                localStorage.setItem("staffff_id", editid);
                 $('.save').attr('data-id',editid)
 
                 $.ajax({
@@ -320,7 +338,7 @@ $(document).ready(function() {
                            console.log(response.staff_image);
                             $('#staffphoto').attr('src', imageUrl);
                             console.log(BASE_URL + 'staff/');
-                        //   $('#editModal').modal('show');
+                        
                       }
                   });
               });
@@ -328,6 +346,8 @@ $(document).ready(function() {
 
               $('.save').click(function() {
                   var edituserid = $(this).attr('data-id');
+                  window.localStorage.clear();
+                  localStorage.setItem("update_id", edituserid);
                   alert(edituserid);
                   console.log(edituserid);
                 //   return false;
@@ -348,9 +368,60 @@ $(document).ready(function() {
                           }
                       }
                   });
+               
+               
               });
             });
-    
+            var abc = localStorage.getItem('update_id');
+            console.log(abc);
+            $('#names li').each(function() {
+                // Get the value of the data-id attribute for the current element
+                var dataIdValue = $(this).attr('data-id');
+
+                // Check if the data-id value matches the target value
+                if (dataIdValue === abc) {
+                // If it matches, trigger an alert
+               
+                alert("Match found for data-id: " + abc);
+                $(this).addClass('active');
+                $(this).trigger("click");
+               
+                $.ajax({
+                      url: "<?php echo base_url('edit_staff/') ?>" + abc,
+                      type: "GET",
+                      dataType: "json",
+                      success: function(response) {
+                        alert(abc);
+                        // alert( $('#city').val());
+                          $('#name').val(response.Name);
+                          $('#email').val(response.Email);
+                          $('#description').val(response.description);
+                          $('#phone').val(response.phone);
+                          $('#address').val(response.address);
+                          $('#city').val(response.city);
+                          $('#state').val(response.state);
+                          $('#country').val(response.country);
+                          $('#zip').val(response.zip);
+                          if (response.Booking == 1) {
+                                $('#booking').prop('checked', true);
+                            } else {
+                                $('#booking').prop('checked', false);
+                            }
+                        //   $('#service').val(response.service);
+
+                          $('#idInput').val(response.id);
+
+                          var imageUrl = BASE_URL + 'staff/' + response.staff_image;
+                           console.log(response.staff_image);
+                            $('#staffphoto').attr('src', imageUrl);
+                            console.log(BASE_URL + 'staff/');
+                      }
+                  });
+                }
+            });
+          // $("li").find(`[data-id='${abc}']`);
+            $('#idInput').val(abc);
+         
     </script>
 
 

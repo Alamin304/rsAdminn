@@ -188,6 +188,103 @@ class CRMController extends BaseController
 
     public function UpdateCRM($id)
     {
+
+        $validation = \Config\Services::validation();
+
+        $rules = [
+            'email' => 'required|valid_email', 
+            'password' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'phone' => 'required',
+            'street' => 'required',
+            'zip' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'note' => 'required',
+        ];
+
+
+        $validation->setRules($rules, [
+            'email' => [
+                'required' => 'Please enter an email.',
+                'valid_email' => 'Invalid email format.',
+            ],
+            'password' => [
+                'required' => 'Please enter a password.',
+            ],
+            'firstname' => [
+                'required' => 'Please enter a first name.',
+            ],
+            'lastname' => [
+                'required' => 'Please enter a last name.',
+            ],
+            'phone' => [
+                'required' => 'Please enter your phone number.',
+            ],
+            'street' => [
+                'required' => 'Please enter a street address.',
+            ],
+            'zip' => [
+                'required' => 'Please enter a zip code.',
+            ],
+            'city' => [
+                'required' => 'Please enter a city.',
+            ],
+            'state' => [
+                'required' => 'Please enter a state.',
+            ],
+            'note' => [
+                'required' => 'Please enter your note.',
+            ],
+        ]);
+
+        if (!$this->validate($rules)) {
+            $response = [
+                'email' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('email') ?: '',
+                ],
+                'password' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('password') ?: '',
+                ],
+                'firstname' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('firstname') ?: '',
+                ],
+                'lastname' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('lastname') ?: '',
+                ],
+                'phone' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('phone') ?: '',
+                ],
+                'street' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('street') ?: '',
+                ],
+                'zip' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('zip') ?: '',
+                ],
+                'city' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('city') ?: '',
+                ],
+                'state' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('state') ?: '',
+                ],
+                'note' => [
+                    'status' => 'error',
+                    'message' => $validation->getError('note') ?: '',
+                ],
+            ];
+            return json_encode($response);
+        }
+
         
         $CrmModel = new CrmModel();
         $data = $CrmModel->find([$id]);
@@ -287,25 +384,54 @@ class CRMController extends BaseController
     public function ShowCustomer($id)
     {
 
-        $MessagesModel = new MessagesModel();
-        $data = $MessagesModel->find($id);
-
-        // echo '<pre>';
-        // print_r($data);
-        // die();
-
-
         $CrmModel = new CrmModel();
-        $data2 = $CrmModel->findAll();
+        $MessagesModel = new MessagesModel();
+        // $data = $MessagesModel->find($id);
+        $data = $MessagesModel->where('id',$id)->findAll();
+        // print_r($data);
+        // die;
+
+        if (!empty($data)) {
+            $crmIdsArray = json_decode($data[0]['crm_id'], true);
+            header('Content-Type: application/json');
+            // $result = json_decode($crmIdsArray);
+            
+        }
+
+        // print_r($crmIdsArray);
+        // die;
+
+        $result = array();
+
+        $data2 = $CrmModel->whereIn('id', $crmIdsArray)->findAll();
+        foreach ($crmIdsArray as $cust) {
+            foreach ($data2 as $detail) {
+                if ($cust == $detail['id']) {
+                     $result[] = array(
+                'ID' => $detail['id'],
+                'Name' => $detail['first_name'] . ' ' . $detail['last_name']
+            );
+                    
+                }
+            }
+        }
+            $jsonResult = json_encode($result);
+            header('Content-Type: application/json');
+
+            echo $jsonResult;
+            die();
+          
         
+
         // echo '<pre>';
         // print_r($data2);
         // die();
 
-        $db = \Config\Database::connect();
+
+
+        // $db = \Config\Database::connect();
 
         // $crmidsArray = json_decode($data['crm_id'], true);
-
         // $myData = [];
 
         // foreach ($data as $allvalue) {
@@ -317,11 +443,12 @@ class CRMController extends BaseController
         //         $myData[]=$allvalue;
                 
         // }
+       
 
-            $query = "SELECT * FROM messages right JOIN crm ON messages.id = crm.id";
+            // $query = "SELECT * FROM messages right JOIN crm ON messages.id = crm.id";
 
-            $result = $db->query($query);
-            $data3 = $result->getResult();
+            // $result = $db->query($query);
+            // $data3 = $result->getResult();
 
             // echo '<pre>';
             // print_r($data3);
@@ -336,7 +463,7 @@ class CRMController extends BaseController
 
         return view('Admin_Template/messages', [
             'data'=>$data,
-            'data3' => $data3,
+            '$jsonResult' => $jsonResult,
           
         ]);
 
@@ -354,16 +481,25 @@ class CRMController extends BaseController
             // 'Attachment' =>'required',
         ];
 
+        $validation->setRules($rules, [
+            'Subject' => [
+                'required' => 'Please write your Message Subject.',
+            ],
+            'Message' => [
+                'required' => 'Please write your Message.',
+            ],
+        ]);
+
         if (! $this->validate($rules)) {
 
             $response = [
                 'Subject' => [
-                    'status' => 'required',
-                    'message' => 'Please writte your Subject',
+                    'status' => 'error',
+                    'message' => $validation->getError('Subject') ?: '',
                 ],
                 'Message' => [
-                    'status' => 'required',
-                    'message' => 'Please writte your Message',
+                    'status' => 'error',
+                    'message' => $validation->getError('Message') ?: '',
                 ],
                 // 'Attachment' => [
                 //     'status' => 'required',
@@ -371,6 +507,8 @@ class CRMController extends BaseController
                 // ],
                 
             ];
+
+            
             return json_encode($response);
         }
 
@@ -383,6 +521,7 @@ class CRMController extends BaseController
 
         $crmidsArray = $_POST['crm_id'];
         $crmidsJSON = json_encode($crmidsArray);
+        
         // $crmidsArray = json_decode($row['crm_id'], true);
         $data = [
 
@@ -439,10 +578,14 @@ class CRMController extends BaseController
                 return json_encode($response);
             }
     
-            $MessagesModel = new MessagesModel();
+            
+            $SmsMessagesModel = new SmsMessagesModel();
     
-            $crmidsArray = $_POST['crm_id'];
-            $crmidsJSON = json_encode($crmidsArray);
+            $crmids = $_POST['crm_id'];
+            $crmidsJSON = json_encode($crmids);
+            // echo '<pre>';
+            // print_r($crmidsJSON);
+            // die();
             $data = [
     
                 'messages' => $this->request->getPost('SmsMessage'),
